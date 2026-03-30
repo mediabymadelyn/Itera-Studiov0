@@ -1,40 +1,10 @@
 import { searchAicArtworks } from "@/lib/sources/aic";
+import { dedupeRankedResults } from "@/lib/search/dedupeResults";
 import { searchMetArtworks } from "@/lib/sources/met";
+import { rankAndSelectResults } from "@/lib/search/rankResults";
 import { searchUnsplashArtworks } from "@/lib/sources/unsplash";
-import { ArtworkResult } from "@/lib/types/artwork";
 import { routeQueryToSources, SourceName } from "@/lib/search/routeQuery";
-
-function isValidArtworkResult(result: ArtworkResult): boolean {
-  return Boolean(
-    result.id &&
-      result.title &&
-      result.source &&
-      result.imageUrl &&
-      result.originalLink
-  );
-}
-
-function mergeResults(results: ArtworkResult[], limit: number): ArtworkResult[] {
-  return results
-    .filter(isValidArtworkResult)
-    .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
-    .slice(0, limit);
-}
-
-function applySourcePriority(
-  results: ArtworkResult[],
-  priority: SourceName[]
-): ArtworkResult[] {
-  return results.map((result) => {
-    const index = priority.findIndex((source) => result.id.startsWith(`${source}-`));
-    const bonus = index === -1 ? 0 : (priority.length - index) * 0.05;
-
-    return {
-      ...result,
-      score: (result.score ?? 0) + bonus
-    };
-  });
-}
+import { ArtworkResult } from "@/lib/types/artwork";
 
 export async function searchAllArtworks(
   query: string,
@@ -56,5 +26,12 @@ export async function searchAllArtworks(
     result.status === "fulfilled" ? result.value : []
   );
 
-  return mergeResults(applySourcePriority(combined, routedSources), limit);
+  const ranked = rankAndSelectResults(
+    combined,
+    query,
+    routedSources,
+    Math.max(combined.length, limit)
+  );
+
+  return dedupeRankedResults(ranked).slice(0, limit);
 }

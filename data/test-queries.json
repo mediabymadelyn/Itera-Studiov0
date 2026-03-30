@@ -1,0 +1,77 @@
+[
+  {
+    "query": "impressionist oil painting landscape",
+    "category": "painting",
+    "expectedOutcome": "Top results should prioritize museum sources with credited painters and full artwork metadata."
+  },
+  {
+    "query": "baroque religious painting dramatic light",
+    "category": "painting",
+    "expectedOutcome": "Results should surface historical museum works with clear title, artist, source, and original link."
+  },
+  {
+    "query": "abstract expressionist color field painting",
+    "category": "painting",
+    "expectedOutcome": "Ranked results should include relevant painting references and avoid unrelated photography-first cards."
+  },
+  {
+    "query": "classical marble sculpture figure",
+    "category": "sculpture",
+    "expectedOutcome": "Museum-based sculpture pieces should rank highly with usable images and attribution."
+  },
+  {
+    "query": "bronze sculpture human anatomy study",
+    "category": "sculpture",
+    "expectedOutcome": "Results should include sculpture records with strong metadata completeness and original source links."
+  },
+  {
+    "query": "ancient greek statue drapery",
+    "category": "sculpture",
+    "expectedOutcome": "Top cards should show sculpture-focused museum results with low duplication."
+  },
+  {
+    "query": "street photography at night rain",
+    "category": "photography",
+    "expectedOutcome": "Unsplash should be prioritized, with photographer attribution and clear original photo links."
+  },
+  {
+    "query": "fashion editorial photography monochrome",
+    "category": "photography",
+    "expectedOutcome": "Photography sources should dominate top ranking while still preserving licensing and source labels."
+  },
+  {
+    "query": "documentary photo market scene",
+    "category": "photography",
+    "expectedOutcome": "Top results should include modern real-world photos and compact, clear attribution fields."
+  },
+  {
+    "query": "renaissance portrait woman profile",
+    "category": "portrait",
+    "expectedOutcome": "Museum portrait works should rank above unrelated modern photography."
+  },
+  {
+    "query": "self portrait oil painting",
+    "category": "portrait",
+    "expectedOutcome": "Results should show portrait-relevant artwork with artist names and minimal vague metadata."
+  },
+  {
+    "query": "photographic portrait natural window light",
+    "category": "portrait",
+    "expectedOutcome": "Photography portrait references should appear strongly, while preserving source credibility labels."
+  },
+  {
+    "query": "hands reference drawing and photo",
+    "category": "mixed reference",
+    "expectedOutcome": "Search should combine museum and photography sources and return diverse but relevant top 6 results."
+  },
+  {
+    "query": "urban figure pose reference",
+    "category": "mixed reference",
+    "expectedOutcome": "Results should blend modern photography with possible museum figure studies based on ranking signals."
+  },
+  {
+    "query": "color palette inspiration for portrait painting",
+    "category": "mixed reference",
+    "expectedOutcome": "Top results should remain relevant to portrait/painterly context while avoiding duplicate near-matches."
+  }
+]

@@ -1,0 +1,119 @@
+[
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1614085686116-bc13e95dd11e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHw1fHxnb2xkZW4lMjBob3VyJTIwYmFja2xpdCUyMHBvcnRyYWl0JTIwd2FybSUyMHN1bnNldCUyMGdsb3d8ZW58MXx8fHwxNzg4OTAwNjMxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-lmdb7PcPD6Y",
+    "title": "portrait of a little girl in the golden hour in nature",
+    "artist": "Vitolda Klein",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/girl-in-white-and-blue-striped-shirt-standing-on-field-during-sunset-lmdb7PcPD6Y",
+    "probe": "golden hour / backlit: expect direction back or side, quality soft, warm, contrast medium"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1765813102971-47144ca56d03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHw2fHxnb2xkZW4lMjBob3VyJTIwYmFja2xpdCUyMHBvcnRyYWl0JTIwd2FybSUyMHN1bnNldCUyMGdsb3d8ZW58MXx8fHwxNzg4OTAwNjMxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-HTZLfLB4sBg",
+    "title": "Young woman with eyes closed in warm sunset light",
+    "artist": "Alef Morais",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/young-woman-with-eyes-closed-in-warm-sunset-light-HTZLfLB4sBg",
+    "probe": "golden hour: expect direction back/side, quality soft, warm, contrast low-medium"
+  },
+  {
+    "imageUrl": "https://www.artic.edu/iiif/2/7c9ea9a7-5990-68c0-8798-ad6efe21753a/full/843,/0/default.jpg",
+    "id": "aic-66878",
+    "title": "Porch Shadows",
+    "artist": "Paul Strand\nAmerican, 1890–1976",
+    "source": "Art Institute of Chicago",
+    "page": "https://www.artic.edu/artworks/66878",
+    "probe": "hard raking light (Porch Shadows): expect quality hard, contrast high, strong cast shadows"
+  },
+  {
+    "imageUrl": "https://www.artic.edu/iiif/2/2ca9b97b-de1a-575b-507a-95d526661792/full/843,/0/default.jpg",
+    "id": "aic-13832",
+    "title": "Light and Shadow",
+    "artist": "John Warner Norton (American, 1876–1934)",
+    "source": "Art Institute of Chicago",
+    "page": "https://www.artic.edu/artworks/13832",
+    "probe": "hard directional light and shadow study: expect quality hard, contrast high"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1721701233113-85e8e91eb79b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHw1fHxzaWxob3VldHRlJTIwcGVyc29uJTIwYWdhaW5zdCUyMGJyaWdodCUyMHN1bnNldCUyMHNreXxlbnwxfHx8fDE3ODg5MDA2MzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-2BrX5xwE5QA",
+    "title": "A silhouette of a person standing in front of a sunset",
+    "artist": "Galih Jelih",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/a-silhouette-of-a-person-standing-in-front-of-a-sunset-2BrX5xwE5QA",
+    "probe": "silhouette vs bright sky: expect direction back, quality hard, contrast high, subject dark"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1523780329224-c3be49f59edd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHwzfHxzaWxob3VldHRlJTIwcGVyc29uJTIwYWdhaW5zdCUyMGJyaWdodCUyMHN1bnNldCUyMHNreXxlbnwxfHx8fDE3ODg5MDA2MzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-zjGa2RQphRA",
+    "title": "silhouette of man during sunset",
+    "artist": "Anton Darius",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/silhouette-of-man-during-sunset-zjGa2RQphRA",
+    "probe": "silhouette of man at sunset: expect direction back, contrast high"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1781351885043-97c9c4a8eead?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHwzfHxvdmVyY2FzdCUyMGdyZXklMjBmbGF0JTIwZGlmZnVzZWQlMjBsaWdodCUyMGxhbmRzY2FwZXxlbnwxfHx8fDE3ODg5MDA2MzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-VRxmYw4O6rw",
+    "title": "A white car parked on a wet road under heavy fog, its driver-side door swung open to reveal a figure in a pink jacket sitting inside. Flat green fields fade into a thick grey mist behind, and the dark, rain-slicked asphalt anchors the lower frame. The diffused, overcast light gives the scene a quiet, contemplative stillness.",
+    "artist": "Abby Thompson",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/white-suv-with-open-door-parked-on-wet-asphalt-VRxmYw4O6rw",
+    "probe": "heavy overcast: expect quality flat/diffuse, contrast low, no strong direction"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1773701265079-da7990ce4f4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHw0fHxoYXJzaCUyMG1pZGRheSUyMHN1biUyMGhpZ2glMjBjb250cmFzdCUyMGhhcmQlMjBzaGFkb3dzJTIwc3RyZWV0fGVufDF8fHx8MTc4ODkwMDYzNHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-R1dcVNEP-oE",
+    "title": "People walk down a sunlit street with shadows",
+    "artist": "Kristians Greckis",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/people-walk-down-a-sunlit-street-with-shadows-R1dcVNEP-oE",
+    "probe": "harsh midday sun on street: expect quality hard, direction above/side, contrast high"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1785069897469-05e2109fb73c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHw2fHxoYXJzaCUyMG1pZGRheSUyMHN1biUyMGhpZ2glMjBjb250cmFzdCUyMGhhcmQlMjBzaGFkb3dzJTIwc3RyZWV0fGVufDF8fHx8MTc4ODkwMDYzNHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-WwKYxvuiNZ0",
+    "title": "Strong geometric shadows stretch across a quiet street lined with parked cars.",
+    "artist": "Hanlin Sun",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/city-street-with-cars-and-patterned-shadows-on-crosswalk-WwKYxvuiNZ0",
+    "probe": "strong geometric cast shadows: expect quality hard, contrast high"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1620939391250-eb822ac0818a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHwxfHxyaW0lMjBsaWdodCUyMGJhY2tsaXQlMjBoYWlyJTIwZ2xvd2luZyUyMGVkZ2UlMjBkYXJrJTIwYmFja2dyb3VuZHxlbnwxfHx8fDE3ODg5MDA2MzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-KGw1AOyBTQM",
+    "title": "brown hair on black background",
+    "artist": "Adrian \"Rosco\" Stef",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/brown-hair-on-black-background-KGw1AOyBTQM",
+    "probe": "hair on black, rim/backlight: expect direction back, contrast high, dark background"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1592700819903-308f4820372d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHwxfHxsb3clMjBrZXklMjBzaW5nbGUlMjBsaWdodCUyMHNvdXJjZSUyMGRhcmslMjBtb29keSUyMHBvcnRyYWl0fGVufDF8fHx8MTc4ODkwMDYzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-3RafwmM98mY",
+    "title": "low key self portrait. ",
+    "artist": "Peri Stojnic",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/man-in-black-shirt-with-white-earbuds-3RafwmM98mY",
+    "probe": "low-key single source self portrait: expect quality hard, contrast high, direction side"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1774016591243-81779126a186?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHw0fHxsb3clMjBrZXklMjBzaW5nbGUlMjBsaWdodCUyMHNvdXJjZSUyMGRhcmslMjBtb29keSUyMHBvcnRyYWl0fGVufDF8fHx8MTc4ODkwMDYzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-b9_HxFV78ik",
+    "title": "moody silhouette portrait of man looking into light with dramatic shadows",
+    "artist": "Cemrecan Yurtman",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/a-person-illuminated-by-a-single-spotlight-in-darkness-b9_HxFV78ik",
+    "probe": "moody single-source profile: expect direction side/back, contrast high"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1782775170474-1b8b2bfa582d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHw0fHxibHVlJTIwaG91ciUyMGNpdHklMjBza3lsaW5lJTIwZHVzayUyMGxpZ2h0c3xlbnwxfHx8fDE3ODg5MDA2Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-NJqQCOnhKhw",
+    "title": "City skyline at twilight with a purple and blue sky",
+    "artist": "Leviosa Hou",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/city-skyline-at-twilight-with-a-purple-and-blue-sky-NJqQCOnhKhw",
+    "probe": "blue hour skyline: expect quality diffuse/ambient, contrast low-medium, cool"
+  }
+]

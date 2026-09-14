@@ -1,0 +1,158 @@
+[
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/ad/original/DP-29006-001.jpg",
+    "id": "met-12127",
+    "title": "Madame X (Virginie Amélie Avegno Gautreau)",
+    "artist": "John Singer Sargent",
+    "page": "https://www.metmuseum.org/art/collection/search/12127",
+    "probe": "hand-picked (subject-led)"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/as/original/DP119528.jpg",
+    "id": "met-45073",
+    "title": "First Day of Autumn (Risshu)",
+    "artist": "Suzuki Harunobu",
+    "page": "https://www.metmuseum.org/art/collection/search/45073",
+    "probe": "hand-picked (subject-led)"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT2159.jpg",
+    "id": "met-437382",
+    "title": "Vase of Flowers (Pink Background)",
+    "artist": "Odilon Redon",
+    "page": "https://www.metmuseum.org/art/collection/search/437382",
+    "probe": "hand-picked (subject-led)"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/is/original/DP234080.jpg",
+    "id": "met-454011",
+    "title": "Black Stork in a Landscape",
+    "artist": "Unknown",
+    "page": "https://www.metmuseum.org/art/collection/search/454011",
+    "probe": "hand-picked (subject-led)"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP243404.jpg",
+    "id": "met-435852",
+    "title": "Two Children Teasing a Cat",
+    "artist": "Annibale Carracci",
+    "page": "https://www.metmuseum.org/art/collection/search/435852",
+    "probe": "hand-picked (subject-led)"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/mi/original/DP331229.jpg",
+    "id": "met-503219",
+    "title": "Division Viol",
+    "artist": "Richard Meares",
+    "page": "https://www.metmuseum.org/art/collection/search/503219",
+    "probe": "hand-picked (subject-led)"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP109484.jpg",
+    "id": "met-435848",
+    "title": "The Birth of the Virgin",
+    "artist": "Fra Carnevale (Bartolomeo di Giovanni Corradini)",
+    "source": "The Metropolitan Museum of Art",
+    "page": "https://www.metmuseum.org/art/collection/search/435848",
+    "probe": "dramatic lighting from below / chiaroscuro"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT10776.jpg",
+    "id": "met-437422",
+    "title": "Charity",
+    "artist": "Guido Reni",
+    "source": "The Metropolitan Museum of Art",
+    "page": "https://www.metmuseum.org/art/collection/search/437422",
+    "probe": "dramatic lighting from below / chiaroscuro"
+  },
+  {
+    "imageUrl": "https://images.unsplash.com/photo-1548317202-26d94742e8d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTEwMzF8MHwxfHNlYXJjaHwxfHxzdHJlZXQlMjBwaG90b2dyYXBoeSUyMGF0JTIwbmlnaHQlMjByYWluJTIwbmVvbiUyMHJlZmxlY3Rpb25zfGVufDF8fHx8MTc4ODg5ODI2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "id": "unsplash-t7w4NnjOwDk",
+    "title": "wet street in between building at night",
+    "artist": "Ryiin C",
+    "source": "Unsplash",
+    "page": "https://unsplash.com/photos/wet-street-in-between-building-at-night-t7w4NnjOwDk",
+    "probe": "moody night atmosphere, artificial light on wet street"
+  },
+  {
+    "imageUrl": "https://www.artic.edu/iiif/2/2b8a684d-69d7-eb3f-1481-c3eb26546508/full/843,/0/default.jpg",
+    "id": "aic-14603",
+    "title": "Katsura: The Night Rain Lantern",
+    "artist": "Yasuhiro Ishimoto\nJapanese, born United States, 1921–2012",
+    "source": "Art Institute of Chicago",
+    "page": "https://www.artic.edu/artworks/14603",
+    "probe": "moody night atmosphere, artificial light on wet street"
+  },
+  {
+    "imageUrl": "https://www.artic.edu/iiif/2/f3dcc8fb-0ff7-5762-b532-aad69634093e/full/843,/0/default.jpg",
+    "id": "aic-10035",
+    "title": "Landscape Against the Light",
+    "artist": "Mario Prassinos\nFrench, born Turkey, 1916-1985",
+    "source": "Art Institute of Chicago",
+    "page": "https://www.artic.edu/artworks/10035",
+    "probe": "golden hour"
+  },
+  {
+    "imageUrl": "https://www.artic.edu/iiif/2/0b66bb30-3170-f7d1-543a-93e02ffe194f/full/843,/0/default.jpg",
+    "id": "aic-64740",
+    "title": "Landscape, Sunset",
+    "artist": "George Inness (American, 1825–1894)",
+    "source": "Art Institute of Chicago",
+    "page": "https://www.artic.edu/artworks/64740",
+    "probe": "golden hour"
+  },
+  {
+    "imageUrl": "https://www.artic.edu/iiif/2/72b245bf-698b-aed4-eea6-86c35cd169fa/full/843,/0/default.jpg",
+    "id": "aic-52528",
+    "title": "Cattails Against the Sky",
+    "artist": "Harry Callahan\nAmerican, 1912–1999",
+    "source": "Art Institute of Chicago",
+    "page": "https://www.artic.edu/artworks/52528",
+    "probe": "silhouette against bright background / backlighting"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/ao/original/DP-23472-001.jpg",
+    "id": "met-313262",
+    "title": "Deity figure",
+    "artist": "Maya artist(s)",
+    "source": "The Metropolitan Museum of Art",
+    "page": "https://www.metmuseum.org/art/collection/search/313262",
+    "probe": "silhouette against bright background / backlighting"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP159891.jpg",
+    "id": "met-436896",
+    "title": "Portrait of a Woman with a Man at a Casement",
+    "artist": "Fra Filippo Lippi",
+    "source": "The Metropolitan Museum of Art",
+    "page": "https://www.metmuseum.org/art/collection/search/436896",
+    "probe": "soft diffused window light"
+  },
+  {
+    "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-44361-001.jpg",
+    "id": "met-435896",
+    "title": "Portrait of a Carthusian",
+    "artist": "Petrus Christus",
+    "source": "The Metropolitan Museum of Art",
+    "page": "https://www.metmuseum.org/art/collection/search/435896",
+    "probe": "soft diffused window light"
+  },
+  {
+    "imageUrl": "https://www.artic.edu/iiif/2/701ac2a8-29eb-6011-5ebd-423eafbd9b03/full/843,/0/default.jpg",
+    "id": "aic-100269",
+    "title": "Composition with Machine in Motion",
+    "artist": "Ella Bergmann-Michel\nGerman, 1896-1971",
+    "source": "Art Institute of Chicago",
+    "page": "https://www.artic.edu/artworks/100269",
+    "probe": "diagonal composition"
+  },
+  {
+    "imageUrl": "https://www.artic.edu/iiif/2/bf53f56e-b25f-17af-4d5c-286b1fbd8757/full/843,/0/default.jpg",
+    "id": "aic-16435",
+    "title": "Two Nude Figures in Motion",
+    "artist": "Mary Frank\nAmerican, born England, 1933",
+    "source": "Art Institute of Chicago",
+    "page": "https://www.artic.edu/artworks/16435",
+    "probe": "diagonal composition"
+  }
+]

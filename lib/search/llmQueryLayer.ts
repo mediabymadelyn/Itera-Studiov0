@@ -63,11 +63,21 @@ function buildPrompt(query: string, candidates: CandidateSummary[], limit: numbe
 
   return (
     `A user searched an art-reference tool for: "${query}"\n\n` +
-    `Here are ${candidates.length} candidate results, already retrieved by keyword search:\n${listing}\n\n` +
-    `Select the ${limit} candidates most relevant to what the user is actually looking for, ` +
-    `ordered best match first. Consider subject matter, style, and any visual or mood ` +
-    `descriptors in the query that the listed metadata suggests. Reply with ONLY a JSON array ` +
-    `of the chosen index numbers, e.g. [3,0,7,1,5,2]. No other text.`
+    `Here are ${candidates.length} candidate results, already retrieved by keyword search. ` +
+    `The Metropolitan Museum of Art and the Art Institute of Chicago are historical fine-art ` +
+    `collections (paintings, sculpture, prints); Unsplash is modern photography:\n${listing}\n\n` +
+    `Work in two steps.\n\n` +
+    `Step 1: Go through EVERY candidate individually, including ones you might initially skim ` +
+    `past, and judge whether it is actually relevant to the query -- the specific subject, ` +
+    `pose, or visual quality the user described, not just a loose category match (e.g. "armor" ` +
+    `or "a person" is not automatically relevant just because the query mentions a body part or ` +
+    `activity). Do not stop at the first plausible candidate from a medium; check all of them.\n\n` +
+    `Step 2: From ONLY the candidates you judged genuinely relevant in step 1, choose the ` +
+    `${limit} best, ordered best match first. If genuinely relevant candidates exist in more ` +
+    `than one medium (fine art vs. photography), prefer keeping that mix rather than collapsing ` +
+    `to a single medium -- but never promote a candidate that didn't clear step 1 just to add ` +
+    `variety, and never omit a clearly strong match to make room for a weaker one.\n\n` +
+    `Reply with ONLY a JSON array of the chosen index numbers, e.g. [3,0,7,1,5,2]. No other text.`
   );
 }
 

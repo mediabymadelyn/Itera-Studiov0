@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     enableLlmRerankParam !== null ? enableLlmRerankParam === "true" : undefined;
 
   try {
-    const results = await searchAllArtworks(query, 6, {
+    const results = await searchAllArtworks(query, 12, {
       disableQueryTranslation,
       enableLlmRerank
     });

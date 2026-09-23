@@ -6,7 +6,7 @@ It does not generate images.
 It helps users find real, credited visual references from trusted museum and image APIs.
 
 ## v0 goal
-A user types a prompt and gets back real, credited image references.
+A user types a prompt and gets back credited image references.
 
 ## Initial sources
 - The Metropolitan Museum of Art API

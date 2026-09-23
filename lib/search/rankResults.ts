@@ -1,4 +1,3 @@
-import { SourceName } from "@/lib/search/routeQuery";
 import { ArtworkResult } from "@/lib/types/artwork";
 
 const STOP_WORDS = new Set([
@@ -18,22 +17,6 @@ const STOP_WORDS = new Set([
 const VAGUE_TITLE_PATTERN = /^(untitled|unknown|untitled photo|image)$/i;
 const VAGUE_ARTIST_PATTERN = /^(unknown|unknown artist|unknown photographer)$/i;
 
-function getSourceName(result: ArtworkResult): SourceName | null {
-  if (result.id.startsWith("met-") || result.source.includes("Metropolitan")) {
-    return "met";
-  }
-
-  if (result.id.startsWith("aic-") || result.source.includes("Art Institute")) {
-    return "aic";
-  }
-
-  if (result.id.startsWith("unsplash-") || result.source.includes("Unsplash")) {
-    return "unsplash";
-  }
-
-  return null;
-}
-
 function tokenizeQuery(query: string): string[] {
   return query
     .toLowerCase()
@@ -48,6 +31,14 @@ function countKeywordMatches(text: string, keywords: string[]): number {
   return keywords.reduce((count, keyword) => {
     return normalizedText.includes(keyword) ? count + 1 : count;
   }, 0);
+}
+
+function countKeywordMatchesInList(values: string[] | undefined, keywords: string[]): number {
+  if (!values || values.length === 0) {
+    return 0;
+  }
+
+  return countKeywordMatches(values.join(" "), keywords);
 }
 
 function computeMetadataCompletenessScore(result: ArtworkResult): number {
@@ -101,27 +92,6 @@ function computeVagueFieldPenalty(result: ArtworkResult): number {
   return penalty;
 }
 
-function computeSourcePriorityScore(
-  result: ArtworkResult,
-  sourcePriority: SourceName[]
-): number {
-  const source = getSourceName(result);
-
-  if (!source) {
-    return 0;
-  }
-
-  const index = sourcePriority.indexOf(source);
-
-  if (index === -1) {
-    return 0;
-  }
-
-  const base = sourcePriority.length - index;
-
-  return base * 0.12;
-}
-
 function isValidArtworkResult(result: ArtworkResult): boolean {
   return Boolean(
     result.id &&
@@ -135,7 +105,6 @@ function isValidArtworkResult(result: ArtworkResult): boolean {
 export function rankAndSelectResults(
   results: ArtworkResult[],
   query: string,
-  sourcePriority: SourceName[],
   limit: number
 ): ArtworkResult[] {
   const keywords = tokenizeQuery(query);
@@ -145,8 +114,19 @@ export function rankAndSelectResults(
     .map((result) => {
       const titleMatches = countKeywordMatches(result.title, keywords);
       const artistMatches = countKeywordMatches(result.artist, keywords);
-      const keywordScore = titleMatches * 0.22 + artistMatches * 0.12;
-      const sourceScore = computeSourcePriorityScore(result, sourcePriority);
+      // Descriptive-metadata fields (tags/subjectTitles/styleTitles/themeTitles/medium)
+      // only exist on museum-source results. Taking their best single match instead of
+      // summing all of them keeps a well-tagged museum piece from outscoring a good
+      // title match just for having more metadata fields to match against.
+      const secondaryMatches = Math.max(
+        countKeywordMatchesInList(result.tags, keywords),
+        countKeywordMatchesInList(result.subjectTitles, keywords),
+        countKeywordMatchesInList(result.styleTitles, keywords),
+        countKeywordMatchesInList(result.themeTitles, keywords),
+        countKeywordMatches(result.medium ?? "", keywords)
+      );
+      const keywordScore =
+        titleMatches * 0.22 + artistMatches * 0.12 + secondaryMatches * 0.12;
       const metadataScore = computeMetadataCompletenessScore(result);
       const imageScore = computeImageQualityScore(result);
       const vaguePenalty = computeVagueFieldPenalty(result);
@@ -155,7 +135,6 @@ export function rankAndSelectResults(
       const score =
         existingScore +
         keywordScore +
-        sourceScore +
         metadataScore +
         imageScore -
         vaguePenalty;

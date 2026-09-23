@@ -5,6 +5,10 @@ type MetSearchResponse = {
   objectIDs: number[] | null;
 };
 
+type MetTag = {
+  term?: string;
+};
+
 type MetObjectResponse = {
   objectID: number;
   title: string;
@@ -13,6 +17,11 @@ type MetObjectResponse = {
   primaryImageSmall: string;
   objectURL: string;
   isPublicDomain: boolean;
+  tags?: MetTag[] | null;
+  medium?: string;
+  classification?: string;
+  culture?: string;
+  objectDate?: string;
 };
 
 const MET_BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1";
@@ -39,7 +48,14 @@ function normalizeMetObject(
     thumbnailUrl: object.primaryImageSmall || imageUrl,
     licenseType: object.isPublicDomain ? "Public Domain" : "Unknown",
     sourceLink: "https://www.metmuseum.org",
-    score: Math.max(0, 1 - index * 0.01)
+    score: Math.max(0, 1 - index * 0.01),
+    tags: object.tags
+      ?.map((tag) => tag.term)
+      .filter((term): term is string => Boolean(term)),
+    medium: object.medium,
+    classification: object.classification,
+    culture: object.culture,
+    objectDate: object.objectDate
   };
 }
 

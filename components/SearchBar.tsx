@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
 import ResultCard from "@/components/ResultCard";
+import Lightbox from "@/components/Lightbox";
 
 type SearchResponse = {
   results?: ArtworkResult[];
@@ -24,9 +25,16 @@ export default function SearchBar() {
   const [typeFilter, setTypeFilter] = useState<ResultTypeFilter>("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [expandedResult, setExpandedResult] = useState<ArtworkResult | null>(null);
+  const [unavailableIds, setUnavailableIds] = useState<Set<string>>(new Set());
 
-  const sourceOptions = Array.from(new Set(results.map((result) => result.source)));
-  const filteredResults = results.filter((result) => {
+  const handleUnavailable = useCallback((resultId: string) => {
+    setUnavailableIds((prev) => (prev.has(resultId) ? prev : new Set(prev).add(resultId)));
+  }, []);
+
+  const availableResults = results.filter((result) => !unavailableIds.has(result.id));
+  const sourceOptions = Array.from(new Set(availableResults.map((result) => result.source)));
+  const filteredResults = availableResults.filter((result) => {
     const sourceMatches = sourceFilter === "all" || result.source === sourceFilter;
     const typeMatches = typeFilter === "all" || getResultType(result) === typeFilter;
 
@@ -60,6 +68,7 @@ export default function SearchBar() {
       setResults(data.results ?? []);
       setSourceFilter("all");
       setTypeFilter("all");
+      setUnavailableIds(new Set());
     } catch (err) {
       const message = err instanceof Error ? err.message : "Search failed.";
       setError(message);
@@ -131,7 +140,7 @@ export default function SearchBar() {
           </button>
 
           <span className="filters-count">
-            Showing {filteredResults.length} of {results.length}
+            Showing {filteredResults.length} of {availableResults.length}
           </span>
         </div>
       )}
@@ -140,16 +149,29 @@ export default function SearchBar() {
       {!error && !loading && results.length === 0 && (
         <p className="state-text">Search to view credited Met results.</p>
       )}
-      {!error && !loading && results.length > 0 && filteredResults.length === 0 && (
-        <p className="state-text">No results match the selected filters.</p>
+      {!error && !loading && results.length > 0 && availableResults.length === 0 && (
+        <p className="state-text">No images could be loaded for this search.</p>
       )}
+      {!error &&
+        !loading &&
+        availableResults.length > 0 &&
+        filteredResults.length === 0 && (
+          <p className="state-text">No results match the selected filters.</p>
+        )}
       {loading && <p className="state-text">Loading results...</p>}
 
       <div className="results-grid">
         {filteredResults.map((result) => (
-          <ResultCard key={result.id} result={result} />
+          <ResultCard
+            key={result.id}
+            result={result}
+            onExpand={setExpandedResult}
+            onUnavailable={handleUnavailable}
+          />
         ))}
       </div>
+
+      <Lightbox result={expandedResult} onClose={() => setExpandedResult(null)} />
     </section>
   );
 }

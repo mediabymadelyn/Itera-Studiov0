@@ -1,7 +1,12 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
 
 type ResultCardProps = {
   result: ArtworkResult;
+  onExpand: (result: ArtworkResult) => void;
+  onUnavailable: (resultId: string) => void;
 };
 
 function getTypeLabel(source: string): "Museum" | "Photography" {
@@ -16,18 +21,49 @@ function getCreatorLabel(source: string): "Artist" | "Photographer" {
     : "Artist";
 }
 
-export default function ResultCard({ result }: ResultCardProps) {
+export default function ResultCard({ result, onExpand, onUnavailable }: ResultCardProps) {
+  const [imgSrc, setImgSrc] = useState(result.imageUrl);
+  const [hasError, setHasError] = useState(false);
+
   const typeLabel = getTypeLabel(result.source);
   const creatorLabel = getCreatorLabel(result.source);
 
+  useEffect(() => {
+    if (hasError) {
+      onUnavailable(result.id);
+    }
+  }, [hasError, result.id, onUnavailable]);
+
+  function handleImageError() {
+    if (result.thumbnailUrl && imgSrc !== result.thumbnailUrl) {
+      setImgSrc(result.thumbnailUrl);
+      return;
+    }
+
+    setHasError(true);
+  }
+
+  if (hasError) {
+    return null;
+  }
+
   return (
     <article className="result-card">
-      <img
-        className="result-image"
-        src={result.imageUrl}
-        alt={result.title}
-        loading="lazy"
-      />
+      <button
+        type="button"
+        className="result-image-button"
+        onClick={() => onExpand(result)}
+        aria-label={`Expand image: ${result.title}`}
+      >
+        <img
+          className="result-image"
+          src={imgSrc}
+          alt={result.title}
+          loading="lazy"
+          onError={handleImageError}
+        />
+        <span className="result-image-expand-hint">Click to expand</span>
+      </button>
       <div className="result-content">
         <div className="result-badges">
           <span className="result-badge">{typeLabel}</span>

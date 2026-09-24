@@ -18,10 +18,30 @@ const LLM_QUERY_LAYER_API_URL = "https://router.huggingface.co/v1/chat/completio
 // letting previously-filtered irrelevant candidates back in. Splitting
 // them: selection alone is the smaller, well-tested prompt (fast,
 // reliable); categorization runs only over the already-selected dozen
-// results, a much simpler task. If categorization fails, results still
-// return -- they just render without a match-reason badge.
-const SELECTION_TIMEOUT_MS = 15000;
-const CATEGORY_TIMEOUT_MS = 15000;
+// results. If categorization fails, results still return -- they just
+// render without a match-reason badge.
+const SELECTION_TIMEOUT_MS = 18000;
+
+// Categorization is further split into small parallel batches rather than
+// one call for the whole selected set: a single call for ~12 items was an
+// all-or-nothing failure mode (one timeout meant zero labels for the whole
+// search). Smaller batches are individually faster and more reliable, run
+// concurrently (not sequentially, so this doesn't add latency), and a
+// failure only costs labels on that one batch's few items instead of
+// everything. Each batch also gets one cheap retry on failure -- cheap
+// specifically because the batch is small, unlike retrying the old
+// monolithic call would have been.
+const CATEGORY_BATCH_SIZE = 4;
+const CATEGORY_BATCH_TIMEOUT_MS = 12000;
+
+// Per-result-id cache so re-selecting the same result across searches (very
+// common when iterating on the same test queries) skips the model call
+// entirely and reuses its last real category. Best-effort, in-memory, not
+// persisted across server restarts -- a nice-to-have speed/reliability
+// boost, not something correctness depends on. Capped to avoid unbounded
+// growth in a long-running process.
+const MATCH_REASON_CACHE_MAX_SIZE = 500;
+const matchReasonCache = new Map<string, string>();
 
 // Closed vocabulary for per-card match-reason badges (and, later, the
 // "Based on your search" query-level tags -- same taxonomy, shared across
@@ -48,7 +68,12 @@ function normalizeMatchReason(raw: string | undefined): string | undefined {
 
   const normalized = raw.trim().toLowerCase().replace(/[.!]+$/, "");
 
-  return MATCH_REASON_CATEGORIES.find((category) => category === normalized);
+  // Compare case-insensitively but return the canonical (as-declared) casing
+  // from the list, so MATCH_REASON_CATEGORIES' own casing always wins
+  // regardless of how the model capitalizes its output.
+  return MATCH_REASON_CATEGORIES.find(
+    (category) => category.toLowerCase() === normalized
+  );
 }
 
 function apiKey(): string {
@@ -117,10 +142,10 @@ function buildSelectionPrompt(
     `or "a person" is not automatically relevant just because the query mentions a body part or ` +
     `activity). Do not stop at the first plausible candidate from a medium; check all of them.\n\n` +
     `Step 2: From ONLY the candidates you judged genuinely relevant in step 1, choose the ` +
-    `${limit} best, ordered best match first. If genuinely relevant candidates exist in more ` +
-    `than one medium (fine art vs. photography), prefer keeping that mix rather than collapsing ` +
-    `to a single medium -- but never promote a candidate that didn't clear step 1 just to add ` +
-    `variety, and never omit a clearly strong match to make room for a weaker one.\n\n` +
+    `${limit} best, ordered best match first. As a tiebreaker only -- never to include an ` +
+    `irrelevant candidate or drop a clearly stronger one -- prefer variety: a mix of medium ` +
+    `(fine art and photography) and a mix of what makes each pick useful (pose, lighting, ` +
+    `color, style, composition, etc.) over several picks that are redundant with each other.\n\n` +
     `Reply with ONLY a JSON array of the chosen index numbers, ordered best first, e.g. ` +
     `[3,0,7,1,5,2]. No other text.`
   );
@@ -149,7 +174,7 @@ function buildCategoryPrompt(query: string, candidates: CandidateSummary[]): str
     `only give them the same category if they are genuinely strongest on the exact same ` +
     `dimension.\n\n` +
     `Reply with ONLY a JSON array of objects, e.g. ` +
-    `[{"index":3,"reason":"pose/gesture"},{"index":0,"reason":"lighting"}]. No other text.`
+    `[{"index":3,"reason":"Pose/Gesture"},{"index":0,"reason":"Lighting"}]. No other text.`
   );
 }
 
@@ -239,34 +264,94 @@ async function callModel(prompt: string, maxTokens: number, timeoutMs: number): 
   }
 }
 
+type BatchItem = { globalIndex: number; result: ArtworkResult };
+
+/**
+ * Categorizes one small batch of already-selected results, retrying once
+ * on failure (cheap here specifically because the batch is small). Never
+ * throws -- resolves to an empty map if both attempts fail, so a bad batch
+ * only costs labels on its own few items.
+ */
+async function categorizeBatch(
+  batch: BatchItem[],
+  query: string
+): Promise<Map<number, string>> {
+  const localSummaries = batch.map((item, localIndex) =>
+    summarizeCandidate(item.result, localIndex)
+  );
+  const prompt = buildCategoryPrompt(query, localSummaries);
+
+  async function attempt(): Promise<Map<number, string> | null> {
+    const content = await callModel(prompt, 120, CATEGORY_BATCH_TIMEOUT_MS);
+    if (!content) return null;
+
+    const picks = parseCategoryPicks(content, batch.length - 1);
+    if (!picks) return null;
+
+    const result = new Map<number, string>();
+    for (const pick of picks) {
+      const normalized = normalizeMatchReason(pick.reason);
+      const globalIndex = batch[pick.index]?.globalIndex;
+      if (normalized && globalIndex !== undefined) {
+        result.set(globalIndex, normalized);
+      }
+    }
+    return result;
+  }
+
+  return (await attempt()) ?? (await attempt()) ?? new Map();
+}
+
 /**
  * Labels an already-selected result set with match-reason categories.
- * Best-effort: on any failure (timeout, bad response, unparseable JSON),
- * returns the input unchanged -- a labeling failure should never take the
- * actual results down with it.
+ * Cache hits (same result id labeled in a prior search) skip the model
+ * entirely. Remaining results are split into small batches, categorized in
+ * parallel (not sequentially -- doesn't add latency), each with one retry
+ * on failure. Best-effort throughout: any result that never gets a label
+ * (cache miss + both attempts on its batch failing) simply renders without
+ * one -- a labeling gap never takes the actual results down with it.
  */
 async function attachMatchReasons(
   selected: ArtworkResult[],
   query: string
 ): Promise<ArtworkResult[]> {
-  const summaries = selected.map((result, index) => summarizeCandidate(result, index));
-  const prompt = buildCategoryPrompt(query, summaries);
-
-  const content = await callModel(prompt, 250, CATEGORY_TIMEOUT_MS);
-  if (!content) return selected;
-
-  const picks = parseCategoryPicks(content, selected.length - 1);
-  if (!picks) return selected;
-
   const reasonByIndex = new Map<number, string>();
-  for (const pick of picks) {
-    const normalized = normalizeMatchReason(pick.reason);
-    if (normalized) reasonByIndex.set(pick.index, normalized);
+  const uncached: BatchItem[] = [];
+
+  selected.forEach((result, index) => {
+    const cached = matchReasonCache.get(result.id);
+    if (cached) {
+      reasonByIndex.set(index, cached);
+    } else {
+      uncached.push({ globalIndex: index, result });
+    }
+  });
+
+  const batches: BatchItem[][] = [];
+  for (let i = 0; i < uncached.length; i += CATEGORY_BATCH_SIZE) {
+    batches.push(uncached.slice(i, i + CATEGORY_BATCH_SIZE));
+  }
+
+  const batchResults = await Promise.all(
+    batches.map((batch) => categorizeBatch(batch, query))
+  );
+
+  for (const batchMap of batchResults) {
+    for (const [globalIndex, reason] of batchMap) {
+      reasonByIndex.set(globalIndex, reason);
+    }
+  }
+
+  if (matchReasonCache.size >= MATCH_REASON_CACHE_MAX_SIZE) {
+    matchReasonCache.clear();
   }
 
   return selected.map((result, index) => {
     const matchReason = reasonByIndex.get(index);
-    return matchReason ? { ...result, matchReason } : result;
+    if (!matchReason) return result;
+
+    matchReasonCache.set(result.id, matchReason);
+    return { ...result, matchReason };
   });
 }
 
@@ -303,5 +388,13 @@ export async function selectWithLlmRerank(
 
   if (selected.length === 0) return null;
 
-  return attachMatchReasons(selected, query);
+  const withReasons = await attachMatchReasons(selected, query);
+
+  // The selection prompt already asks for results ordered best-match-first,
+  // so index 0 of the final list *is* the model's top pick -- no separate
+  // judgment call needed, just surfacing a ranking signal that already
+  // existed. Applied after attachMatchReasons so it survives that step.
+  return withReasons.map((result, index) =>
+    index === 0 ? { ...result, isTopPick: true } : result
+  );
 }

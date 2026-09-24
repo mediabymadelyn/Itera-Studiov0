@@ -36,4 +36,9 @@ export type ArtworkResult = {
   // source for this label on the plain keyword/mechanical selection path,
   // so it's simply absent there.
   matchReason?: string;
+  // True on the single result the LLM rerank layer ranked first (its own
+  // "ordered best match first" output) -- reuses the existing ranking
+  // rather than a separate judgment call, so it's only ever set on the
+  // LLM rerank path, same as matchReason.
+  isTopPick?: boolean;
 };

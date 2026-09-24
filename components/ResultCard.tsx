@@ -62,6 +62,9 @@ export default function ResultCard({ result, onExpand, onUnavailable }: ResultCa
           loading="lazy"
           onError={handleImageError}
         />
+        {result.isTopPick && (
+          <span className="result-top-pick">Top Pick</span>
+        )}
         {result.matchReason && (
           <span className="result-match-reason">{result.matchReason}</span>
         )}

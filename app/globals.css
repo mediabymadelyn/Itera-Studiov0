@@ -238,6 +238,19 @@ p {
   border-radius: 999px;
 }
 
+.result-top-pick {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #3a2600;
+  background: rgba(255, 193, 61, 0.92);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
 .result-image-button:hover .result-image-expand-hint,
 .result-image-button:focus-visible .result-image-expand-hint {
   opacity: 1;

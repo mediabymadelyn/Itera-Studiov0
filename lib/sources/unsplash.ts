@@ -25,6 +25,25 @@ type UnsplashPhoto = {
 
 const UNSPLASH_SEARCH_URL = "https://api.unsplash.com/search/photos";
 
+// `description` is free text the uploader wrote themselves and can be a
+// promotional blurb (brand name, "mockup", a URL) rather than a real
+// description -- `alt_description` is Unsplash's own literal, accessibility
+// -focused text and is far more consistently clean, so it's tried first.
+// Even so, skip any candidate that still looks like an ad.
+function looksPromotional(text: string): boolean {
+  return /https?:\/\/|www\.[a-z]/i.test(text);
+}
+
+function pickUnsplashTitle(photo: UnsplashPhoto): string {
+  const candidates = [photo.alt_description, photo.description].filter(
+    (text): text is string => Boolean(text && text.trim())
+  );
+
+  const clean = candidates.find((text) => !looksPromotional(text));
+
+  return clean || "Untitled photo";
+}
+
 function normalizeUnsplashPhoto(
   photo: UnsplashPhoto,
   index: number
@@ -38,7 +57,7 @@ function normalizeUnsplashPhoto(
 
   return {
     id: `unsplash-${photo.id}`,
-    title: photo.description || photo.alt_description || "Untitled photo",
+    title: pickUnsplashTitle(photo),
     artist: photo.user.name || "Unknown photographer",
     source: "Unsplash",
     imageUrl,

@@ -17,10 +17,11 @@ import { ArtworkResult } from "@/lib/types/artwork";
 const AIC_BRANCH_TIMEOUT_MS = 2500;
 
 // How many top-ranked candidates the LLM rerank layer gets to choose from --
-// capped for latency/cost, not the full pool. Kept at ~2x the final result
-// count so the LLM has real room to filter out weak candidates instead of
-// being forced to include most of what it's given.
-const LLM_RERANK_CANDIDATE_POOL_SIZE = 24;
+// capped for latency/cost, not the full pool. Generating a reason per pick
+// (not just an index) is slow enough over a large pool that 24 candidates
+// pushed response time past 20s with real variance; 18 is a compromise
+// between real filtering headroom and reliable response time.
+const LLM_RERANK_CANDIDATE_POOL_SIZE = 18;
 
 function withTimeout<T>(
   promise: Promise<T>,

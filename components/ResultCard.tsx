@@ -62,13 +62,19 @@ export default function ResultCard({ result, onExpand, onUnavailable }: ResultCa
           loading="lazy"
           onError={handleImageError}
         />
+        {result.matchReason && (
+          <span className="result-match-reason">{result.matchReason}</span>
+        )}
         <span className="result-image-expand-hint">Click to expand</span>
       </button>
       <div className="result-content">
         <div className="result-badges">
           <span className="result-badge">{typeLabel}</span>
         </div>
-        <div className="result-title">{result.title}</div>
+        <div className="result-meta">
+          <span className="result-meta-label">Title</span>
+          <span className="result-title-value">{result.title}</span>
+        </div>
         <div className="result-meta">
           <span className="result-meta-label">{creatorLabel}</span>
           <span>{result.artist}</span>

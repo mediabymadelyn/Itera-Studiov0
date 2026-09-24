@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 export const metadata: Metadata = {
   title: "Itera Studio",
-  description: "Search real, credited art references."
+  description: "Find real references from real artists."
 };
 
 export default function RootLayout({

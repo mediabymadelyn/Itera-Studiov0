@@ -30,4 +30,10 @@ export type ArtworkResult = {
   classification?: string;
   culture?: string;
   objectDate?: string;
+  // Short, human-readable reason this result matched the query (e.g. "pose
+  // reference", "lighting reference"). Only set by the LLM rerank layer,
+  // which is judging per-candidate relevance anyway -- there's no honest
+  // source for this label on the plain keyword/mechanical selection path,
+  // so it's simply absent there.
+  matchReason?: string;
 };

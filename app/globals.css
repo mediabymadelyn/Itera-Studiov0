@@ -169,10 +169,8 @@ p {
   border-radius: 999px;
 }
 
-.result-title {
-  font-size: 1rem;
+.result-title-value {
   font-weight: 600;
-  line-height: 1.25;
 }
 
 .result-meta {
@@ -226,6 +224,18 @@ p {
   border-radius: 999px;
   opacity: 0;
   transition: opacity 0.15s ease;
+}
+
+.result-match-reason {
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #f3ebfb;
+  background: rgba(120, 30, 168, 0.82);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
 }
 
 .result-image-button:hover .result-image-expand-hint,

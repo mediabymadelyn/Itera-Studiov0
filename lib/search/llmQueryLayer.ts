@@ -1,26 +1,31 @@
 import { ArtworkResult } from "@/lib/types/artwork";
+import { selectWithSourceDiversity } from "@/lib/search/selectDiverseResults";
 
 // Retrieval stays plain keyword search (see aic.ts/met.ts/unsplash.ts) --
 // this is the actual LLM query-translation arm: given the user's original
 // query text and the candidate pool keyword search already retrieved, an
 // LLM picks and orders which candidates actually get shown. It never
-// touches retrieval itself, only the final selection step. Reuses the same
-// hosted-model setup as the (separate) image-tagging feature in
-// visualTags.ts, but this call only ever sees text -- title/artist/tags --
-// never images, to keep it fast over a dozen-plus candidates.
+// touches retrieval itself. Reuses the same hosted-model setup as the
+// (separate) image-tagging feature in visualTags.ts, but this call only
+// ever sees text -- title/artist/tags -- never images.
 const LLM_QUERY_LAYER_API_URL = "https://router.huggingface.co/v1/chat/completions";
 
-// Selection and categorization are two separate calls, not one combined
-// prompt. A single call asked to both judge relevance over ~18 candidates
-// AND assign a category to each pick was slow and unreliable (measured
-// 17-20s+ response times, ~2/3 timing out at a 20s budget) -- and worse,
-// the added task appeared to weaken the relevance judgment itself,
-// letting previously-filtered irrelevant candidates back in. Splitting
-// them: selection alone is the smaller, well-tested prompt (fast,
-// reliable); categorization runs only over the already-selected dozen
-// results. If categorization fails, results still return -- they just
-// render without a match-reason badge.
-const SELECTION_TIMEOUT_MS = 18000;
+// Selection is a relevance FILTER, not a ranker -- the LLM judges each
+// candidate independently (relevant or not), then the already-tested
+// selectWithSourceDiversity() deterministically picks and orders the final
+// set from whatever it approved. This split matters: the original design
+// asked one call to both judge relevance across the whole pool AND rank/
+// diversify the chosen ones, which was slow and got less reliable as the
+// pool grew (measured 17-20s+ at just 18 candidates). A pure per-candidate
+// relevance judgment is a much simpler task, so it's safe to split across
+// small parallel chunks the same way categorization already was -- each
+// chunk only has to say yes/no about its own few candidates, never compare
+// across chunks, so there's no cross-chunk ranking to get wrong. A chunk
+// that fails (after one retry) just contributes zero candidates rather than
+// guessing -- consistent with never including something the LLM didn't
+// actually vet.
+const SELECTION_CHUNK_SIZE = 10;
+const SELECTION_CHUNK_TIMEOUT_MS = 15000;
 
 // Categorization is further split into small parallel batches rather than
 // one call for the whole selected set: a single call for ~12 items was an
@@ -118,11 +123,7 @@ function summarizeCandidate(result: ArtworkResult, index: number): CandidateSumm
   };
 }
 
-function buildSelectionPrompt(
-  query: string,
-  candidates: CandidateSummary[],
-  limit: number
-): string {
+function buildRelevancePrompt(query: string, candidates: CandidateSummary[]): string {
   const listing = candidates
     .map(
       (c) =>
@@ -135,19 +136,13 @@ function buildSelectionPrompt(
     `Here are ${candidates.length} candidate results, already retrieved by keyword search. ` +
     `The Metropolitan Museum of Art and the Art Institute of Chicago are historical fine-art ` +
     `collections (paintings, sculpture, prints); Unsplash is modern photography:\n${listing}\n\n` +
-    `Work in two steps.\n\n` +
-    `Step 1: Go through EVERY candidate individually, including ones you might initially skim ` +
-    `past, and judge whether it is actually relevant to the query -- the specific subject, ` +
-    `pose, or visual quality the user described, not just a loose category match (e.g. "armor" ` +
-    `or "a person" is not automatically relevant just because the query mentions a body part or ` +
-    `activity). Do not stop at the first plausible candidate from a medium; check all of them.\n\n` +
-    `Step 2: From ONLY the candidates you judged genuinely relevant in step 1, choose the ` +
-    `${limit} best, ordered best match first. As a tiebreaker only -- never to include an ` +
-    `irrelevant candidate or drop a clearly stronger one -- prefer variety: a mix of medium ` +
-    `(fine art and photography) and a mix of what makes each pick useful (pose, lighting, ` +
-    `color, style, composition, etc.) over several picks that are redundant with each other.\n\n` +
-    `Reply with ONLY a JSON array of the chosen index numbers, ordered best first, e.g. ` +
-    `[3,0,7,1,5,2]. No other text.`
+    `Go through EVERY candidate individually, including ones you might initially skim past, ` +
+    `and judge whether it is actually relevant to the query -- the specific subject, pose, or ` +
+    `visual quality the user described, not just a loose category match (e.g. "armor" or "a ` +
+    `person" is not automatically relevant just because the query mentions a body part or ` +
+    `activity). Do not stop at the first plausible candidate; check all of them independently.\n\n` +
+    `Reply with ONLY a JSON array of the index numbers you judged genuinely relevant, in any ` +
+    `order, e.g. [2,0,5]. If none of them are relevant, reply with []. No other text.`
   );
 }
 
@@ -196,15 +191,17 @@ function extractJsonArray(raw: string): unknown[] | null {
   }
 }
 
-function parseIndices(raw: string, maxIndex: number): number[] | null {
+// null means "couldn't parse a response at all" (worth retrying); a
+// resolved [] is a legitimate answer ("none of this chunk was relevant")
+// and must NOT be treated the same as a failure, or a chunk that correctly
+// found nothing relevant would be retried pointlessly every time.
+function parseRelevantIndices(raw: string, maxIndex: number): number[] | null {
   const parsed = extractJsonArray(raw);
   if (!parsed) return null;
 
-  const indices = parsed
+  return parsed
     .map((v) => Number(v))
     .filter((n) => Number.isInteger(n) && n >= 0 && n <= maxIndex);
-
-  return indices.length > 0 ? indices : null;
 }
 
 type CategoryPick = { index: number; reason?: string };
@@ -355,13 +352,77 @@ async function attachMatchReasons(
   });
 }
 
+function shuffled<T>(items: T[]): T[] {
+  const copy = [...items];
+
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  return copy;
+}
+
 /**
- * Final relevance layer: an LLM looks at the original query together with
- * the already-retrieved candidate pool and selects + orders which ones
- * actually get shown, then (separately, best-effort) labels each with a
- * match-reason category. Returns null only if selection itself fails
- * (missing key, network error, timeout, unparseable response), so callers
- * fall back to the existing mechanical selection -- never breaks search.
+ * Filters one small chunk for relevance using two independent reads, run
+ * IN PARALLEL (not sequentially -- costs no extra wall-clock time over a
+ * single call, since both finish around the same time). Returns the union
+ * of whatever either read approved, rather than picking one read over the
+ * other: item-level judgment has real variance -- a specific candidate
+ * approved in one read and missed in the other isn't rare, even when the
+ * overall approval *rate* looks reasonable in both. The two reads use
+ * different orderings of the same chunk, not identical prompts -- testing
+ * showed a model response for a given prompt is close enough to
+ * deterministic that two reads of the exact same prompt tended to repeat
+ * the exact same mistake rather than acting as genuinely independent
+ * looks. Shuffling breaks that without changing what's actually being
+ * judged. Never throws -- resolves to [] if both reads fail to even
+ * parse, so a bad chunk only costs its own few candidates rather than the
+ * whole search.
+ */
+async function relevanceFilterChunk(
+  chunk: BatchItem[],
+  query: string
+): Promise<ArtworkResult[]> {
+  async function attempt(orderedChunk: BatchItem[]): Promise<ArtworkResult[] | null> {
+    const localSummaries = orderedChunk.map((item, localIndex) =>
+      summarizeCandidate(item.result, localIndex)
+    );
+    const prompt = buildRelevancePrompt(query, localSummaries);
+
+    const content = await callModel(prompt, 150, SELECTION_CHUNK_TIMEOUT_MS);
+    if (!content) return null;
+
+    const indices = parseRelevantIndices(content, orderedChunk.length - 1);
+    if (indices === null) return null;
+
+    return indices
+      .map((localIndex) => orderedChunk[localIndex]?.result)
+      .filter((result): result is ArtworkResult => Boolean(result));
+  }
+
+  const [readA, readB] = await Promise.all([attempt(chunk), attempt(shuffled(chunk))]);
+
+  const approved = new Map<string, ArtworkResult>();
+  for (const result of [...(readA ?? []), ...(readB ?? [])]) {
+    approved.set(result.id, result);
+  }
+
+  return Array.from(approved.values());
+}
+
+/**
+ * Final relevance layer: the candidate pool is split into small chunks,
+ * each independently judged for relevance in parallel (never ranked
+ * against each other -- see the SELECTION_CHUNK_SIZE comment above for
+ * why). The union of everything approved is then handed to
+ * selectWithSourceDiversity() -- the same deterministic, already-tested
+ * function the plain keyword path uses -- to pick and order the final
+ * set with a source/medium mix. Each result that makes the cut is then
+ * (separately, best-effort) labeled with a match-reason category. Returns
+ * null only if nothing survives relevance filtering at all (missing key,
+ * total failure, or a genuinely empty pool), so callers fall back to the
+ * existing mechanical selection -- never breaks search.
  */
 export async function selectWithLlmRerank(
   candidates: ArtworkResult[],
@@ -372,28 +433,32 @@ export async function selectWithLlmRerank(
     return null;
   }
 
-  const summaries = candidates.map((candidate, index) => summarizeCandidate(candidate, index));
-  const selectionPrompt = buildSelectionPrompt(query, summaries, limit);
+  const items: BatchItem[] = candidates.map((result, globalIndex) => ({
+    globalIndex,
+    result
+  }));
 
-  const content = await callModel(selectionPrompt, 150, SELECTION_TIMEOUT_MS);
-  if (!content) return null;
+  const chunks: BatchItem[][] = [];
+  for (let i = 0; i < items.length; i += SELECTION_CHUNK_SIZE) {
+    chunks.push(items.slice(i, i + SELECTION_CHUNK_SIZE));
+  }
 
-  const indices = parseIndices(content, candidates.length - 1);
-  if (!indices) return null;
+  const chunkResults = await Promise.all(
+    chunks.map((chunk) => relevanceFilterChunk(chunk, query))
+  );
 
-  const selected = indices
-    .map((index) => candidates[index])
-    .filter((result): result is ArtworkResult => Boolean(result))
-    .slice(0, limit);
+  const relevant = chunkResults.flat().sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+  if (relevant.length === 0) return null;
 
-  if (selected.length === 0) return null;
+  const assembled = selectWithSourceDiversity(relevant, limit);
+  if (assembled.length === 0) return null;
 
-  const withReasons = await attachMatchReasons(selected, query);
+  const withReasons = await attachMatchReasons(assembled, query);
 
-  // The selection prompt already asks for results ordered best-match-first,
-  // so index 0 of the final list *is* the model's top pick -- no separate
-  // judgment call needed, just surfacing a ranking signal that already
-  // existed. Applied after attachMatchReasons so it survives that step.
+  // selectWithSourceDiversity already orders its output by score, so
+  // index 0 is the highest-scoring result among everything the LLM
+  // actually approved -- applied after attachMatchReasons so it survives
+  // that step.
   return withReasons.map((result, index) =>
     index === 0 ? { ...result, isTopPick: true } : result
   );

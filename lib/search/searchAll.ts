@@ -16,12 +16,15 @@ import { ArtworkResult } from "@/lib/types/artwork";
 // resolve independently via Promise.allSettled below.
 const AIC_BRANCH_TIMEOUT_MS = 2500;
 
-// How many top-ranked candidates the LLM rerank layer gets to choose from --
-// capped for latency/cost, not the full pool. Generating a reason per pick
-// (not just an index) is slow enough over a large pool that 24 candidates
-// pushed response time past 20s with real variance; 18 is a compromise
-// between real filtering headroom and reliable response time.
-const LLM_RERANK_CANDIDATE_POOL_SIZE = 18;
+// How many top-ranked candidates the LLM rerank layer gets to choose from.
+// Used to be capped at 18 because a single monolithic selection call got
+// slower and less reliable as the pool grew. Now that selection is split
+// into small parallel relevance-only chunks (see llmQueryLayer.ts), that
+// constraint doesn't apply the same way -- 28 lines up with each source's
+// own raw-fetch ceiling (18 each, so 3 sources can realistically supply
+// this many after dedupe) and gives real headroom for an 18-result final
+// list with genuine variety, not just padding.
+const LLM_RERANK_CANDIDATE_POOL_SIZE = 28;
 
 function withTimeout<T>(
   promise: Promise<T>,

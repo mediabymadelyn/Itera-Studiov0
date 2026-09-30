@@ -27,6 +27,12 @@ export default function SearchBar() {
   const [error, setError] = useState<string | null>(null);
   const [expandedResult, setExpandedResult] = useState<ArtworkResult | null>(null);
   const [unavailableIds, setUnavailableIds] = useState<Set<string>>(new Set());
+  // "all" means no match-reason filter applied. Options are derived purely
+  // from matchReason values already present on this search's results (set
+  // by the LLM rerank layer's categorization step) -- no extra API call,
+  // no extra latency. Absent entirely on the plain keyword path, since
+  // there's nothing to derive it from there.
+  const [reasonFilter, setReasonFilter] = useState("all");
 
   const handleUnavailable = useCallback((resultId: string) => {
     setUnavailableIds((prev) => (prev.has(resultId) ? prev : new Set(prev).add(resultId)));
@@ -34,11 +40,19 @@ export default function SearchBar() {
 
   const availableResults = results.filter((result) => !unavailableIds.has(result.id));
   const sourceOptions = Array.from(new Set(availableResults.map((result) => result.source)));
+  const reasonOptions = Array.from(
+    new Set(
+      availableResults
+        .map((result) => result.matchReason)
+        .filter((reason): reason is string => Boolean(reason))
+    )
+  );
   const filteredResults = availableResults.filter((result) => {
     const sourceMatches = sourceFilter === "all" || result.source === sourceFilter;
     const typeMatches = typeFilter === "all" || getResultType(result) === typeFilter;
+    const reasonMatches = reasonFilter === "all" || result.matchReason === reasonFilter;
 
-    return sourceMatches && typeMatches;
+    return sourceMatches && typeMatches && reasonMatches;
   });
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -68,6 +82,7 @@ export default function SearchBar() {
       setResults(data.results ?? []);
       setSourceFilter("all");
       setTypeFilter("all");
+      setReasonFilter("all");
       setUnavailableIds(new Set());
     } catch (err) {
       const message = err instanceof Error ? err.message : "Search failed.";
@@ -93,6 +108,29 @@ export default function SearchBar() {
           {loading ? "Searching..." : "Search"}
         </button>
       </form>
+
+      {reasonOptions.length > 0 && (
+        <div className="reason-filter-row">
+          <span className="reason-filter-label">Based on your search:</span>
+          {reasonOptions.map((reason) => (
+            <button
+              key={reason}
+              type="button"
+              className={
+                reasonFilter === reason
+                  ? "reason-pill reason-pill-active"
+                  : "reason-pill"
+              }
+              onClick={() =>
+                setReasonFilter((current) => (current === reason ? "all" : reason))
+              }
+              aria-pressed={reasonFilter === reason}
+            >
+              {reason}
+            </button>
+          ))}
+        </div>
+      )}
 
       {results.length > 0 && (
         <div className="filters-row">
@@ -133,8 +171,11 @@ export default function SearchBar() {
             onClick={() => {
               setSourceFilter("all");
               setTypeFilter("all");
+              setReasonFilter("all");
             }}
-            disabled={sourceFilter === "all" && typeFilter === "all"}
+            disabled={
+              sourceFilter === "all" && typeFilter === "all" && reasonFilter === "all"
+            }
           >
             Reset
           </button>

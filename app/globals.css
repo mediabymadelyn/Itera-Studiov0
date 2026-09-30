@@ -77,6 +77,42 @@ p {
   cursor: not-allowed;
 }
 
+.reason-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+}
+
+.reason-filter-label {
+  font-size: 0.85rem;
+  color: #555;
+  margin-right: 0.15rem;
+}
+
+.reason-pill {
+  border: 1px solid rgba(120, 30, 168, 0.45);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  background: rgba(120, 30, 168, 0.08);
+  color: #5a1178;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.reason-pill:hover {
+  background: rgba(120, 30, 168, 0.18);
+}
+
+.reason-pill-active {
+  background: rgba(120, 30, 168, 0.82);
+  border-color: rgba(120, 30, 168, 0.82);
+  color: #f3ebfb;
+}
+
 .filters-row {
   display: flex;
   flex-wrap: wrap;

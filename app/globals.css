@@ -57,9 +57,14 @@ body::before {
     transparent 100%
   );
   filter: blur(60px);
+  transition: filter 0.4s ease;
   pointer-events: none;
   z-index: 0;
   animation: ambient-glow-pulse 9s ease-in-out infinite alternate;
+}
+
+body:has(.search-input:focus)::before {
+  filter: blur(60px) brightness(1.7) saturate(2.4);
 }
 
 @keyframes ambient-glow-pulse {
@@ -105,6 +110,7 @@ main {
   font-weight: 800;
   font-size: 1.15rem;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .navbar-links {
@@ -117,15 +123,48 @@ main {
 }
 
 .navbar-link {
+  position: relative;
   color: var(--color-text-secondary);
   text-decoration: none;
   cursor: default;
+  padding-bottom: 0.4rem;
+  transition: color 0.2s ease;
 }
 
+.navbar-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--color-hero-gradient-start) 0%,
+    var(--color-hero-gradient-mid) 50%,
+    var(--color-hero-gradient-end) 100%
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.navbar-link:hover,
 .navbar-link-active {
   color: var(--color-text-primary);
-  padding-bottom: 0.4rem;
-  border-bottom: 2px solid var(--color-accent-indigo);
+}
+
+.navbar-link:hover::after,
+.navbar-link-active::after {
+  transform: scaleX(1);
+}
+
+.navbar-links:hover .navbar-link-active::after {
+  transform: scaleX(0);
+}
+
+.navbar-links .navbar-link-active:hover::after {
+  transform: scaleX(1);
 }
 
 /* Hero */
@@ -212,9 +251,6 @@ main {
 
 .search-input:focus {
   outline: none;
-  background: #47445a;
-  border-color: rgba(193, 162, 251, 0.6);
-  box-shadow: 0 0 0 4px rgba(161, 98, 210, 0.18);
 }
 
 .search-input::placeholder {
@@ -542,4 +578,123 @@ main {
   color: var(--color-text-secondary);
   font-size: 0.9rem;
   margin-bottom: 0.35rem;
+}
+
+/* How it works */
+
+.how-page {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+  display: grid;
+  gap: 2.5rem;
+  justify-items: center;
+}
+
+.how-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2rem;
+  width: 100%;
+}
+
+.how-step {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.how-step-badge {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+}
+
+.how-step-icon {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #e3c6f5;
+  border: 1px solid rgba(225, 195, 245, 0.35);
+  background: rgba(120, 30, 168, 0.22);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.how-step-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.how-step-label {
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.how-step:not(:last-child) .how-step-badge::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.4rem);
+  height: calc(2rem - 0.8rem);
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--color-text-muted);
+}
+
+.how-step-badge {
+  position: relative;
+}
+
+.how-page-title {
+  color: #e1ccf1;
+}
+
+.how-step-title {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
+  color: var(--color-text-primary);
+}
+
+.how-callout-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.how-step-text {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.how-callout {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(225, 195, 245, 0.35);
+  background: rgba(120, 30, 168, 0.22);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 16px rgba(0, 0, 0, 0.4);
 }

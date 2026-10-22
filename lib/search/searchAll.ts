@@ -93,6 +93,14 @@ export async function searchAllArtworks(
     routedSources.map((source) => runSourceSearch(source))
   );
 
+  // A failed source is dropped so the others still return, but log it --
+  // otherwise a broken upstream API just silently disappears from results.
+  settledResults.forEach((result, index) => {
+    if (result.status === "rejected") {
+      console.warn(`[search] ${routedSources[index]} source failed:`, result.reason);
+    }
+  });
+
   const combined = settledResults.flatMap((result) =>
     result.status === "fulfilled" ? result.value : []
   );

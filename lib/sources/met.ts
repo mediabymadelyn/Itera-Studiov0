@@ -25,6 +25,10 @@ type MetObjectResponse = {
 };
 
 const MET_BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1";
+// The Met retired v1/search on 2026-10-01 (it now returns 410 Gone). v1.1 is
+// the paginated replacement; object lookups still live under v1.
+const MET_SEARCH_URL = "https://collectionapi.metmuseum.org/public/collection/v1.1/search";
+const MET_SEARCH_LIMIT = 18;
 
 function normalizeMetObject(
   object: MetObjectResponse,
@@ -63,7 +67,7 @@ export async function searchMetArtworks(
   query: string,
   limit = 6
 ): Promise<ArtworkResult[]> {
-  const searchUrl = `${MET_BASE_URL}/search?hasImages=true&q=${encodeURIComponent(
+  const searchUrl = `${MET_SEARCH_URL}?hasImages=true&limit=${MET_SEARCH_LIMIT}&q=${encodeURIComponent(
     query
   )}`;
 
@@ -72,11 +76,11 @@ export async function searchMetArtworks(
   });
 
   if (!searchResponse.ok) {
-    throw new Error("Failed to search the Met API.");
+    throw new Error(`Failed to search the Met API (HTTP ${searchResponse.status}).`);
   }
 
   const searchData = (await searchResponse.json()) as MetSearchResponse;
-  const objectIds = (searchData.objectIDs ?? []).slice(0, 18);
+  const objectIds = (searchData.objectIDs ?? []).slice(0, MET_SEARCH_LIMIT);
 
   if (objectIds.length === 0) {
     return [];

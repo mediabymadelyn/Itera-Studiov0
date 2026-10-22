@@ -20,6 +20,10 @@ type AicSearchItem = {
 };
 
 const AIC_SEARCH_URL = "https://api.artic.edu/api/v1/artworks/search";
+// AIC's Cloudflare returns 403 for Node's default `User-Agent: node`, so
+// identify the client explicitly. AIC's docs ask for AIC-User-Agent; see
+// https://api.artic.edu/docs/#authentication
+const USER_AGENT = "IteraStudioArtSearch/1.0";
 
 function normalizeAicItem(
   item: AicSearchItem,
@@ -77,12 +81,16 @@ export async function searchAicArtworks(
   });
 
   const response = await fetch(`${AIC_SEARCH_URL}?${searchParams.toString()}`, {
+    headers: {
+      "AIC-User-Agent": USER_AGENT,
+      "User-Agent": USER_AGENT
+    },
     signal,
     next: { revalidate: 300 }
   });
 
   if (!response.ok) {
-    throw new Error("Failed to search the AIC API.");
+    throw new Error(`Failed to search the AIC API (HTTP ${response.status}).`);
   }
 
   const data = (await response.json()) as AicSearchResponse;

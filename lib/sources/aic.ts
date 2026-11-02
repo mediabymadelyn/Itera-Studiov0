@@ -17,9 +17,14 @@ type AicSearchItem = {
   theme_titles?: string[];
   description?: string;
   short_description?: string;
+  place_of_origin?: string;
+  artwork_type_title?: string;
 };
 
 const AIC_SEARCH_URL = "https://api.artic.edu/api/v1/artworks/search";
+const AIC_ARTWORKS_URL = "https://api.artic.edu/api/v1/artworks";
+const AIC_FIELDS =
+  "id,title,artist_display,main_reference_number,is_public_domain,subject_titles,style_titles,technique_titles,theme_titles,description,short_description,place_of_origin,artwork_type_title";
 // AIC's Cloudflare returns 403 for Node's default `User-Agent: node`, so
 // identify the client explicitly. AIC's docs ask for AIC-User-Agent; see
 // https://api.artic.edu/docs/#authentication
@@ -63,7 +68,11 @@ function normalizeAicItem(
     techniqueTitles: item.technique_titles,
     themeTitles: item.theme_titles,
     description: item.description,
-    shortDescription: item.short_description
+    shortDescription: item.short_description,
+    culture: item.place_of_origin,
+    // "Painting", "Print", "Sculpture", "Vessel"... -- the same role as the
+    // Met's classification, used to cap 3D objects (see queryTerms.ts).
+    classification: item.artwork_type_title
   };
 }
 
@@ -74,8 +83,7 @@ export async function searchAicArtworks(
 ): Promise<ArtworkResult[]> {
   const searchParams = new URLSearchParams({
     q: query,
-    fields:
-      "id,title,artist_display,main_reference_number,is_public_domain,subject_titles,style_titles,technique_titles,theme_titles,description,short_description",
+    fields: AIC_FIELDS,
     limit: "18",
     page: "1"
   });
@@ -109,4 +117,44 @@ export async function searchAicArtworks(
     .map((item, index) => normalizeAicItem(item, index, commonsImagesByReference))
     .filter((result): result is ArtworkResult => result !== null)
     .slice(0, limit);
+}
+
+/**
+ * Fetches specific AIC artworks by ID in one request, using images the
+ * caller already has (Wikimedia Commons URLs, keyed by AIC ID) since AIC's
+ * own image host blocks hotlinking. Used by the curated lighting list,
+ * whose entries carry their Commons image from Wikidata.
+ */
+export async function fetchAicArtworksByIds(
+  imagesById: Map<string, string>,
+  signal?: AbortSignal
+): Promise<ArtworkResult[]> {
+  const ids = Array.from(imagesById.keys());
+  if (ids.length === 0) return [];
+
+  const searchParams = new URLSearchParams({ ids: ids.join(","), fields: AIC_FIELDS });
+  const response = await fetch(`${AIC_ARTWORKS_URL}?${searchParams.toString()}`, {
+    headers: {
+      "AIC-User-Agent": USER_AGENT,
+      "User-Agent": USER_AGENT
+    },
+    signal,
+    next: { revalidate: 86400 }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch AIC artworks (HTTP ${response.status}).`);
+  }
+
+  const data = (await response.json()) as AicSearchResponse;
+  const items = data.data ?? [];
+  const imagesByReference = new Map(
+    items
+      .filter((item) => item.main_reference_number && imagesById.has(String(item.id)))
+      .map((item) => [item.main_reference_number as string, imagesById.get(String(item.id)) as string])
+  );
+
+  return items
+    .map((item, index) => normalizeAicItem(item, index, imagesByReference))
+    .filter((result): result is ArtworkResult => result !== null);
 }

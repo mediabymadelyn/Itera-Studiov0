@@ -1,0 +1,1202 @@
+{
+  "generatedAt": "2026-10-30",
+  "painterIds": [
+    "Q1337275",
+    "Q203371",
+    "Q209615",
+    "Q212657",
+    "Q214062",
+    "Q232423",
+    "Q297838",
+    "Q310285",
+    "Q314548",
+    "Q335927",
+    "Q367360",
+    "Q380708",
+    "Q42207",
+    "Q437233",
+    "Q5598",
+    "Q721166",
+    "Q874868",
+    "Q949627",
+    "Q983634"
+  ],
+  "movementIds": [
+    "Q1464842",
+    "Q1628039",
+    "Q62506"
+  ],
+  "works": [
+    {
+      "source": "met",
+      "objectId": "437402",
+      "wikidataId": "Q1057817",
+      "title": "Woman with a Pink",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "Dianthus caryophyllus",
+        "flower"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "834308",
+      "wikidataId": "Q111272665",
+      "title": "Roman Charity",
+      "artist": "Hendrick ter Brugghen",
+      "genres": [],
+      "depicts": [],
+      "reason": "artist: Hendrick ter Brugghen"
+    },
+    {
+      "source": "met",
+      "objectId": "442491",
+      "wikidataId": "Q126131221",
+      "title": "Saints Peter and Paul",
+      "artist": "Bartolomeo Manfredi",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [],
+      "reason": "artist: Bartolomeo Manfredi"
+    },
+    {
+      "source": "aic",
+      "objectId": "95998",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Rembrandt_Harmensz._van_Rijn_-_Old_Man_with_a_Gold_Chain_-_Google_Art_Project.jpg",
+      "wikidataId": "Q14911808",
+      "title": "Old Man with a Gold Chain",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Rembrandt's father",
+        "feather",
+        "chain",
+        "gorget"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "aic",
+      "objectId": "30901",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Hendrick_Terbrugghen_-_The_Denial_of_Saint_Peter_-_1969.3_-_Art_Institute_of_Chicago.jpg",
+      "wikidataId": "Q17152781",
+      "title": "The Denial of Saint Peter",
+      "artist": "Hendrick ter Brugghen",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Saint Peter"
+      ],
+      "reason": "artist: Hendrick ter Brugghen"
+    },
+    {
+      "source": "met",
+      "objectId": "436626",
+      "wikidataId": "Q17609277",
+      "title": "Boy with a Lute",
+      "artist": "Frans Hals, Judith Leyster",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "boy",
+        "lute",
+        "wine glass",
+        "portrait"
+      ],
+      "reason": "artist: Judith Leyster"
+    },
+    {
+      "source": "met",
+      "objectId": "437401",
+      "wikidataId": "Q18589381",
+      "title": "Portrait of a man with gloves in hand",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "glove",
+        "man",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437395",
+      "wikidataId": "Q18649144",
+      "title": "Portrait of Floris Soop",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437392",
+      "wikidataId": "Q18760265",
+      "title": "Portrait of Herman Doomer",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Herman Doomer",
+        "man",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "aic",
+      "objectId": "59894",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Follower_of_Frans_Hals_-_The_Rommel-Pot_Player_-_1947.78_-_Art_Institute_of_Chicago.jpg",
+      "wikidataId": "Q19326212",
+      "title": "Rommelpot player",
+      "artist": "Judith Leyster",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "man",
+        "rummelpott",
+        "boy",
+        "girl",
+        "friction drum"
+      ],
+      "reason": "artist: Judith Leyster"
+    },
+    {
+      "source": "met",
+      "objectId": "437393",
+      "wikidataId": "Q19863030",
+      "title": "Bathsheba at her Toilette",
+      "artist": "Rembrandt",
+      "genres": [
+        "religious art",
+        "nude",
+        "genre art"
+      ],
+      "depicts": [
+        "Bathsheba",
+        "woman",
+        "washing",
+        "sitting",
+        "breast",
+        "nipple",
+        "group of humans",
+        "fountain",
+        "navel",
+        "nude"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437969",
+      "wikidataId": "Q19904793",
+      "title": "The Battle between Christians and Moors at El Sotillo",
+      "artist": "Francisco de Zurbarán",
+      "genres": [
+        "religious art",
+        "history painting"
+      ],
+      "depicts": [
+        "man"
+      ],
+      "reason": "artist: Francisco de Zurbarán"
+    },
+    {
+      "source": "met",
+      "objectId": "437399",
+      "wikidataId": "Q19904868",
+      "title": "Man with a Magnifying Glass",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "magnifying glass",
+        "Pieter Haringh"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437400",
+      "wikidataId": "Q19905154",
+      "title": "Portrait of a Man",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "hat",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437406",
+      "wikidataId": "Q19905155",
+      "title": "Portrait of a Man (\"The Auctioneer\")",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437413",
+      "wikidataId": "Q19905221",
+      "title": "Man in a Red Cloak",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437387",
+      "wikidataId": "Q19905235",
+      "title": "Portrait of a Man",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "435596",
+      "wikidataId": "Q19905253",
+      "title": "Old Woman in an Armchair",
+      "artist": "Jacob Adriaensz Backer, Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "chair",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437419",
+      "wikidataId": "Q19905287",
+      "title": "Rembrandt (1606–1669) as a Young Man",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait",
+        "self-portrait"
+      ],
+      "depicts": [
+        "Rembrandt",
+        "man",
+        "portrait",
+        "artist"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437408",
+      "wikidataId": "Q19905289",
+      "title": "Man in a Beret",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "beret",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "435597",
+      "wikidataId": "Q19905326",
+      "title": "Portrait of an Old Woman",
+      "artist": "Jacob Adriaensz Backer, Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "fur",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437417",
+      "wikidataId": "Q19905364",
+      "title": "Lieven Willemsz van Coppenol (born about 1599, died 1671 or later)",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437410",
+      "wikidataId": "Q19905365",
+      "title": "Portrait of a Man with a Breastplate and Plumed Hat",
+      "artist": "Rembrandt, Reynier van Gherwen",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "gorget",
+        "feather",
+        "hat",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "436212",
+      "wikidataId": "Q19905418",
+      "title": "Young Woman with a Pearl Necklace",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "necklace",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437970",
+      "wikidataId": "Q19905433",
+      "title": "Saint Benedict",
+      "artist": "Francisco de Zurbarán",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "man",
+        "saint",
+        "pitcher"
+      ],
+      "reason": "artist: Francisco de Zurbarán"
+    },
+    {
+      "source": "met",
+      "objectId": "437409",
+      "wikidataId": "Q19905459",
+      "title": "Portrait of a Woman",
+      "artist": "Rembrandt, Ferdinand Bol, Jan Victors, Reynier van Gherwen",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "chair",
+        "hand fan",
+        "pearl",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "441971",
+      "wikidataId": "Q19911506",
+      "title": "The Tears of Saint Peter",
+      "artist": "Jusepe de Ribera",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Saint Peter"
+      ],
+      "reason": "artist: Jusepe de Ribera"
+    },
+    {
+      "source": "met",
+      "objectId": "437455",
+      "wikidataId": "Q19911538",
+      "title": "The Holy Family with Saints Anne and Catherine of Alexandria",
+      "artist": "Jusepe de Ribera",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Mary",
+        "Christ Child",
+        "Saint Joseph",
+        "Saint Anne",
+        "Catherine of Alexandria",
+        "Holy Family",
+        "Jesus Christ"
+      ],
+      "reason": "artist: Jusepe de Ribera"
+    },
+    {
+      "source": "met",
+      "objectId": "437396",
+      "wikidataId": "Q19911539",
+      "title": "Hendrickje Stoffels (1626–1663)",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Hendrickje Stoffels",
+        "woman",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437407",
+      "wikidataId": "Q19911565",
+      "title": "Christ with a Staff",
+      "artist": "Rembrandt",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "man",
+        "walking stick",
+        "Jesus Christ",
+        "Christ"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437389",
+      "wikidataId": "Q19911626",
+      "title": "Bellona",
+      "artist": "Rembrandt",
+      "genres": [
+        "tronie"
+      ],
+      "depicts": [
+        "woman",
+        "Bellona",
+        "goddess",
+        "armor"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437391",
+      "wikidataId": "Q19911644",
+      "title": "Portrait of a Young Woman with a Fan",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "unidentified woman"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437414",
+      "wikidataId": "Q19911776",
+      "title": "Pilate Washing His Hands",
+      "artist": "Rembrandt",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "man",
+        "Pontius Pilatus",
+        "Pilate washing his hands",
+        "hand washing"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437412",
+      "wikidataId": "Q19911779",
+      "title": "Old Woman Cutting Her Nails",
+      "artist": "Rembrandt",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "woman",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437390",
+      "wikidataId": "Q19911781",
+      "title": "Portrait of a Woman",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "436210",
+      "wikidataId": "Q19911869",
+      "title": "Self-Portrait",
+      "artist": "Gerrit Dou",
+      "genres": [
+        "self-portrait"
+      ],
+      "depicts": [
+        "Gerrit Dou",
+        "Infants playing with a He-goat",
+        "palette",
+        "birdcage",
+        "book",
+        "man",
+        "self-portrait",
+        "artist"
+      ],
+      "reason": "artist: Gerrit Dou"
+    },
+    {
+      "source": "met",
+      "objectId": "437411",
+      "wikidataId": "Q19911900",
+      "title": "Man with a Steel Gorget",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "439933",
+      "wikidataId": "Q19911949",
+      "title": "The Lute Player",
+      "artist": "Valentin de Boulogne",
+      "genres": [],
+      "depicts": [
+        "man",
+        "lute",
+        "musician"
+      ],
+      "reason": "artist: Valentin de Boulogne"
+    },
+    {
+      "source": "met",
+      "objectId": "436209",
+      "wikidataId": "Q19911973",
+      "title": "An Evening School",
+      "artist": "Gerrit Dou",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "man",
+        "girl",
+        "boy",
+        "reading",
+        "student",
+        "teacher",
+        "candle"
+      ],
+      "reason": "artist: Gerrit Dou"
+    },
+    {
+      "source": "met",
+      "objectId": "438379",
+      "wikidataId": "Q19912063",
+      "title": "Young Woman with a Red Necklace",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "necklace",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437405",
+      "wikidataId": "Q19912274",
+      "title": "A Young Woman as a Shepherdess (\"Saskia as Flora\")",
+      "artist": "Govert Flinck, Rembrandt",
+      "genres": [
+        "tronie"
+      ],
+      "depicts": [
+        "woman",
+        "Flora",
+        "Saskia van Uylenburgh",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437954",
+      "wikidataId": "Q19912370",
+      "title": "Portrait of a Woman",
+      "artist": "Joseph Wright of Derby",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman"
+      ],
+      "reason": "artist: Joseph Wright of Derby"
+    },
+    {
+      "source": "met",
+      "objectId": "437757",
+      "wikidataId": "Q19912884",
+      "title": "Old Woman Praying",
+      "artist": "Matthias Stom",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "woman",
+        "rosary",
+        "prayer"
+      ],
+      "reason": "artist: Matthias Stom"
+    },
+    {
+      "source": "met",
+      "objectId": "437633",
+      "wikidataId": "Q19913114",
+      "title": "Cephalus and Procris",
+      "artist": "Godfried Schalcken",
+      "genres": [
+        "mythological painting"
+      ],
+      "depicts": [
+        "woman",
+        "man"
+      ],
+      "reason": "artist: Godfried Schalcken"
+    },
+    {
+      "source": "met",
+      "objectId": "436992",
+      "wikidataId": "Q19913150",
+      "title": "The Sense of Sight",
+      "artist": "Giovanni Do, Jusepe de Ribera",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "woman",
+        "mirror"
+      ],
+      "reason": "artist: Jusepe de Ribera"
+    },
+    {
+      "source": "aic",
+      "objectId": "19336",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Francesco_Buoneri%2C_called_Cecco_del_Caravaggio_-_The_Resurrection_-_Google_Art_Project.jpg",
+      "wikidataId": "Q20087471",
+      "title": "The Resurrection",
+      "artist": "Cecco del Caravaggio",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Jesus Christ"
+      ],
+      "reason": "movement: Caravaggisti"
+    },
+    {
+      "source": "met",
+      "objectId": "437386",
+      "wikidataId": "Q20167032",
+      "title": "Portrait of a Man, probably a Member of the Van Beresteyn Family",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait",
+        "Cornelis van Beresteyn"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "437388",
+      "wikidataId": "Q20167179",
+      "title": "Portrait of a Woman, probably a Member of the Van Beresteyn Family",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "459082",
+      "wikidataId": "Q20183551",
+      "title": "Portrait of Gerard de Lairesse",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Gerard de Lairesse",
+        "man"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "aic",
+      "objectId": "80548",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Follower_of_Rembrandt_Harmenszoon_van_Rijn_-_Young_Man_in_a_Turban_-_1954.297_-_Art_Institute_of_Chicago.jpg",
+      "wikidataId": "Q20264458",
+      "title": "Young Man in a Turban",
+      "artist": "Rembrandt, Samuel van Hoogstraten",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "turban"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "aic",
+      "objectId": "61665",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Francisco_de_Zurbar%C3%A1n_-_Saint_Romanus_of_Antioch_and_Saint_Barulas_-_1947.793_-_Art_Institute_of_Chicago.jpg",
+      "wikidataId": "Q20265152",
+      "title": "Saint Romanus of Antioch and Saint Barulas",
+      "artist": "Francisco de Zurbarán",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [],
+      "reason": "artist: Francisco de Zurbarán"
+    },
+    {
+      "source": "aic",
+      "objectId": "213758",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Adam_Elsheimer_(Umkreis)_-_Johannes_der_T%C3%A4ufer_in_der_W%C3%BCste.jpg",
+      "wikidataId": "Q20266372",
+      "title": "Saint John the Baptist in the Wilderness",
+      "artist": "Adam Elsheimer",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "John the Baptist"
+      ],
+      "reason": "artist: Adam Elsheimer"
+    },
+    {
+      "source": "aic",
+      "objectId": "120172",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Jusepe_de_Ribera_-_Penitent_Saint_Peter_-_1993.60_-_Art_Institute_of_Chicago.jpg",
+      "wikidataId": "Q20268799",
+      "title": "Penitent Saint Peter",
+      "artist": "Jusepe de Ribera",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Saint Peter"
+      ],
+      "reason": "artist: Jusepe de Ribera"
+    },
+    {
+      "source": "aic",
+      "objectId": "94840",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Samuel_van_Hoogstraten_-_Young_woman_at_an_open_half-door_(1645).jpg",
+      "wikidataId": "Q20271957",
+      "title": "Young Woman at an Open Half-Door",
+      "artist": "Rembrandt, Samuel van Hoogstraten",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "woman",
+        "door",
+        "girl"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "aic",
+      "objectId": "59847",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/ManfrediMarsCupid.jpg",
+      "wikidataId": "Q20276003",
+      "title": "Cupid Chastised",
+      "artist": "Bartolomeo Manfredi",
+      "genres": [
+        "mythological painting"
+      ],
+      "depicts": [
+        "Cupid"
+      ],
+      "reason": "artist: Bartolomeo Manfredi"
+    },
+    {
+      "source": "met",
+      "objectId": "437986",
+      "wikidataId": "Q2270778",
+      "title": "The Denial of Saint Peter",
+      "artist": "Caravaggio",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Denial of Peter",
+        "Saint Peter",
+        "soldier",
+        "woman",
+        "man"
+      ],
+      "reason": "artist: Caravaggio"
+    },
+    {
+      "source": "met",
+      "objectId": "437394",
+      "wikidataId": "Q2404992",
+      "title": "Aristotle with a Bust of Homer",
+      "artist": "Rembrandt",
+      "genres": [
+        "historiated portrait"
+      ],
+      "depicts": [
+        "Aristotle",
+        "Homer",
+        "bust",
+        "statue",
+        "belt",
+        "robe",
+        "man",
+        "portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "436839",
+      "wikidataId": "Q3210251",
+      "title": "The Penitent Magdalen",
+      "artist": "Georges de La Tour",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Mary Magdalene",
+        "woman",
+        "sitting",
+        "shirt",
+        "skirt",
+        "brown hair",
+        "waist-length hair",
+        "dressing table",
+        "mirror",
+        "specular reflection",
+        "bougeoir",
+        "candle",
+        "flame",
+        "frame",
+        "bijou",
+        "pearl",
+        "human skull",
+        "eyelashes",
+        "contre-jour",
+        "light source",
+        "drapery",
+        "hermit",
+        "shadow",
+        "prayer",
+        "wall",
+        "décolletage",
+        "mirror image",
+        "mortification of the flesh",
+        "skull"
+      ],
+      "reason": "artist: Georges de La Tour"
+    },
+    {
+      "source": "met",
+      "objectId": "438382",
+      "wikidataId": "Q3212682",
+      "title": "The Holy Family with Saint John the Baptist",
+      "artist": "Caravaggio",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Christ Child",
+        "Mary",
+        "Saint Joseph",
+        "Child Saint John",
+        "Holy Family"
+      ],
+      "reason": "artist: Caravaggio"
+    },
+    {
+      "source": "aic",
+      "objectId": "80084",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Francisco_de_Zurbar%C3%A1n_-_The_Crucifixion_-_1954.15_-_Art_Institute_of_Chicago.jpg",
+      "wikidataId": "Q3221342",
+      "title": "Crucifixion of Christ",
+      "artist": "Francisco de Zurbarán",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Jesus Christ",
+        "man"
+      ],
+      "reason": "artist: Francisco de Zurbarán"
+    },
+    {
+      "source": "met",
+      "objectId": "436453",
+      "wikidataId": "Q3733425",
+      "title": "Esther before Ahasuerus",
+      "artist": "Artemisia Gentileschi",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Esther",
+        "Ahasuerus",
+        "woman",
+        "man"
+      ],
+      "reason": "artist: Artemisia Gentileschi"
+    },
+    {
+      "source": "met",
+      "objectId": "437398",
+      "wikidataId": "Q3784800",
+      "title": "Flora",
+      "artist": "Rembrandt",
+      "genres": [
+        "mythological painting",
+        "portrait"
+      ],
+      "depicts": [
+        "Hendrickje Stoffels",
+        "Flora",
+        "woman",
+        "red hair",
+        "chignon",
+        "hat",
+        "earring",
+        "necklace",
+        "shirt",
+        "skirt",
+        "flower",
+        "branch",
+        "leaf"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "436838",
+      "wikidataId": "Q379906",
+      "title": "The Fortune Teller",
+      "artist": "Georges de La Tour",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "fortune teller",
+        "woman",
+        "man"
+      ],
+      "reason": "artist: Georges de La Tour"
+    },
+    {
+      "source": "met",
+      "objectId": "437971",
+      "wikidataId": "Q6163639",
+      "title": "The Young Virgin",
+      "artist": "Francisco de Zurbarán",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Mary",
+        "basket",
+        "flower",
+        "scissors",
+        "sewing",
+        "embroidery",
+        "lily",
+        "Mary"
+      ],
+      "reason": "artist: Francisco de Zurbarán"
+    },
+    {
+      "source": "aic",
+      "objectId": "243872",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Honthorst_-_A_Boy_Blowing_on_a_Firebrand%2C_1621-22%2C_2018.135.jpg",
+      "wikidataId": "Q62591047",
+      "title": "A Boy Blowing on a Firebrand",
+      "artist": "Gerard van Honthorst",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [],
+      "reason": "artist: Gerard van Honthorst"
+    },
+    {
+      "source": "met",
+      "objectId": "435844",
+      "wikidataId": "Q655705",
+      "title": "The Musicians",
+      "artist": "Caravaggio",
+      "genres": [
+        "genre art",
+        "allegory",
+        "portrait",
+        "self-portrait"
+      ],
+      "depicts": [
+        "Caravaggio",
+        "man",
+        "lute",
+        "lutenist",
+        "cornett",
+        "cornettist",
+        "Cupid",
+        "musician",
+        "madrigal",
+        "grape",
+        "music",
+        "violin"
+      ],
+      "reason": "artist: Caravaggio"
+    },
+    {
+      "source": "met",
+      "objectId": "437397",
+      "wikidataId": "Q7311573",
+      "title": "Self-Portrait",
+      "artist": "Rembrandt",
+      "genres": [
+        "self-portrait"
+      ],
+      "depicts": [
+        "Rembrandt",
+        "man",
+        "self-portrait"
+      ],
+      "reason": "artist: Rembrandt"
+    },
+    {
+      "source": "met",
+      "objectId": "435817",
+      "wikidataId": "Q7728258",
+      "title": "The Crucifixion with the Virgin and St John",
+      "artist": "Hendrick ter Brugghen",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "crucifixion of Jesus",
+        "Mary",
+        "Jesus Christ",
+        "skull",
+        "John the Evangelist",
+        "crucifixion",
+        "Christ"
+      ],
+      "reason": "artist: Hendrick ter Brugghen"
+    },
+    {
+      "source": "met",
+      "objectId": "437385",
+      "wikidataId": "Q987985",
+      "title": "Man in Oriental Costume (\"The Noble Slav\" or \"Man in a Turban\")",
+      "artist": "Rembrandt",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Orientalism",
+        "man",
+        "portrait",
+        "Orientalist painting"
+      ],
+      "reason": "artist: Rembrandt"
+    }
+  ]
+}

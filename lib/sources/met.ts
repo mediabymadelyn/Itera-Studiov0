@@ -17,6 +17,9 @@ type MetObjectResponse = {
   primaryImageSmall: string;
   objectURL: string;
   isPublicDomain: boolean;
+  isHighlight?: boolean;
+  artistNationality?: string;
+  objectWikidata_URL?: string;
   tags?: MetTag[] | null;
   medium?: string;
   classification?: string;
@@ -29,6 +32,28 @@ const MET_BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1";
 // the paginated replacement; object lookups still live under v1.
 const MET_SEARCH_URL = "https://collectionapi.metmuseum.org/public/collection/v1.1/search";
 const MET_SEARCH_LIMIT = 18;
+// The Met's CDN (Imperva) temporarily blocks clients that send too many
+// requests in a short window -- every search costs one request per object,
+// so object records (which rarely change) are cached for a day and search
+// results for an hour.
+const MET_SEARCH_REVALIDATE_SECONDS = 3600;
+const MET_OBJECT_REVALIDATE_SECONDS = 86400;
+
+// Met departments whose collections are under-represented in a plain
+// keyword search (P6: "no African art"). searchAll.ts runs one small extra
+// search in a single department per query to widen cultural coverage.
+export const MET_NON_WESTERN_DEPARTMENT_IDS = [
+  5, // Arts of Africa, Oceania, and the Americas
+  6, // Asian Art
+  14 // Islamic Art
+] as const;
+
+export type MetSearchOptions = {
+  departmentId?: number;
+  // Each candidate costs one object request, so secondary searches fetch
+  // fewer of them than the primary one.
+  objectLimit?: number;
+};
 
 function normalizeMetObject(
   object: MetObjectResponse,
@@ -58,21 +83,33 @@ function normalizeMetObject(
       .filter((term): term is string => Boolean(term)),
     medium: object.medium,
     classification: object.classification,
-    culture: object.culture,
+    culture: object.culture || object.artistNationality,
+    qualitySignal: object.isHighlight ? 1 : undefined,
+    wikidataId: object.objectWikidata_URL?.split("/").pop() || undefined,
     objectDate: object.objectDate
   };
 }
 
 export async function searchMetArtworks(
   query: string,
-  limit = 6
+  limit = 6,
+  options: MetSearchOptions = {}
 ): Promise<ArtworkResult[]> {
-  const searchUrl = `${MET_SEARCH_URL}?hasImages=true&limit=${MET_SEARCH_LIMIT}&q=${encodeURIComponent(
-    query
-  )}`;
+  const objectLimit = options.objectLimit ?? MET_SEARCH_LIMIT;
+  const searchParams = new URLSearchParams({
+    hasImages: "true",
+    limit: String(objectLimit),
+    q: query
+  });
+
+  if (options.departmentId !== undefined) {
+    searchParams.set("departmentId", String(options.departmentId));
+  }
+
+  const searchUrl = `${MET_SEARCH_URL}?${searchParams.toString()}`;
 
   const searchResponse = await fetch(searchUrl, {
-    next: { revalidate: 300 }
+    next: { revalidate: MET_SEARCH_REVALIDATE_SECONDS }
   });
 
   if (!searchResponse.ok) {
@@ -80,16 +117,25 @@ export async function searchMetArtworks(
   }
 
   const searchData = (await searchResponse.json()) as MetSearchResponse;
-  const objectIds = (searchData.objectIDs ?? []).slice(0, MET_SEARCH_LIMIT);
+  const objectIds = (searchData.objectIDs ?? []).slice(0, objectLimit);
 
   if (objectIds.length === 0) {
     return [];
   }
 
+  return (await fetchMetObjects(objectIds)).slice(0, limit);
+}
+
+/**
+ * Fetches and normalizes specific Met objects by ID, in the given order
+ * (score reflects position). Objects that fail to load or have no image are
+ * skipped. Used by search above and by the curated lighting list.
+ */
+export async function fetchMetObjects(objectIds: number[]): Promise<ArtworkResult[]> {
   const objectResponses = await Promise.all(
     objectIds.map(async (objectId) => {
       const objectResponse = await fetch(`${MET_BASE_URL}/objects/${objectId}`, {
-        next: { revalidate: 300 }
+        next: { revalidate: MET_OBJECT_REVALIDATE_SECONDS }
       });
 
       if (!objectResponse.ok) {
@@ -100,7 +146,7 @@ export async function searchMetArtworks(
     })
   );
 
-  const normalized = objectResponses
+  return objectResponses
     .map((object, index) => {
       if (!object) {
         return null;
@@ -108,8 +154,5 @@ export async function searchMetArtworks(
 
       return normalizeMetObject(object, index);
     })
-    .filter((result): result is ArtworkResult => result !== null)
-    .slice(0, limit);
-
-  return normalized;
+    .filter((result): result is ArtworkResult => result !== null);
 }

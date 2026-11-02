@@ -17,6 +17,9 @@ export type ArtworkResult = {
   thumbnailUrl?: string;
   licenseType?: string;
   sourceLink?: string;
+  // The creator's own profile page, when the source has one (Unsplash
+  // photographers). Unsplash's API guidelines require linking it.
+  artistLink?: string;
   score?: number;
   visualTags?: VisualTags;
   subjectTitles?: string[];
@@ -30,15 +33,47 @@ export type ArtworkResult = {
   classification?: string;
   culture?: string;
   objectDate?: string;
-  // Short, human-readable reason this result matched the query (e.g. "pose
-  // reference", "lighting reference"). Only set by the LLM rerank layer,
-  // which is judging per-candidate relevance anyway -- there's no honest
-  // source for this label on the plain keyword/mechanical selection path,
-  // so it's simply absent there.
-  matchReason?: string;
-  // True on the single result the LLM rerank layer ranked first (its own
-  // "ordered best match first" output) -- reuses the existing ranking
-  // rather than a separate judgment call, so it's only ever set on the
-  // LLM rerank path, same as matchReason.
+  // 0-1 hint of how well-regarded the image is at its source (Unsplash
+  // likes, the Met's highlight flag). Kept as a small ranking nudge only --
+  // weighting it heavily would amplify the sources' existing skews.
+  qualitySignal?: number;
+  // Which search found this result (see searchAll.ts). "diversity" results
+  // come from the people-background Unsplash variant or the Met's
+  // non-Western departments, and get a couple of reserved slots.
+  retrievedVia?: "primary" | "secondary" | "diversity";
+  // 1-3 reference categories, strongest first (e.g. "Pose/Anatomy",
+  // "Lighting"). Only set by the LLM rerank layer, which is judging
+  // per-candidate relevance anyway -- there's no honest source for these
+  // labels on the plain keyword/mechanical selection path, so they're
+  // simply absent there.
+  matchReasons?: string[];
+  // Strength of the lighting as judged by the vision model (0-5). Used to
+  // order results within the Lighting filter and for lighting queries.
+  lightingScore?: number;
+  // How well the image matches the whole request, judged by the vision
+  // model from the image itself (see lib/search/visionJudge.ts): 2 = all
+  // of it, 1 = right subject but missing part. Absent when not judged.
+  visionMatch?: 1 | 2;
+  // Wikidata item for the work, when the source links one (the Met does).
+  // Used to look up its art movement (see lib/search/lightingCatalog.ts).
+  wikidataId?: string;
+  // True when Wikidata ties the work to dramatic light: painted by an
+  // artist known for it, or tagged tenebrism / Caravaggisti.
+  knownForDramaticLight?: boolean;
+  // Pixel measurements of the thumbnail (see lib/search/imageAnalysis.ts).
+  imageMetrics?: {
+    contrast: number;
+    darkShare: number;
+    brightShare: number;
+    drama: number;
+    sharpness: number;
+  };
+  // True on the single best result that meets every part of the request
+  // (see chooseTopPick in searchAll.ts). Only ever set on the LLM rerank
+  // path, same as matchReasons, and absent when nothing qualifies.
   isTopPick?: boolean;
+  // Not part of the main results: picked only to give an otherwise-empty
+  // category something to show (see benchEmptyCategories in
+  // llmQueryLayer.ts). The UI shows these only under that category's filter.
+  benchOnly?: boolean;
 };

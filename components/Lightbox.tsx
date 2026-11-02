@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
+import { AttributionLink } from "@/components/ResultCard";
 
 type LightboxProps = {
   result: ArtworkResult | null;
@@ -62,7 +63,28 @@ export default function Lightbox({ result, onClose }: LightboxProps) {
         />
         <div className="lightbox-info">
           <div className="lightbox-title">{result.title}</div>
-          <div className="lightbox-meta">{result.artist}</div>
+          <div className="lightbox-meta">
+            {result.source === "Unsplash" ? (
+              <>
+                Photo by <AttributionLink href={result.artistLink}>{result.artist}</AttributionLink>{" "}
+                on <AttributionLink href={result.sourceLink}>Unsplash</AttributionLink>
+              </>
+            ) : (
+              <>
+                {result.artist} ·{" "}
+                <AttributionLink href={result.sourceLink}>{result.source}</AttributionLink>
+              </>
+            )}
+          </div>
+          {result.matchReasons && result.matchReasons.length > 0 && (
+            <div className="lightbox-reasons" aria-label="Reference categories">
+              {result.matchReasons.map((reason) => (
+                <span key={reason} className="lightbox-reason">
+                  {reason}
+                </span>
+              ))}
+            </div>
+          )}
           <a
             className="result-link"
             href={result.originalLink}

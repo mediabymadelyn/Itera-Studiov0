@@ -2,8 +2,10 @@
 
 import { FormEvent, useCallback, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
+import { MATCH_REASON_CATEGORIES } from "@/lib/search/categories";
 import ResultCard from "@/components/ResultCard";
 import Lightbox from "@/components/Lightbox";
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 type SearchResponse = {
   results?: ArtworkResult[];
@@ -11,6 +13,14 @@ type SearchResponse = {
 };
 
 type ResultTypeFilter = "all" | "museum" | "photography";
+
+// Long searches (LLM rewrite + several sources + relevance filtering) can
+// take a while, but a request that hangs forever looked like the app was
+// broken (P2). Past this, stop and say so instead of spinning.
+const SEARCH_TIMEOUT_MS = 45000;
+const LIGHTING_REASON = "Lighting";
+
+const SKELETON_CARD_COUNT = 12;
 
 function getResultType(result: ArtworkResult): ResultTypeFilter {
   return result.source.toLowerCase().includes("unsplash")
@@ -21,39 +31,61 @@ function getResultType(result: ArtworkResult): ResultTypeFilter {
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<ArtworkResult[]>([]);
-  const [sourceFilter, setSourceFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState<ResultTypeFilter>("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expandedResult, setExpandedResult] = useState<ArtworkResult | null>(null);
   const [unavailableIds, setUnavailableIds] = useState<Set<string>>(new Set());
-  // "all" means no match-reason filter applied. Options are derived purely
-  // from matchReason values already present on this search's results (set
-  // by the LLM rerank layer's categorization step) -- no extra API call,
-  // no extra latency. Absent entirely on the plain keyword path, since
-  // there's nothing to derive it from there.
+  // "all" means no match-reason filter applied. Every category is always
+  // listed in a fixed order (testers wanted filters that don't move or
+  // vanish between searches); counts come from matchReasons already on this
+  // search's results (set by the LLM rerank layer's categorization step) --
+  // no extra API call, no extra latency. On the plain keyword path there
+  // are no labels, so every count is 0.
   const [reasonFilter, setReasonFilter] = useState("all");
 
   const handleUnavailable = useCallback((resultId: string) => {
     setUnavailableIds((prev) => (prev.has(resultId) ? prev : new Set(prev).add(resultId)));
   }, []);
 
-  const availableResults = results.filter((result) => !unavailableIds.has(result.id));
-  const sourceOptions = Array.from(new Set(availableResults.map((result) => result.source)));
-  const reasonOptions = Array.from(
-    new Set(
-      availableResults
-        .map((result) => result.matchReason)
-        .filter((reason): reason is string => Boolean(reason))
-    )
+  const loadedResults = results.filter((result) => !unavailableIds.has(result.id));
+  // Bench results (see benchEmptyCategories in llmQueryLayer.ts) exist only
+  // so every category has something to show; they never appear on the main
+  // grid, only under their own category's filter, after the regular matches.
+  const availableResults = loadedResults.filter((result) => !result.benchOnly);
+  const typeMatches = (result: ArtworkResult) =>
+    typeFilter === "all" || getResultType(result) === typeFilter;
+  const typeMatchedResults = availableResults.filter(typeMatches);
+  const typeMatchedBench = loadedResults.filter(
+    (result) => result.benchOnly && typeMatches(result)
   );
-  const filteredResults = availableResults.filter((result) => {
-    const sourceMatches = sourceFilter === "all" || result.source === sourceFilter;
-    const typeMatches = typeFilter === "all" || getResultType(result) === typeFilter;
-    const reasonMatches = reasonFilter === "all" || result.matchReason === reasonFilter;
-
-    return sourceMatches && typeMatches && reasonMatches;
-  });
+  const reasonCounts = new Map<string, number>(
+    MATCH_REASON_CATEGORIES.map((category) => [
+      category,
+      [...typeMatchedResults, ...typeMatchedBench].filter((result) =>
+        (result.matchReasons ?? []).includes(category)
+      ).length
+    ])
+  );
+  const hasAnyLabels = Array.from(reasonCounts.values()).some((count) => count > 0);
+  const hasReason = (result: ArtworkResult) =>
+    (result.matchReasons ?? []).includes(reasonFilter);
+  // Within the Lighting filter, strongest lighting comes first: the vision
+  // check's 0-5 score (llmQueryLayer.ts) and the pixel drama measure
+  // (imageAnalysis.ts), each weighted equally; unmeasured ones sort last.
+  const lightingStrength = (result: ArtworkResult) =>
+    ((result.lightingScore ?? 0) / 5 + (result.imageMetrics?.drama ?? 0)) / 2;
+  const byLighting = (results: ArtworkResult[]) =>
+    reasonFilter === LIGHTING_REASON
+      ? [...results].sort((a, b) => lightingStrength(b) - lightingStrength(a))
+      : results;
+  const filteredResults =
+    reasonFilter === "all"
+      ? typeMatchedResults
+      : [
+          ...byLighting(typeMatchedResults.filter(hasReason)),
+          ...byLighting(typeMatchedBench.filter(hasReason))
+        ];
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -69,9 +101,13 @@ export default function SearchBar() {
     setLoading(true);
     setError(null);
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), SEARCH_TIMEOUT_MS);
+
     try {
       const response = await fetch(
-        `/api/search?q=${encodeURIComponent(trimmedQuery)}`
+        `/api/search?q=${encodeURIComponent(trimmedQuery)}`,
+        { signal: controller.signal }
       );
       const data = (await response.json()) as SearchResponse;
 
@@ -80,15 +116,20 @@ export default function SearchBar() {
       }
 
       setResults(data.results ?? []);
-      setSourceFilter("all");
       setTypeFilter("all");
       setReasonFilter("all");
       setUnavailableIds(new Set());
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Search failed.";
+      const message =
+        err instanceof Error && err.name === "AbortError"
+          ? "This search took too long. Try again, or describe it in fewer words."
+          : err instanceof Error
+            ? err.message
+            : "Search failed.";
       setError(message);
       setResults([]);
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
     }
   }
@@ -127,49 +168,40 @@ export default function SearchBar() {
         </div>
       </form>
 
-      {reasonOptions.length > 0 && (
+      {!loading && results.length > 0 && (
         <div className="reason-filter-row">
-          <span className="reason-filter-label">Based on your search:</span>
-          {reasonOptions.map((reason) => (
-            <button
-              key={reason}
-              type="button"
-              className={
-                reasonFilter === reason
-                  ? "reason-pill reason-pill-active"
-                  : "reason-pill"
-              }
-              onClick={() =>
-                setReasonFilter((current) => (current === reason ? "all" : reason))
-              }
-              aria-pressed={reasonFilter === reason}
-            >
-              {reason}
-            </button>
-          ))}
+          <span className="reason-filter-label">Filter by:</span>
+          {MATCH_REASON_CATEGORIES.map((reason) => {
+            const count = reasonCounts.get(reason) ?? 0;
+            const active = reasonFilter === reason;
+
+            return (
+              <button
+                key={reason}
+                type="button"
+                className={active ? "reason-pill reason-pill-active" : "reason-pill"}
+                onClick={() => setReasonFilter((current) => (current === reason ? "all" : reason))}
+                aria-pressed={active}
+                disabled={count === 0 && !active}
+              >
+                {reason}
+                <span className="reason-pill-count">{count}</span>
+              </button>
+            );
+          })}
+          {!hasAnyLabels && (
+            <span className="reason-filter-empty">No categories for this search</span>
+          )}
         </div>
       )}
 
-      {results.length > 0 && (
+      {!loading && results.length > 0 && (
         <div className="filters-row">
+          {/* One control instead of separate Source + Type dropdowns: the two
+              could be set to contradict each other (Unsplash + Museum), which
+              read as the filter being broken (P2, P5). */}
           <label className="filter-control">
-            <span className="filter-label">Source</span>
-            <select
-              className="filter-select"
-              value={sourceFilter}
-              onChange={(event) => setSourceFilter(event.target.value)}
-            >
-              <option value="all">All Sources</option>
-              {sourceOptions.map((source) => (
-                <option key={source} value={source}>
-                  {source}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label className="filter-control">
-            <span className="filter-label">Type</span>
+            <span className="filter-label">Show</span>
             <select
               className="filter-select"
               value={typeFilter}
@@ -177,9 +209,9 @@ export default function SearchBar() {
                 setTypeFilter(event.target.value as ResultTypeFilter)
               }
             >
-              <option value="all">All Types</option>
-              <option value="museum">Museum</option>
-              <option value="photography">Photography</option>
+              <option value="all">All results</option>
+              <option value="museum">Museum art</option>
+              <option value="photography">Photography (Unsplash)</option>
             </select>
           </label>
 
@@ -187,13 +219,10 @@ export default function SearchBar() {
             className="filter-reset"
             type="button"
             onClick={() => {
-              setSourceFilter("all");
               setTypeFilter("all");
               setReasonFilter("all");
             }}
-            disabled={
-              sourceFilter === "all" && typeFilter === "all" && reasonFilter === "all"
-            }
+            disabled={typeFilter === "all" && reasonFilter === "all"}
           >
             Reset
           </button>
@@ -214,17 +243,26 @@ export default function SearchBar() {
         filteredResults.length === 0 && (
           <p className="state-text">No results match the selected filters.</p>
         )}
-      {loading && <p className="state-text">Loading results...</p>}
+      {loading && <LoadingIndicator />}
 
-      <div className="results-grid">
-        {filteredResults.map((result) => (
-          <ResultCard
-            key={result.id}
-            result={result}
-            onExpand={setExpandedResult}
-            onUnavailable={handleUnavailable}
-          />
-        ))}
+      <div className="results-grid" aria-busy={loading}>
+        {loading
+          ? Array.from({ length: SKELETON_CARD_COUNT }, (_, index) => (
+              <div key={index} className="result-card result-card-skeleton" aria-hidden="true">
+                <div className="skeleton-image" />
+                <div className="skeleton-line" />
+                <div className="skeleton-line skeleton-line-short" />
+              </div>
+            ))
+          : filteredResults.map((result) => (
+              <ResultCard
+                key={result.id}
+                result={result}
+                activeReason={reasonFilter === "all" ? undefined : reasonFilter}
+                onExpand={setExpandedResult}
+                onUnavailable={handleUnavailable}
+              />
+            ))}
       </div>
 
       <Lightbox result={expandedResult} onClose={() => setExpandedResult(null)} />

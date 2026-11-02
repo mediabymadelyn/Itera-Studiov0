@@ -1,13 +1,17 @@
-import { ArtworkResult } from "@/lib/types/artwork";
-import { selectWithSourceDiversity } from "@/lib/search/selectDiverseResults";
+import { ArtworkResult, VisualTags } from "@/lib/types/artwork";
+import { SelectionOptions, selectWithSourceDiversity } from "@/lib/search/selectDiverseResults";
+import { describeVisualTags } from "@/lib/search/visualTags";
+import { MATCH_REASON_CATEGORIES, MatchReasonCategory } from "@/lib/search/categories";
+import { isVisionJudgeEnabled, judgeResultImages, VisionJudgment } from "@/lib/search/visionJudge";
 
 // Retrieval stays plain keyword search (see aic.ts/met.ts/unsplash.ts) --
 // this is the actual LLM query-translation arm: given the user's original
 // query text and the candidate pool keyword search already retrieved, an
 // LLM picks and orders which candidates actually get shown. It never
-// touches retrieval itself. Reuses the same hosted-model setup as the
-// (separate) image-tagging feature in visualTags.ts, but this call only
-// ever sees text -- title/artist/tags -- never images.
+// touches retrieval itself. When GEMINI_API_KEY is set, selection runs on
+// the images themselves (see visionJudge.ts and selectWithVisionJudge at
+// the bottom of this file); the text-only Gemma path below -- title/artist/
+// tags, never images -- is the fallback when it isn't, or when Gemini fails.
 const LLM_QUERY_LAYER_API_URL = "https://router.huggingface.co/v1/chat/completions";
 
 // Selection is a relevance FILTER, not a ranker -- the LLM judges each
@@ -46,32 +50,48 @@ const CATEGORY_BATCH_TIMEOUT_MS = 12000;
 // boost, not something correctness depends on. Capped to avoid unbounded
 // growth in a long-running process.
 const MATCH_REASON_CACHE_MAX_SIZE = 500;
-const matchReasonCache = new Map<string, string>();
+type CachedLabels = { reasons: string[]; lightingScore?: number };
+const matchReasonCache = new Map<string, CachedLabels>();
 
-// Closed vocabulary for per-card match-reason badges (and, later, the
-// "Based on your search" query-level tags -- same taxonomy, shared across
-// both so they're not two disconnected labeling systems). Each name is a
-// dimension of reference usefulness, not a subject description, so the
-// model can't satisfy it by just restating what's in the image -- and two
-// candidates with similar subject matter are forced to land on different
-// categories unless they're genuinely strongest on the same one.
-const MATCH_REASON_CATEGORIES = [
-  "Pose/Gesture",
-  "Anatomy/Form",
-  "Lighting",
-  "Color Palette",
-  "Composition",
-  "Style/Technique",
-  "Texture/Material",
-  "Expression/Emotion",
-  "Environment/Setting",
-  "Historical/Cultural Reference"
-] as const;
+// Testers found single labels too narrow (P2, P3: categories overlap), so
+// each result gets up to this many, strongest first.
+const MAX_MATCH_REASONS = 3;
+
+// "Lighting" was the most-mislabeled category (P2, P3: hands holding a cup
+// filed under Lighting), because the labeling model only ever sees text.
+// Results it labels Lighting get one vision check each, in parallel; the
+// vision model's read of the actual image decides whether the label stays
+// and orders results within the Lighting filter. A failed or slow check
+// keeps the text label rather than dropping it.
+const LIGHTING_CATEGORY: MatchReasonCategory = "Lighting";
+const LIGHTING_CHECK_TIMEOUT_MS = 4000;
+const LIGHTING_MIN_CONFIDENCE = 0.5;
+const LIGHTING_MIN_SCORE = 2;
+
+// Every category should have something to show when it's selected. After
+// the final set is labeled, any category still empty gets one fast-model
+// call over the candidates that didn't make the page, picking up to this
+// many per category. Those "bench" results only appear under that
+// category's filter, so the main grid is unchanged.
+const BENCH_PER_CATEGORY = 2;
+const BENCH_TIMEOUT_MS = 3000;
+
+// Closed category vocabulary: see lib/search/categories.ts.
+
+// Testers couldn't tell Pose/Gesture from Anatomy/Form (P2, P5), so they
+// were merged; the old names still map in case the model uses them.
+const LEGACY_CATEGORY_NAMES: Record<string, string> = {
+  "pose/gesture": "Pose/Anatomy",
+  "anatomy/form": "Pose/Anatomy",
+  pose: "Pose/Anatomy",
+  anatomy: "Pose/Anatomy"
+};
 
 function normalizeMatchReason(raw: string | undefined): string | undefined {
   if (!raw) return undefined;
 
   const normalized = raw.trim().toLowerCase().replace(/[.!]+$/, "");
+  if (LEGACY_CATEGORY_NAMES[normalized]) return LEGACY_CATEGORY_NAMES[normalized];
 
   // Compare case-insensitively but return the canonical (as-declared) casing
   // from the list, so MATCH_REASON_CATEGORIES' own casing always wins
@@ -85,6 +105,16 @@ function apiKey(): string {
   return process.env.HUGGINGFACE_API_KEY?.trim() || process.env.BLIP_API_KEY?.trim() || "";
 }
 
+// Used for the newer, latency-sensitive steps (query rewrite in
+// queryPlan.ts, category backfill below). Measured ~0.9s per call on the HF
+// router vs ~2.5s for the Gemma model the relevance/labeling steps use.
+// Overridable for comparison runs.
+const DEFAULT_FAST_MODEL = "meta-llama/Llama-3.3-70B-Instruct:fastest";
+
+export function fastModel(): string {
+  return process.env.FAST_LLM_MODEL?.trim() || DEFAULT_FAST_MODEL;
+}
+
 function model(): string {
   return (
     process.env.VISUAL_TAGS_MODEL?.trim() ||
@@ -94,7 +124,7 @@ function model(): string {
 }
 
 export function isLlmQueryLayerEnabled(): boolean {
-  return process.env.ENABLE_LLM_QUERY_LAYER === "true" && Boolean(apiKey());
+  return process.env.ENABLE_LLM_QUERY_LAYER === "true" && (Boolean(apiKey()) || isVisionJudgeEnabled());
 }
 
 type CandidateSummary = {
@@ -158,18 +188,18 @@ function buildCategoryPrompt(query: string, candidates: CandidateSummary[]): str
     `A user searched an art-reference tool for: "${query}"\n\n` +
     `These ${candidates.length} results were already judged relevant and selected -- do not ` +
     `re-evaluate whether they belong, only label them:\n${listing}\n\n` +
-    `For each one, assign exactly ONE category from this fixed list -- copy the spelling ` +
-    `exactly as written, do not invent your own wording:\n` +
+    `For each one, assign 1 to ${MAX_MATCH_REASONS} categories from this fixed list, strongest ` +
+    `first -- copy the spelling exactly as written, do not invent your own wording:\n` +
     `${MATCH_REASON_CATEGORIES.map((c) => `"${c}"`).join(", ")}\n\n` +
-    `Pick the SINGLE dimension that makes this specific result most useful as a reference -- ` +
-    `not a description of its subject matter (e.g. do not pick a category just because it ` +
-    `names something visible in the image; pick the one quality that actually makes THIS result ` +
-    `a good reference). If two results share similar subject matter, they should usually get ` +
-    `different categories, based on what's actually distinct about each one's reference value -- ` +
-    `only give them the same category if they are genuinely strongest on the exact same ` +
-    `dimension.\n\n` +
+    `Pick the dimensions that make this specific result useful as a reference -- not a ` +
+    `description of its subject matter (e.g. do not pick a category just because it names ` +
+    `something visible in the image). Only add a second or third category if the result is ` +
+    `genuinely strong on it too; one category is fine. Only pick "Lighting" when the light ` +
+    `itself (direction, contrast, shadows) is a notable feature, not just because an object ` +
+    `such as a cup or a window is mentioned.\n\n` +
     `Reply with ONLY a JSON array of objects, e.g. ` +
-    `[{"index":3,"reason":"Pose/Gesture"},{"index":0,"reason":"Lighting"}]. No other text.`
+    `[{"index":3,"reasons":["Pose/Anatomy","Expression/Emotion"]},{"index":0,"reasons":["Lighting"]}]. ` +
+    `No other text.`
   );
 }
 
@@ -204,7 +234,7 @@ function parseRelevantIndices(raw: string, maxIndex: number): number[] | null {
     .filter((n) => Number.isInteger(n) && n >= 0 && n <= maxIndex);
 }
 
-type CategoryPick = { index: number; reason?: string };
+type CategoryPick = { index: number; reasons: string[] };
 
 function parseCategoryPicks(raw: string, maxIndex: number): CategoryPick[] | null {
   const parsed = extractJsonArray(raw);
@@ -215,17 +245,28 @@ function parseCategoryPicks(raw: string, maxIndex: number): CategoryPick[] | nul
       if (!entry || typeof entry !== "object" || !("index" in entry)) return null;
 
       const index = Number((entry as { index: unknown }).index);
-      const reasonRaw = (entry as { reason?: unknown }).reason;
-      const reason = typeof reasonRaw === "string" ? reasonRaw.trim() : undefined;
+      const { reasons: reasonsRaw, reason: reasonRaw } = entry as {
+        reasons?: unknown;
+        reason?: unknown;
+      };
+      const candidates = Array.isArray(reasonsRaw) ? reasonsRaw : [reasonRaw];
+      const reasons = candidates.filter(
+        (value): value is string => typeof value === "string" && value.trim().length > 0
+      );
 
-      return Number.isInteger(index) ? { index, reason } : null;
+      return Number.isInteger(index) ? { index, reasons } : null;
     })
     .filter((pick): pick is CategoryPick => pick !== null && pick.index >= 0 && pick.index <= maxIndex);
 
   return picks.length > 0 ? picks : null;
 }
 
-async function callModel(prompt: string, maxTokens: number, timeoutMs: number): Promise<string | null> {
+export async function callModel(
+  prompt: string,
+  maxTokens: number,
+  timeoutMs: number,
+  modelOverride?: string
+): Promise<string | null> {
   const key = apiKey();
   if (!key) return null;
 
@@ -240,7 +281,7 @@ async function callModel(prompt: string, maxTokens: number, timeoutMs: number): 
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: model(),
+        model: modelOverride ?? model(),
         max_tokens: maxTokens,
         messages: [{ role: "user", content: prompt }]
       }),
@@ -272,24 +313,30 @@ type BatchItem = { globalIndex: number; result: ArtworkResult };
 async function categorizeBatch(
   batch: BatchItem[],
   query: string
-): Promise<Map<number, string>> {
+): Promise<Map<number, string[]>> {
   const localSummaries = batch.map((item, localIndex) =>
     summarizeCandidate(item.result, localIndex)
   );
   const prompt = buildCategoryPrompt(query, localSummaries);
 
-  async function attempt(): Promise<Map<number, string> | null> {
-    const content = await callModel(prompt, 120, CATEGORY_BATCH_TIMEOUT_MS);
+  async function attempt(): Promise<Map<number, string[]> | null> {
+    const content = await callModel(prompt, 200, CATEGORY_BATCH_TIMEOUT_MS);
     if (!content) return null;
 
     const picks = parseCategoryPicks(content, batch.length - 1);
     if (!picks) return null;
 
-    const result = new Map<number, string>();
+    const result = new Map<number, string[]>();
     for (const pick of picks) {
-      const normalized = normalizeMatchReason(pick.reason);
+      const normalized = Array.from(
+        new Set(
+          pick.reasons
+            .map((reason) => normalizeMatchReason(reason))
+            .filter((reason): reason is string => Boolean(reason))
+        )
+      ).slice(0, MAX_MATCH_REASONS);
       const globalIndex = batch[pick.index]?.globalIndex;
-      if (normalized && globalIndex !== undefined) {
+      if (normalized.length > 0 && globalIndex !== undefined) {
         result.set(globalIndex, normalized);
       }
     }
@@ -300,25 +347,62 @@ async function categorizeBatch(
 }
 
 /**
- * Labels an already-selected result set with match-reason categories.
+ * Scores how notable an image's lighting is from the vision model's tags:
+ * high contrast, hard light and directional (side/back/top/under) light
+ * each count. Returns null when the model wasn't confident enough to say.
+ */
+function scoreLighting(tags: VisualTags): number | null {
+  if ((tags.confidence ?? 0) < LIGHTING_MIN_CONFIDENCE) return null;
+
+  let score = 0;
+  if (tags.contrast === "high") score += 2;
+  else if (tags.contrast === "medium") score += 1;
+  if (tags.lightingQuality === "hard") score += 2;
+  else if (tags.lightingQuality === "mixed") score += 1;
+  if (["side-left", "side-right", "back", "above", "below"].includes(tags.lightingDirection)) {
+    score += 1;
+  }
+
+  return score;
+}
+
+async function verifyLighting(result: ArtworkResult): Promise<CachedLabels | null> {
+  const reasons = result.matchReasons ?? [];
+  const tags = await describeVisualTags(
+    result.thumbnailUrl || result.imageUrl,
+    LIGHTING_CHECK_TIMEOUT_MS
+  );
+  const lightingScore = tags ? scoreLighting(tags) : null;
+
+  if (lightingScore === null) return null;
+
+  return lightingScore >= LIGHTING_MIN_SCORE
+    ? { reasons, lightingScore }
+    : { reasons: reasons.filter((reason) => reason !== LIGHTING_CATEGORY) };
+}
+
+/**
+ * Labels an already-selected result set with 1-3 match-reason categories.
  * Cache hits (same result id labeled in a prior search) skip the model
  * entirely. Remaining results are split into small batches, categorized in
  * parallel (not sequentially -- doesn't add latency), each with one retry
- * on failure. Best-effort throughout: any result that never gets a label
- * (cache miss + both attempts on its batch failing) simply renders without
- * one -- a labeling gap never takes the actual results down with it.
+ * on failure. Then any newly labeled "Lighting" result gets a vision check
+ * (see LIGHTING_CATEGORY above). Best-effort throughout: any result that
+ * never gets a label (cache miss + both attempts on its batch failing)
+ * simply renders without one -- a labeling gap never takes the actual
+ * results down with it.
  */
 async function attachMatchReasons(
   selected: ArtworkResult[],
   query: string
 ): Promise<ArtworkResult[]> {
-  const reasonByIndex = new Map<number, string>();
+  const labelsByIndex = new Map<number, CachedLabels>();
   const uncached: BatchItem[] = [];
 
   selected.forEach((result, index) => {
     const cached = matchReasonCache.get(result.id);
     if (cached) {
-      reasonByIndex.set(index, cached);
+      labelsByIndex.set(index, cached);
     } else {
       uncached.push({ globalIndex: index, result });
     }
@@ -333,22 +417,42 @@ async function attachMatchReasons(
     batches.map((batch) => categorizeBatch(batch, query))
   );
 
+  const newlyLabeled: number[] = [];
   for (const batchMap of batchResults) {
-    for (const [globalIndex, reason] of batchMap) {
-      reasonByIndex.set(globalIndex, reason);
+    for (const [globalIndex, reasons] of batchMap) {
+      labelsByIndex.set(globalIndex, { reasons });
+      newlyLabeled.push(globalIndex);
     }
   }
+
+  await Promise.all(
+    newlyLabeled
+      .filter((index) => labelsByIndex.get(index)?.reasons.includes(LIGHTING_CATEGORY))
+      .map(async (index) => {
+        const verified = await verifyLighting({
+          ...selected[index],
+          matchReasons: labelsByIndex.get(index)?.reasons
+        });
+        if (verified) labelsByIndex.set(index, verified);
+      })
+  );
 
   if (matchReasonCache.size >= MATCH_REASON_CACHE_MAX_SIZE) {
     matchReasonCache.clear();
   }
 
   return selected.map((result, index) => {
-    const matchReason = reasonByIndex.get(index);
-    if (!matchReason) return result;
+    const labels = labelsByIndex.get(index);
+    if (!labels) return result;
 
-    matchReasonCache.set(result.id, matchReason);
-    return { ...result, matchReason };
+    matchReasonCache.set(result.id, labels);
+    if (labels.reasons.length === 0) return result;
+
+    return {
+      ...result,
+      matchReasons: labels.reasons,
+      lightingScore: labels.lightingScore
+    };
   });
 }
 
@@ -411,6 +515,154 @@ async function relevanceFilterChunk(
   return Array.from(approved.values());
 }
 
+function buildBenchPrompt(
+  query: string,
+  categories: string[],
+  candidates: CandidateSummary[]
+): string {
+  const listing = candidates
+    .map(
+      (c) =>
+        `${c.index}. "${c.title}" by ${c.artist} (${c.source})${c.tags ? ` -- ${c.tags}` : ""}`
+    )
+    .join("\n");
+
+  return (
+    `A user searched an art-reference tool for: "${query}"\n\n` +
+    `Candidate results:\n${listing}\n\n` +
+    `For each of these reference categories: ${categories.map((c) => `"${c}"`).join(", ")} -- ` +
+    `pick up to ${BENCH_PER_CATEGORY} candidates that are relevant to the search AND genuinely ` +
+    `useful as a reference for that category. Use [] for a category when nothing fits; never ` +
+    `pick something irrelevant just to fill it. Only pick "Lighting" when the light itself ` +
+    `(direction, contrast, shadows) is notable.\n\n` +
+    `Reply with ONLY a JSON object mapping each category to an array of index numbers, e.g. ` +
+    `{"Lighting":[4],"Composition":[]}. No other text.`
+  );
+}
+
+function parseBenchPicks(raw: string, maxIndex: number): Map<number, string[]> {
+  const picks = new Map<number, string[]>();
+  const start = raw.indexOf("{");
+  const end = raw.lastIndexOf("}");
+  if (start === -1 || end <= start) return picks;
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw.slice(start, end + 1));
+  } catch {
+    return picks;
+  }
+  if (!parsed || typeof parsed !== "object") return picks;
+
+  for (const [rawCategory, indices] of Object.entries(parsed as Record<string, unknown>)) {
+    const category = normalizeMatchReason(rawCategory);
+    if (!category || !Array.isArray(indices)) continue;
+
+    for (const value of indices.slice(0, BENCH_PER_CATEGORY)) {
+      const index = Number(value);
+      if (!Number.isInteger(index) || index < 0 || index > maxIndex) continue;
+      picks.set(index, [...(picks.get(index) ?? []), category]);
+    }
+  }
+
+  return picks;
+}
+
+/**
+ * Fills categories the final set left empty with candidates that didn't
+ * make the page (see BENCH_PER_CATEGORY). Best-effort: a failed or slow
+ * call just means no bench, and Lighting picks still go through the
+ * vision check like any other Lighting label.
+ */
+async function benchEmptyCategories(
+  labeled: ArtworkResult[],
+  candidates: ArtworkResult[],
+  query: string
+): Promise<ArtworkResult[]> {
+  const covered = new Set(labeled.flatMap((result) => result.matchReasons ?? []));
+  const emptyCategories = MATCH_REASON_CATEGORIES.filter((category) => !covered.has(category));
+  const shownIds = new Set(labeled.map((result) => result.id));
+  const leftovers = candidates.filter((result) => !shownIds.has(result.id));
+
+  if (emptyCategories.length === 0 || leftovers.length === 0) return [];
+
+  const content = await callModel(
+    buildBenchPrompt(query, emptyCategories, leftovers.map(summarizeCandidate)),
+    300,
+    BENCH_TIMEOUT_MS,
+    fastModel()
+  );
+  if (!content) return [];
+
+  const picks = parseBenchPicks(content, leftovers.length - 1);
+  const benched = Array.from(picks.entries()).map(([index, reasons]) => ({
+    ...leftovers[index],
+    matchReasons: reasons,
+    benchOnly: true
+  }));
+
+  const checked = await Promise.all(
+    benched.map(async (result) => {
+      if (!result.matchReasons.includes(LIGHTING_CATEGORY)) return result;
+
+      const verified = await verifyLighting(result);
+      return verified
+        ? { ...result, matchReasons: verified.reasons, lightingScore: verified.lightingScore }
+        : result;
+    })
+  );
+
+  return checked.filter((result) => result.matchReasons.length > 0);
+}
+
+export type RerankOptions = {
+  selection?: SelectionOptions;
+  // Used instead of `selection` when the vision model judged the pool:
+  // every approved work already shows the right subject, so museum
+  // eligibility can be about what kind of work it is instead.
+  visionSelection?: SelectionOptions;
+  // Applied to the approved results before the final pick -- used to fold
+  // in pixel checks that ran in parallel with the relevance calls.
+  adjustScores?: (results: ArtworkResult[]) => Promise<ArtworkResult[]>;
+  // When the LLM approves fewer than this, the page is topped up with the
+  // next-best candidates (already subject-checked upstream), ranked below
+  // every approved one. Testers found 5-6 results too few to work with.
+  minResults?: number;
+};
+
+export type RerankOutcome = {
+  results: ArtworkResult[];
+  // Results the vision model looked at and judged the wrong subject. Later
+  // steps that add results back (compound-query coverage in searchAll.ts)
+  // must skip these, or rejected oil lamps could return. Empty on the text
+  // path.
+  rejectedIds: Set<string>;
+};
+
+// Top-up results are placed strictly below the lowest approved score.
+const FILL_SCORE_STEP = 0.01;
+
+function topUp(
+  approved: ArtworkResult[],
+  candidates: ArtworkResult[],
+  target: number
+): ArtworkResult[] {
+  if (approved.length >= target) return approved;
+
+  const approvedIds = new Set(approved.map((result) => result.id));
+  const floor = Math.min(...approved.map((result) => result.score ?? 0));
+
+  const fill = candidates
+    .filter((result) => !approvedIds.has(result.id))
+    .slice(0, target - approved.length)
+    .map((result, index) => ({
+      ...result,
+      score: Number((floor - FILL_SCORE_STEP * (index + 1)).toFixed(4))
+    }));
+
+  return [...approved, ...fill];
+}
+
 /**
  * Final relevance layer: the candidate pool is split into small chunks,
  * each independently judged for relevance in parallel (never ranked
@@ -418,18 +670,29 @@ async function relevanceFilterChunk(
  * why). The union of everything approved is then handed to
  * selectWithSourceDiversity() -- the same deterministic, already-tested
  * function the plain keyword path uses -- to pick and order the final
- * set with a source/medium mix. Each result that makes the cut is then
- * (separately, best-effort) labeled with a match-reason category. Returns
- * null only if nothing survives relevance filtering at all (missing key,
- * total failure, or a genuinely empty pool), so callers fall back to the
- * existing mechanical selection -- never breaks search.
+ * set with a source/medium mix, topped up to `minResults` if the LLM was
+ * strict. Each result that makes the cut is then (separately, best-effort)
+ * labeled with match-reason categories. Returns null only if nothing
+ * survives relevance filtering at all (missing key, total failure, or a
+ * genuinely empty pool), so callers fall back to the existing mechanical
+ * selection -- never breaks search. The top pick is chosen by the caller
+ * (searchAll.ts), which knows the full query plan.
  */
 export async function selectWithLlmRerank(
   candidates: ArtworkResult[],
   query: string,
-  limit: number
-): Promise<ArtworkResult[] | null> {
-  if (!apiKey() || candidates.length === 0) {
+  limit: number,
+  options: RerankOptions = {}
+): Promise<RerankOutcome | null> {
+  if (candidates.length === 0) return null;
+
+  if (isVisionJudgeEnabled()) {
+    const judged = await selectWithVisionJudge(candidates, query, limit, options);
+    if (judged) return judged;
+    // Gemini unavailable for this search: fall through to the text path.
+  }
+
+  if (!apiKey()) {
     return null;
   }
 
@@ -447,19 +710,101 @@ export async function selectWithLlmRerank(
     chunks.map((chunk) => relevanceFilterChunk(chunk, query))
   );
 
-  const relevant = chunkResults.flat().sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
-  if (relevant.length === 0) return null;
+  const approved = chunkResults.flat();
+  if (approved.length === 0) return null;
+  const relevant = (options.adjustScores ? await options.adjustScores(approved) : approved).sort(
+    (a, b) => (b.score ?? 0) - (a.score ?? 0)
+  );
 
-  const assembled = selectWithSourceDiversity(relevant, limit);
+  const assembled = selectWithSourceDiversity(relevant, limit, options.selection);
   if (assembled.length === 0) return null;
 
-  const withReasons = await attachMatchReasons(assembled, query);
+  const filled = topUp(assembled, candidates, Math.min(options.minResults ?? 0, limit));
+  const labeled = await attachMatchReasons(filled, query);
+  const bench = await benchEmptyCategories(labeled, candidates, query);
 
-  // selectWithSourceDiversity already orders its output by score, so
-  // index 0 is the highest-scoring result among everything the LLM
-  // actually approved -- applied after attachMatchReasons so it survives
-  // that step.
-  return withReasons.map((result, index) =>
-    index === 0 ? { ...result, isTopPick: true } : result
+  return { results: [...labeled, ...bench], rejectedIds: new Set() };
+}
+
+// --- Vision path (Gemini; see visionJudge.ts) -------------------------------
+
+// "Lighting" stays as a label only when the image's light is at least
+// "clear light and shadow" on the vision scale.
+const VISION_LIGHTING_LABEL_MIN = 3;
+// Results matching the whole request (match 2) rank ahead of partial
+// matches (1) unless the keyword ranking strongly disagrees.
+const FULL_MATCH_BONUS = 0.3;
+
+function withJudgment(result: ArtworkResult, judgment: VisionJudgment | undefined): ArtworkResult {
+  if (!judgment) return result;
+
+  const reasons = judgment.categories.filter(
+    (category) => category !== LIGHTING_CATEGORY || judgment.lightingScore >= VISION_LIGHTING_LABEL_MIN
   );
+  const bonus = judgment.match === 2 ? FULL_MATCH_BONUS : 0;
+  return {
+    ...result,
+    matchReasons: reasons.length > 0 ? reasons : undefined,
+    lightingScore: judgment.lightingScore,
+    visionMatch: judgment.match === 0 ? undefined : judgment.match,
+    score: Number(((result.score ?? 0) + bonus).toFixed(4))
+  };
+}
+
+/**
+ * Same shape as the text path below it -- relevance filter, score
+ * adjustments, diversity selection, top-up, labels, bench -- but every
+ * answer comes from one vision call per image, made in parallel, so
+ * labels and the bench need no further model calls. Returns null when no
+ * image could be judged at all (key or API problem), so the caller falls
+ * back to the text path.
+ */
+async function selectWithVisionJudge(
+  candidates: ArtworkResult[],
+  query: string,
+  limit: number,
+  options: RerankOptions
+): Promise<RerankOutcome | null> {
+  const judgments = await judgeResultImages(candidates, query);
+  if (judgments.size === 0) return null;
+
+  const judged = candidates.map((result) => withJudgment(result, judgments.get(result.id)));
+  const approved = judged.filter((result) => (judgments.get(result.id)?.match ?? 0) >= 1);
+  if (approved.length === 0) return null;
+
+  const relevant = (options.adjustScores ? await options.adjustScores(approved) : approved).sort(
+    (a, b) => (b.score ?? 0) - (a.score ?? 0)
+  );
+  // The reserved museum slots normally need a caption that names the whole
+  // request (action and setting). Museum titles rarely do -- "Naked man
+  // walking to the right" never says "city" -- so "man walking in city"
+  // showed no art at all. Every approved work here was judged from its
+  // image to show at least the right subject, so visionSelection decides
+  // eligibility instead.
+  const assembled = selectWithSourceDiversity(relevant, limit, options.visionSelection);
+  if (assembled.length === 0) return null;
+
+  // Top-up only draws on images the model didn't get to (timeouts), never
+  // on ones it looked at and rejected -- those are the oil lamps.
+  const unjudged = judged.filter((result) => !judgments.has(result.id));
+  const filled = topUp(assembled, unjudged, Math.min(options.minResults ?? 0, limit));
+
+  const covered = new Set(filled.flatMap((result) => result.matchReasons ?? []));
+  const shownIds = new Set(filled.map((result) => result.id));
+  const leftovers = relevant.filter((result) => !shownIds.has(result.id));
+  const bench = MATCH_REASON_CATEGORIES.filter((category) => !covered.has(category)).flatMap(
+    (category) =>
+      leftovers
+        .filter((result) => result.matchReasons?.includes(category))
+        .slice(0, BENCH_PER_CATEGORY)
+        .map((result) => ({ ...result, matchReasons: [category], benchOnly: true }))
+  );
+
+  const rejectedIds = new Set(
+    Array.from(judgments.entries())
+      .filter(([, judgment]) => judgment.match === 0)
+      .map(([id]) => id)
+  );
+
+  return { results: [...filled, ...bench], rejectedIds };
 }

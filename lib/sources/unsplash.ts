@@ -6,8 +6,11 @@ type UnsplashSearchResponse = {
 
 type UnsplashPhoto = {
   id: string;
+  slug?: string;
   alt_description: string | null;
   description: string | null;
+  seo_meta_description?: string | null;
+  likes?: number;
   urls: {
     regular?: string;
     small?: string;
@@ -24,6 +27,25 @@ type UnsplashPhoto = {
 };
 
 const UNSPLASH_SEARCH_URL = "https://api.unsplash.com/search/photos";
+
+// Unsplash's API guidelines require crediting the photographer (linked to
+// their profile) and Unsplash, with every link back to Unsplash carrying
+// these referral parameters. utm_source should match the application name
+// registered in the Unsplash developer dashboard.
+const UNSPLASH_UTM_PARAMS = "utm_source=itera_studio&utm_medium=referral";
+
+function withUnsplashReferral(url: string): string {
+  return `${url}${url.includes("?") ? "&" : "?"}${UNSPLASH_UTM_PARAMS}`;
+}
+
+// Last X-Ratelimit-Remaining Unsplash reported (per server instance, so
+// approximate). searchAll.ts uses it to stop spending extra variant
+// searches when the hourly quota is nearly gone. null until the first call.
+let lastRateLimitRemaining: number | null = null;
+
+export function unsplashCallsRemaining(): number | null {
+  return lastRateLimitRemaining;
+}
 
 // `description` is free text the uploader wrote themselves and can be a
 // promotional blurb (brand name, "mockup", a URL) rather than a real
@@ -44,6 +66,27 @@ function pickUnsplashTitle(photo: UnsplashPhoto): string {
   return clean || "Untitled photo";
 }
 
+// Unsplash search results carry no tags, and alt text is often one short
+// sentence -- too sparse to confirm a result actually shows what was asked
+// for (see subjectFilter.ts). The slug is the photo's description as words
+// ("white-ceramic-mug-on-brown-table-<id>"), so it's a free second source.
+function slugWords(photo: UnsplashPhoto): string[] {
+  if (!photo.slug) return [];
+
+  const words = photo.slug.split("-");
+  if (words[words.length - 1] === photo.id) words.pop();
+
+  return words.filter((word) => /^[a-z]{2,}$/.test(word));
+}
+
+// Likes span from 0 to tens of thousands; log scale keeps a viral photo
+// from dominating. 10k+ likes saturates at 1.
+function likesToQualitySignal(likes: number | undefined): number | undefined {
+  if (!likes || likes <= 0) return undefined;
+
+  return Math.min(1, Math.log10(likes + 1) / 4);
+}
+
 function normalizeUnsplashPhoto(
   photo: UnsplashPhoto,
   index: number
@@ -61,11 +104,17 @@ function normalizeUnsplashPhoto(
     artist: photo.user.name || "Unknown photographer",
     source: "Unsplash",
     imageUrl,
-    originalLink,
+    originalLink: withUnsplashReferral(originalLink),
     thumbnailUrl: photo.urls.small || imageUrl,
     licenseType: "Unsplash License",
-    sourceLink: photo.user.links?.html || "https://unsplash.com",
-    score: Math.max(0, 1 - index * 0.01)
+    sourceLink: withUnsplashReferral("https://unsplash.com/"),
+    artistLink: photo.user.links?.html ? withUnsplashReferral(photo.user.links.html) : undefined,
+    score: Math.max(0, 1 - index * 0.01),
+    tags: slugWords(photo),
+    shortDescription: [photo.description, photo.seo_meta_description]
+      .filter((text): text is string => Boolean(text && text.trim() && !looksPromotional(text)))
+      .join(" ") || undefined,
+    qualitySignal: likesToQualitySignal(photo.likes)
   };
 }
 
@@ -90,11 +139,18 @@ export async function searchUnsplashArtworks(
     headers: {
       Authorization: `Client-ID ${accessKey}`
     },
-    next: { revalidate: 300 }
+    // Demo keys allow 50 requests/hour, so identical searches are served
+    // from cache for an hour rather than five minutes.
+    next: { revalidate: 3600 }
   });
 
+  const remaining = Number(response.headers.get("x-ratelimit-remaining"));
+  if (Number.isFinite(remaining) && response.headers.has("x-ratelimit-remaining")) {
+    lastRateLimitRemaining = remaining;
+  }
+
   if (!response.ok) {
-    throw new Error("Failed to search the Unsplash API.");
+    throw new Error(`Failed to search the Unsplash API (HTTP ${response.status}).`);
   }
 
   const data = (await response.json()) as UnsplashSearchResponse;

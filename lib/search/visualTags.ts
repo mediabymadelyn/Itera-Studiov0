@@ -101,14 +101,17 @@ function parseTags(raw: string): VisualTags | null {
  * LLM. Never throws -- returns null on any failure (missing key, network
  * error, timeout, bad response) so a tagging failure never breaks search.
  */
-export async function describeVisualTags(imageUrl: string): Promise<VisualTags | null> {
+export async function describeVisualTags(
+  imageUrl: string,
+  timeoutMs = REQUEST_TIMEOUT_MS
+): Promise<VisualTags | null> {
   const key = apiKey();
   if (!key || !imageUrl) {
     return null;
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
     const response = await fetch(VISUAL_TAGS_API_URL, {

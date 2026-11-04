@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
+import { reportUnsplashDownload } from "@/components/unsplashDownload";
 
 type ResultCardProps = {
   result: ArtworkResult;
@@ -126,6 +127,7 @@ export default function ResultCard({
           href={result.originalLink}
           target="_blank"
           rel="noreferrer"
+          onClick={() => reportUnsplashDownload(result)}
         >
           View original
         </a>

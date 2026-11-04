@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
 import { AttributionLink } from "@/components/ResultCard";
+import { reportUnsplashDownload } from "@/components/unsplashDownload";
 
 type LightboxProps = {
   result: ArtworkResult | null;
@@ -24,6 +25,9 @@ export default function Lightbox({ result, onClose }: LightboxProps) {
     if (!result) {
       return;
     }
+
+    // Opening a photo full-size is how a user picks it as a reference.
+    reportUnsplashDownload(result);
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -90,6 +94,7 @@ export default function Lightbox({ result, onClose }: LightboxProps) {
             href={result.originalLink}
             target="_blank"
             rel="noreferrer"
+            onClick={() => reportUnsplashDownload(result)}
           >
             View original
           </a>

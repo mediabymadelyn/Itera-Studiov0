@@ -17,6 +17,7 @@ type UnsplashPhoto = {
   };
   links: {
     html?: string;
+    download_location?: string;
   };
   user: {
     name?: string;
@@ -109,6 +110,7 @@ function normalizeUnsplashPhoto(
     licenseType: "Unsplash License",
     sourceLink: withUnsplashReferral("https://unsplash.com/"),
     artistLink: photo.user.links?.html ? withUnsplashReferral(photo.user.links.html) : undefined,
+    downloadLocation: photo.links.download_location,
     score: Math.max(0, 1 - index * 0.01),
     tags: slugWords(photo),
     shortDescription: [photo.description, photo.seo_meta_description]

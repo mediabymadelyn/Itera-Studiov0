@@ -20,6 +20,11 @@ export type ArtworkResult = {
   // The creator's own profile page, when the source has one (Unsplash
   // photographers). Unsplash's API guidelines require linking it.
   artistLink?: string;
+  // Unsplash's download-tracking endpoint for the photo. The guidelines
+  // require calling it when a user picks a photo to use; for Itera that's
+  // opening it as a reference or clicking through to the original (see
+  // components/unsplashDownload.ts and app/api/unsplash/download).
+  downloadLocation?: string;
   score?: number;
   visualTags?: VisualTags;
   subjectTitles?: string[];

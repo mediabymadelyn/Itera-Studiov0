@@ -14,7 +14,7 @@ import {
   resultWords,
   underrepresentedGender
 } from "@/lib/search/queryTerms";
-import { isMuseumResult, selectWithSourceDiversity } from "@/lib/search/selectDiverseResults";
+import { isMuseumResult, limitPerArtist, selectWithSourceDiversity } from "@/lib/search/selectDiverseResults";
 import { applySubjectRequirement, capObjectResults } from "@/lib/search/subjectFilter";
 import {
   applyDramaticLightSignal,
@@ -59,6 +59,10 @@ const POOL_EXTRA_DIVERSITY = 4;
 
 // Secondary Met searches fetch fewer objects: each one is its own request.
 const MET_SECONDARY_OBJECT_LIMIT = 4;
+// The light-source search ("candlelight" in European Paintings) is small
+// -- five works -- and the Met lists the strongest one, La Tour's "The
+// Penitent Magdalen", last, so it gets a wider limit.
+const MET_LIGHT_SOURCE_OBJECT_LIMIT = 8;
 
 // Compound requests ("hedgehog doing a backflip") rarely have results
 // showing both parts. Rather than letting either half vanish, the final set
@@ -69,11 +73,13 @@ const MIN_RESULTS_PER_QUERY_PART = 3;
 // next-best candidates (see selectWithLlmRerank).
 const MIN_RESULTS = 12;
 
-// Lighting searches: evenly lit results (see isFlatForLighting) move off
-// the main grid into the category filters. (Promoting lit bench picks into
-// their place was tried: pixels alone promoted woven bags titled "Bag
+// Lighting searches: results without strong lighting (see isStronglyLit)
+// move off the main grid into the category filters. Demoting only flat
+// ones (2/5 or less) left the 3/5 ones -- glowing face paint on black, sun
+// rays, soft side light -- filling the page. (Promoting lit bench picks
+// into their place was tried: pixels alone promoted woven bags titled "Bag
 // Face" for "dramatic lighting on face".) The grid never shrinks below
-// this, so a search with few lit candidates keeps its best flat ones at
+// this, so a search with few lit candidates keeps its best-lit others at
 // the end instead of going sparse.
 const MIN_LIGHTING_MAIN_RESULTS = 8;
 
@@ -160,10 +166,10 @@ function buildSourceSearches(
         label: `met (secondary${secondary.departmentId ? `, department ${secondary.departmentId}` : ""})`,
         promise: firstNonEmpty(secondary.queries, (q) =>
           searchMetArtworks(q, limit, {
-            objectLimit: MET_SECONDARY_OBJECT_LIMIT,
+            objectLimit: secondary.forLighting ? MET_LIGHT_SOURCE_OBJECT_LIMIT : MET_SECONDARY_OBJECT_LIMIT,
             departmentId: secondary.departmentId
           })
-        ).then((results) => tagRetrieval(results, "secondary"))
+        ).then((results) => tagRetrieval(results, secondary.forLighting ? "lighting" : "secondary"))
       });
     }
 
@@ -406,15 +412,25 @@ function demoteFlatLighting(
 ): { main: ArtworkResult[]; bench: ArtworkResult[] } {
   if (!plan.lighting) return { main, bench };
 
-  const flat = main.filter(isFlatForLighting);
-  if (flat.length === 0) return { main, bench };
+  const kept = main.filter(isStronglyLit);
+  if (kept.length === main.length) return { main, bench };
 
-  const kept = main.filter((result) => !isFlatForLighting(result));
-  const flatKept = Math.max(0, MIN_LIGHTING_MAIN_RESULTS - kept.length);
+  // Best-lit first, flat ones last; ties keep their ranked order.
+  const weaker = main
+    .filter((result) => !isStronglyLit(result))
+    .map((result, index) => ({ result, index }))
+    .sort(
+      (a, b) =>
+        Number(isFlatForLighting(a.result)) - Number(isFlatForLighting(b.result)) ||
+        (b.result.lightingScore ?? 0) - (a.result.lightingScore ?? 0) ||
+        a.index - b.index
+    )
+    .map(({ result }) => result);
+  const weakerKept = Math.max(0, MIN_LIGHTING_MAIN_RESULTS - kept.length);
 
   return {
-    main: [...kept, ...flat.slice(0, flatKept)],
-    bench: [...bench, ...flat.slice(flatKept).map((result) => ({ ...result, benchOnly: true }))]
+    main: [...kept, ...weaker.slice(0, weakerKept)],
+    bench: [...bench, ...weaker.slice(weakerKept).map((result) => ({ ...result, benchOnly: true }))]
   };
 }
 
@@ -538,8 +554,12 @@ export async function searchAllArtworks(
   const deduped = capObjectResults(dedupeRankedResults(required), plan);
   const fetchedAt = Date.now();
 
+  // Lighting searches only give a reserved diversity slot to a strongly
+  // lit result; others can still place on score.
+  const isEligibleDiversity = plan.lighting ? isStronglyLit : undefined;
   const selection = {
-    isEligibleMuseum: (result: ArtworkResult) => matchesWholeRequest(result, plan)
+    isEligibleMuseum: (result: ArtworkResult) => matchesWholeRequest(result, plan),
+    isEligibleDiversity
   };
 
   // Pixel checks (contrast for lighting queries, blur for photos) and, for
@@ -567,7 +587,8 @@ export async function searchAllArtworks(
         // score, but doesn't take a guaranteed museum slot unless objects
         // were asked for.
         visionSelection: {
-          isEligibleMuseum: (result) => plan.allowsObjects || !isObjectResult(result)
+          isEligibleMuseum: (result) => plan.allowsObjects || !isObjectResult(result),
+          isEligibleDiversity
         },
         minResults: MIN_RESULTS,
         adjustScores: withImageScores
@@ -599,11 +620,14 @@ export async function searchAllArtworks(
   );
   // Categories only exist on the LLM path, so only it can have empty ones.
   const categoryFill = llmResults ? await fillEmptyCategories([...main, ...bench], plan, limit) : [];
-  const finalResults = [
+  // The per-artist cap runs once more over everything shown: coverage,
+  // bench and category fills add results after selection. Main results
+  // come first, so they keep their places.
+  const finalResults = limitPerArtist([
     ...(llmResults ? chooseTopPick(objectsLast(main, plan), plan) : objectsLast(main, plan)),
     ...bench,
     ...categoryFill
-  ];
+  ]);
 
   const selectedAt = Date.now();
 

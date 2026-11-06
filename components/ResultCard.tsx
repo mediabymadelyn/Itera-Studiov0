@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
 import { reportUnsplashDownload } from "@/components/unsplashDownload";
 
@@ -12,18 +12,26 @@ type ResultCardProps = {
   activeReason?: string;
   onExpand: (result: ArtworkResult) => void;
   onUnavailable: (resultId: string) => void;
+  // The top pick, when it leads the grid: shown two columns wide.
+  featured?: boolean;
 };
+
+// Cards take their image's own shape (P2/P3 didn't want images cropped),
+// within these limits so a panorama or a long scroll doesn't produce a
+// sliver or a tower; past them the image is shown whole over a blurred
+// copy of itself. Until an image's shape is known, its card is 3:4.
+const MIN_ASPECT_RATIO = 0.5;
+const MAX_ASPECT_RATIO = 2;
+const DEFAULT_ASPECT_RATIO = 3 / 4;
+
+function frameAspectRatio(ratio: number | undefined): number {
+  return Math.min(MAX_ASPECT_RATIO, Math.max(MIN_ASPECT_RATIO, ratio ?? DEFAULT_ASPECT_RATIO));
+}
 
 function getTypeLabel(source: string): "Museum" | "Photography" {
   return source.toLowerCase().includes("unsplash")
     ? "Photography"
     : "Museum";
-}
-
-function getCreatorLabel(source: string): "Artist" | "Photographer" {
-  return source.toLowerCase().includes("unsplash")
-    ? "Photographer"
-    : "Artist";
 }
 
 export function AttributionLink({ href, children }: { href?: string; children: string }) {
@@ -40,13 +48,15 @@ export default function ResultCard({
   result,
   activeReason,
   onExpand,
-  onUnavailable
+  onUnavailable,
+  featured
 }: ResultCardProps) {
   const [imgSrc, setImgSrc] = useState(result.imageUrl);
   const [hasError, setHasError] = useState(false);
+  const [aspectRatio, setAspectRatio] = useState(result.imageAspectRatio);
 
   const typeLabel = getTypeLabel(result.source);
-  const creatorLabel = getCreatorLabel(result.source);
+  const isPhoto = typeLabel === "Photography";
 
   useEffect(() => {
     if (hasError) {
@@ -63,29 +73,36 @@ export default function ResultCard({
     setHasError(true);
   }
 
+  function handleImageLoad(event: SyntheticEvent<HTMLImageElement>) {
+    const { naturalWidth, naturalHeight } = event.currentTarget;
+    if (naturalWidth && naturalHeight) setAspectRatio(naturalWidth / naturalHeight);
+  }
+
   if (hasError) {
     return null;
   }
 
   return (
-    <article className="result-card">
+    <article className={`result-card${featured ? " result-card-featured" : ""}`}>
       <button
         type="button"
         className="result-image-button"
         onClick={() => onExpand(result)}
         aria-label={`Expand image: ${result.title}`}
       >
-        {/* Fixed-shape frame keeps the grid tidy; the image itself is shown
-            whole (never cropped, P2/P3) over a blurred copy of itself. */}
         <span
           className="result-image-frame"
-          style={{ backgroundImage: `url(${JSON.stringify(imgSrc)})` }}
+          style={{
+            backgroundImage: `url(${JSON.stringify(imgSrc)})`,
+            aspectRatio: String(frameAspectRatio(aspectRatio))
+          }}
         >
           <img
             className="result-image"
             src={imgSrc}
             alt={result.title}
             loading="lazy"
+            onLoad={handleImageLoad}
             onError={handleImageError}
           />
         </span>
@@ -97,40 +114,42 @@ export default function ResultCard({
         )}
         <span className="result-image-expand-hint">Click to expand</span>
       </button>
+      {/* Compact credit block: every card still shows title, creator,
+          source, license and the original link. Creator and source link out
+          wherever the source provides a page for them -- required for
+          Unsplash, in its "Photo by X on Unsplash" form (photographer
+          profile + Unsplash, with referral parameters; see unsplash.ts). */}
       <div className="result-content">
-        <div className="result-badges">
-          <span className="result-badge">{typeLabel}</span>
-        </div>
-        <div className="result-meta">
-          <span className="result-meta-label">Title</span>
-          <span className="result-title-value">{result.title}</span>
-        </div>
-        {/* Creator and source link out wherever the source provides a page
-            for them -- required for Unsplash (photographer profile +
-            Unsplash, with referral parameters; see unsplash.ts). */}
-        <div className="result-meta">
-          <span className="result-meta-label">{creatorLabel}</span>
-          <AttributionLink href={result.artistLink}>{result.artist}</AttributionLink>
-        </div>
-        <div className="result-meta">
-          <span className="result-meta-label">Source</span>
-          <AttributionLink href={result.sourceLink}>{result.source}</AttributionLink>
-        </div>
-        {result.licenseType && (
-          <div className="result-meta">
-            <span className="result-meta-label">License</span>
-            <span>{result.licenseType}</span>
-          </div>
-        )}
-        <a
-          className="result-link"
-          href={result.originalLink}
-          target="_blank"
-          rel="noreferrer"
-          onClick={() => reportUnsplashDownload(result)}
-        >
-          View original
-        </a>
+        <span className="result-badge">{typeLabel}</span>
+        <span className="result-title-value" title={result.title}>
+          {result.title}
+        </span>
+        <span className="result-credit">
+          {isPhoto ? (
+            <>
+              Photo by <AttributionLink href={result.artistLink}>{result.artist}</AttributionLink>{" "}
+              on <AttributionLink href={result.sourceLink}>{result.source}</AttributionLink>
+            </>
+          ) : (
+            <>
+              <AttributionLink href={result.artistLink}>{result.artist}</AttributionLink>
+              {" · "}
+              <AttributionLink href={result.sourceLink}>{result.source}</AttributionLink>
+            </>
+          )}
+        </span>
+        <span className="result-footer">
+          {result.licenseType && <span className="result-license">{result.licenseType}</span>}
+          <a
+            className="result-link"
+            href={result.originalLink}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => reportUnsplashDownload(result)}
+          >
+            View original
+          </a>
+        </span>
       </div>
     </article>
   );

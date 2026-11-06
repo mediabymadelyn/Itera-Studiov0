@@ -207,34 +207,24 @@ export function isDramaticallyLit(result: ArtworkResult): boolean {
 }
 
 // --- Combined lighting judgment ---------------------------------------------
-// Neither check is reliable alone: the pixel measure misses dark-toned
-// paintings lit from one side (Rembrandt's "Man with a Steel Gorget":
-// drama 0.12, vision 5/5), and the vision check (lightingScore, 0-5, see
-// scoreLighting in llmQueryLayer.ts) only runs on results labeled Lighting.
-// So a result counts as lit when either check says so, and as flat only
-// when neither does and at least one says flat.
+// When the vision check scored the image (lightingScore, 0-5, see
+// visionJudge.ts), its score decides: it sees where the light falls, while
+// pixels only see tonal spread. Pixels fail both ways -- a bright face on a
+// black ground measures 1.0 however flat the light on the face (a 1/5
+// "woman's face" was kept as lit for "dramatic lighting on face"), and a
+// dark-toned painting lit from one side measures as flat. The pixel
+// measure decides only when there's no vision score.
 const VISION_LIT_SCORE = 4;
 const VISION_FLAT_SCORE = 2;
 
-export function isLitForLighting(result: ArtworkResult): boolean {
-  return (result.lightingScore ?? 0) >= VISION_LIT_SCORE || isDramaticallyLit(result);
-}
-
-// Stricter, for the top pick: when the vision check scored the image its
-// score decides (it sees where the light falls; pixels only see tonal
-// spread -- a bright face on a dark ground measures 1.0 either way), and
-// the pixel measure decides only when there's no vision score.
 export function isStronglyLit(result: ArtworkResult): boolean {
   if (result.lightingScore !== undefined) return result.lightingScore >= VISION_LIT_SCORE;
   return isDramaticallyLit(result);
 }
 
 export function isFlatForLighting(result: ArtworkResult): boolean {
-  if (isLitForLighting(result)) return false;
-
-  const flatByVision = result.lightingScore !== undefined && result.lightingScore <= VISION_FLAT_SCORE;
-  const flatByPixels = result.imageMetrics !== undefined && result.imageMetrics.drama < FLAT_LIGHTING_DRAMA;
-  return flatByVision || flatByPixels;
+  if (result.lightingScore !== undefined) return result.lightingScore <= VISION_FLAT_SCORE;
+  return result.imageMetrics !== undefined && result.imageMetrics.drama < FLAT_LIGHTING_DRAMA;
 }
 
 export function applyImageMetrics(

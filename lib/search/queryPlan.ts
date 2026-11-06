@@ -18,6 +18,7 @@ import {
   queryAllowsObjects,
   settingMatchWords,
   backgroundVariants,
+  isFaceSubject,
   hasStatedGender,
   isBodyPartSubject,
   queryWantsBlur,
@@ -93,6 +94,8 @@ export type MuseumSearch = {
   // Tried in order until one returns results.
   queries: string[];
   departmentId?: number;
+  // Tags results as retrievedVia "lighting" instead of "secondary".
+  forLighting?: boolean;
 };
 
 type LlmRewrite = {
@@ -329,13 +332,23 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
         museumSubject
       ]);
 
+  // Only for people and faces: candlelit paintings almost always show a
+  // figure, and these results skip the subject-word check (subjectFilter.ts),
+  // leaving the vision check to confirm the subject from the image.
+  const lightSourceSearches: MuseumSearch[] =
+    lighting?.metLightSearch && isPeopleQuery(allTokens)
+      ? [{ ...lighting.metLightSearch, forLighting: true }]
+      : [];
   const museumSecondarySearches: MuseumSearch[] = options.passthrough
     ? []
     : lighting
-      ? lighting.metDepartmentIds.map((departmentId) => ({
-          queries: [museumSubject],
-          departmentId
-        }))
+      ? [
+          ...lighting.metDepartmentIds.map((departmentId) => ({
+            queries: [museumSubject],
+            departmentId
+          })),
+          ...lightSourceSearches
+        ]
       : actionSearch
         ? [{ queries: unique([`${museumSubject} ${actionSearch}`, actionSearch]) }]
         : [];
@@ -364,7 +377,7 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
       : undefined;
   const photoBackgroundQueries =
     peopleQuery && !hasStatedBackground(query)
-      ? backgroundVariants(query, photoQuery, bodyPartSubject, MAX_BACKGROUND_VARIANTS)
+      ? backgroundVariants(query, photoQuery, bodyPartSubject, MAX_BACKGROUND_VARIANTS, isFaceSubject(subjectWords))
       : [];
 
   return {

@@ -68,6 +68,11 @@ export type LightingIntent = {
   photoTerms: string;
   aicTerm: string;
   metDepartmentIds: number[];
+  // A Met search for the light itself rather than the subject, for people
+  // and faces. Catalogs describe the light source, not the effect: La
+  // Tour's "The Penitent Magdalen" (a face lit by one candle) is tagged
+  // "Candles" and never says portrait or face, so the subject search misses it.
+  metLightSearch?: { queries: string[]; departmentId: number };
   rankTerms: string[];
   rankArtists: string[];
 };
@@ -89,6 +94,7 @@ const DRAMATIC_LIGHTING: LightingIntent = {
   photoTerms: "dramatic low key",
   aicTerm: "candlelight",
   metDepartmentIds: [MET_EUROPEAN_PAINTINGS, MET_PHOTOGRAPHS],
+  metLightSearch: { queries: ["candlelight"], departmentId: MET_EUROPEAN_PAINTINGS },
   rankTerms: [
     "candle", "candlelight", "candlelit", "night", "nocturne",
     "lamp", "lamplight", "torch", "torchlight", "firelight", "moonlight",
@@ -97,7 +103,8 @@ const DRAMATIC_LIGHTING: LightingIntent = {
   rankArtists: [
     "caravaggio", "rembrandt", "georges de la tour", "joseph wright",
     "honthorst", "ribera", "zurbarán", "zurbaran", "terbrugghen",
-    "ter brugghen", "schalcken", "gerrit dou", "artemisia gentileschi"
+    "ter brugghen", "schalcken", "gerrit dou", "artemisia gentileschi",
+    "manfredi"
   ]
 };
 
@@ -277,19 +284,34 @@ export function hasStatedGender(tokens: string[]): boolean {
   return tokens.some((token) => FEMALE_WORDS.includes(token) || MALE_WORDS.includes(token));
 }
 
+const FACE_WORDS = new Set(["face", "faces"]);
+// Face variants alternate these, one per variant.
+const FACE_VARIANT_PEOPLE = ["woman's", "man's"];
+
+export function isFaceSubject(subjectWords: string[]): boolean {
+  return subjectWords.some((word) => FACE_WORDS.has(word));
+}
+
 export function backgroundVariants(
   query: string,
   baseQuery: string,
   bodyPart: boolean,
-  count: number
+  count: number,
+  face = false
 ): string[] {
-  const descriptors = bodyPart ? SKIN_DESCRIPTORS : PERSON_DESCRIPTORS;
+  // Faces name the person, not the skin: "Black face dramatic low key"
+  // reads as black face paint (and echoes "blackface") and returned one
+  // face-paint shoot, while "Black woman's face dramatic low key" returns
+  // portraits of Black women in low light.
+  const descriptors = bodyPart && !face ? SKIN_DESCRIPTORS : PERSON_DESCRIPTORS;
   const start = stableHash(query.toLowerCase()) % descriptors.length;
 
-  return Array.from(
-    { length: Math.min(count, descriptors.length) },
-    (_, offset) => `${descriptors[(start + offset) % descriptors.length]} ${baseQuery}`
-  );
+  return Array.from({ length: Math.min(count, descriptors.length) }, (_, offset) => {
+    const descriptor = descriptors[(start + offset) % descriptors.length];
+    return face
+      ? `${descriptor} ${FACE_VARIANT_PEOPLE[offset % FACE_VARIANT_PEOPLE.length]} ${baseQuery}`
+      : `${descriptor} ${baseQuery}`;
+  });
 }
 
 /**

@@ -6,6 +6,7 @@ import { MATCH_REASON_CATEGORIES } from "@/lib/search/categories";
 import ResultCard from "@/components/ResultCard";
 import Lightbox from "@/components/Lightbox";
 import LoadingIndicator from "@/components/LoadingIndicator";
+import MasonryGrid from "@/components/MasonryGrid";
 
 type SearchResponse = {
   results?: ArtworkResult[];
@@ -21,6 +22,8 @@ const SEARCH_TIMEOUT_MS = 45000;
 const LIGHTING_REASON = "Lighting";
 
 const SKELETON_CARD_COUNT = 12;
+// Mixed shapes, so the loading grid looks like the masonry grid it becomes.
+const SKELETON_ASPECT_RATIOS = ["3 / 4", "4 / 3", "1", "2 / 3", "3 / 2", "4 / 5"];
 
 function getResultType(result: ArtworkResult): ResultTypeFilter {
   return result.source.toLowerCase().includes("unsplash")
@@ -245,25 +248,29 @@ export default function SearchBar() {
         )}
       {loading && <LoadingIndicator />}
 
-      <div className="results-grid" aria-busy={loading}>
+      <MasonryGrid busy={loading}>
         {loading
           ? Array.from({ length: SKELETON_CARD_COUNT }, (_, index) => (
               <div key={index} className="result-card result-card-skeleton" aria-hidden="true">
-                <div className="skeleton-image" />
+                <div
+                  className="skeleton-image"
+                  style={{ aspectRatio: SKELETON_ASPECT_RATIOS[index % SKELETON_ASPECT_RATIOS.length] }}
+                />
                 <div className="skeleton-line" />
                 <div className="skeleton-line skeleton-line-short" />
               </div>
             ))
-          : filteredResults.map((result) => (
+          : filteredResults.map((result, index) => (
               <ResultCard
                 key={result.id}
                 result={result}
                 activeReason={reasonFilter === "all" ? undefined : reasonFilter}
                 onExpand={setExpandedResult}
                 onUnavailable={handleUnavailable}
+                featured={index === 0 && result.isTopPick}
               />
             ))}
-      </div>
+      </MasonryGrid>
 
       <Lightbox result={expandedResult} onClose={() => setExpandedResult(null)} />
     </section>

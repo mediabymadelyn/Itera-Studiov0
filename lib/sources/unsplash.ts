@@ -11,6 +11,8 @@ type UnsplashPhoto = {
   description: string | null;
   seo_meta_description?: string | null;
   likes?: number;
+  width?: number;
+  height?: number;
   urls: {
     regular?: string;
     small?: string;
@@ -111,6 +113,7 @@ function normalizeUnsplashPhoto(
     sourceLink: withUnsplashReferral("https://unsplash.com/"),
     artistLink: photo.user.links?.html ? withUnsplashReferral(photo.user.links.html) : undefined,
     downloadLocation: photo.links.download_location,
+    imageAspectRatio: photo.width && photo.height ? photo.width / photo.height : undefined,
     score: Math.max(0, 1 - index * 0.01),
     tags: slugWords(photo),
     shortDescription: [photo.description, photo.seo_meta_description]

@@ -80,6 +80,9 @@ export default function Lightbox({ result, onClose }: LightboxProps) {
               </>
             )}
           </div>
+          {result.lightingType && (
+            <div className="lightbox-lighting">Lighting: {result.lightingType}</div>
+          )}
           {result.matchReasons && result.matchReasons.length > 0 && (
             <div className="lightbox-reasons" aria-label="Reference categories">
               {result.matchReasons.map((reason) => (

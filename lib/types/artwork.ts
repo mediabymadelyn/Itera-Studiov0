@@ -25,6 +25,10 @@ export type ArtworkResult = {
   // opening it as a reference or clicking through to the original (see
   // components/unsplashDownload.ts and app/api/unsplash/download).
   downloadLocation?: string;
+  // Width / height of the image, when the source says so up front (Unsplash
+  // does). Lets the grid size each card before its image loads; other
+  // sources are sized once the image arrives.
+  imageAspectRatio?: number;
   score?: number;
   visualTags?: VisualTags;
   subjectTitles?: string[];
@@ -45,7 +49,9 @@ export type ArtworkResult = {
   // Which search found this result (see searchAll.ts). "diversity" results
   // come from the people-background Unsplash variant or the Met's
   // non-Western departments, and get a couple of reserved slots.
-  retrievedVia?: "primary" | "secondary" | "diversity";
+  // "lighting" results come from a museum search for the light itself
+  // ("candlelight"), not the subject; see queryPlan.ts.
+  retrievedVia?: "primary" | "secondary" | "diversity" | "lighting";
   // 1-3 reference categories, strongest first (e.g. "Pose/Anatomy",
   // "Lighting"). Only set by the LLM rerank layer, which is judging
   // per-candidate relevance anyway -- there's no honest source for these
@@ -55,6 +61,9 @@ export type ArtworkResult = {
   // Strength of the lighting as judged by the vision model (0-5). Used to
   // order results within the Lighting filter and for lighting queries.
   lightingScore?: number;
+  // The kind of light on the subject ("side / split", "soft window", ...),
+  // from the vision model's lighting breakdown (see visionJudge.ts).
+  lightingType?: string;
   // How well the image matches the whole request, judged by the vision
   // model from the image itself (see lib/search/visionJudge.ts): 2 = all
   // of it, 1 = right subject but missing part. Absent when not judged.

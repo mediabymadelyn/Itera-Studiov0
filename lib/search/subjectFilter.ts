@@ -79,6 +79,12 @@ function judge(result: ArtworkResult, plan: QueryPlan, subjectWords: string[]): 
     return "sparse";
   }
 
+  // Found by searching for the light ("candlelight") on a people or face
+  // search: the catalog names the light source, not the figure, so the
+  // text can't confirm the subject. Kept like sparse results; the vision
+  // check confirms the subject from the image.
+  if (result.retrievedVia === "lighting") return "sparse";
+
   return "unverified";
 }
 

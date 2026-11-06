@@ -746,6 +746,7 @@ function withJudgment(result: ArtworkResult, judgment: VisionJudgment | undefine
     ...result,
     matchReasons: reasons.length > 0 ? reasons : undefined,
     lightingScore: judgment.lightingScore,
+    lightingType: judgment.lighting.type,
     visionMatch: judgment.match === 0 ? undefined : judgment.match,
     score: Number(((result.score ?? 0) + bonus).toFixed(4))
   };

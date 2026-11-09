@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 // A plain "Loading results..." line was easy to miss and testers weren't
 // sure anything was happening (P4, P5). This sits above the skeleton grid:
 // three paint-swatch dots (colors cycle through the palette in CSS) plus a
-// short label that follows the real stages of a search (see the
-// SEARCH_TIMING_LOG breakdown in searchAll.ts): sources return in ~1-2s,
-// then the relevance check and labeling take the rest.
+// short label naming the stages of a search. They're timed from typical
+// searches (see the SEARCH_TIMING_LOG breakdown in searchAll.ts: the plan
+// ~1s, sources ~1-2s, then the image check takes most of the 8-11s), not
+// reported by the server, so a stage can show a little early or late.
 const STEPS = [
-  { afterMs: 0, label: "Checking your search" },
-  { afterMs: 1200, label: "Searching sources" },
-  { afterMs: 3000, label: "Checking results" }
+  { afterMs: 0, label: "Reading your search" },
+  { afterMs: 1000, label: "Searching museum collections and photos" },
+  { afterMs: 2500, label: "Looking at each image for your request" },
+  { afterMs: 7500, label: "Putting your page together" }
 ];
 const SLOW_NOTE_AFTER_MS = 15000;
 

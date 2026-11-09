@@ -1,8 +1,8 @@
 {
-  "builtAt": "2026-11-09T21:32:17.020Z",
+  "builtAt": "2026-11-09T23:30:10.076Z",
   "judge": {
     "model": "gemini-3.8-flash",
-    "promptVersion": 7,
+    "promptVersion": 10,
     "imageSize": 512,
     "mediaResolution": "MEDIA_RESOLUTION_MEDIUM",
     "thinkingLevel": "low",
@@ -41,7 +41,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "side",
+        "direction": "front",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -56,8 +56,8 @@
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Expression/Emotion",
+        "Texture/Material"
       ]
     },
     {
@@ -84,7 +84,7 @@
       "lighting": {
         "sources": 1,
         "quality": "hard",
-        "direction": "top",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -144,8 +144,7 @@
       ],
       "categories": [
         "Lighting",
-        "Expression/Emotion",
-        "Style/Technique"
+        "Expression/Emotion"
       ]
     },
     {
@@ -195,7 +194,7 @@
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -228,23 +227,23 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
-        "contrast": "medium",
+        "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 3,
+      "lightingScore": 4,
       "lightingType": "single source",
       "scores": [
-        3,
-        3,
-        4
+        4,
+        4,
+        3
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Expression/Emotion",
+        "Texture/Material"
       ]
     },
     {
@@ -291,8 +290,8 @@
       ],
       "categories": [
         "Lighting",
-        "Historical/Cultural Reference",
-        "Style/Technique"
+        "Texture/Material",
+        "Pose/Anatomy"
       ]
     },
     {
@@ -325,23 +324,22 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
-        "shadow": 1,
+        "direction": "side",
+        "shadow": 2,
         "type": "single source",
-        "contrast": "high",
+        "contrast": "medium",
         "readable": "yes"
       },
       "lightingScore": 3,
       "lightingType": "single source",
       "scores": [
-        4,
+        3,
         3,
         3
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -399,7 +397,7 @@
       "categories": [
         "Lighting",
         "Pose/Anatomy",
-        "Historical/Cultural Reference"
+        "Composition"
       ]
     },
     {
@@ -433,21 +431,20 @@
         "quality": "hard",
         "direction": "side",
         "shadow": 2,
-        "type": "single source",
+        "type": "side / split",
         "contrast": "high",
-        "readable": "partly"
+        "readable": "yes"
       },
-      "lightingScore": 3,
-      "lightingType": "single source",
+      "lightingScore": 4,
+      "lightingType": "side / split",
       "scores": [
         4,
-        3,
-        3
+        4,
+        4
       ],
       "categories": [
-        "Composition",
         "Lighting",
-        "Historical/Cultural Reference"
+        "Composition"
       ]
     },
     {
@@ -489,13 +486,13 @@
       "lightingScore": 4,
       "lightingType": "single source",
       "scores": [
-        5,
+        4,
         4,
         4
       ],
       "categories": [
         "Lighting",
-        "Style/Technique"
+        "Expression/Emotion"
       ]
     },
     {
@@ -529,22 +526,21 @@
         "sources": 1,
         "quality": "soft",
         "direction": "front",
-        "shadow": 2,
+        "shadow": 3,
         "type": "single source",
         "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 5,
       "lightingType": "single source",
       "scores": [
-        4,
+        5,
         5,
         4
       ],
       "categories": [
         "Lighting",
-        "Historical/Cultural Reference",
-        "Style/Technique"
+        "Expression/Emotion"
       ]
     },
     {
@@ -585,14 +581,14 @@
       "lightingScore": 4,
       "lightingType": "single source",
       "scores": [
-        5,
+        4,
         4,
         4
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Texture/Material",
+        "Pose/Anatomy"
       ]
     },
     {
@@ -624,7 +620,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "side",
+        "direction": "front",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -635,12 +631,12 @@
       "scores": [
         4,
         4,
-        5
+        4
       ],
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Style/Technique"
+        "Color Palette"
       ]
     },
     {
@@ -672,23 +668,22 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
-        "contrast": "high",
+        "contrast": "medium",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 3,
       "lightingType": "single source",
       "scores": [
-        4,
-        4,
+        2,
+        3,
         4
       ],
       "categories": [
         "Lighting",
-        "Historical/Cultural Reference",
-        "Style/Technique"
+        "Texture/Material"
       ]
     },
     {
@@ -722,22 +717,22 @@
         "sources": 1,
         "quality": "soft",
         "direction": "front",
-        "shadow": 2,
-        "type": "single source",
+        "shadow": 1,
+        "type": "soft window",
         "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 4,
-      "lightingType": "single source",
+      "lightingScore": 3,
+      "lightingType": "soft window",
       "scores": [
+        3,
         4,
-        4,
-        4
+        3
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Texture/Material",
+        "Pose/Anatomy"
       ]
     },
     {
@@ -772,7 +767,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -782,13 +777,12 @@
       "lightingType": "single source",
       "scores": [
         4,
-        4,
+        3,
         4
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Expression/Emotion"
       ]
     },
     {
@@ -821,7 +815,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "top",
+        "direction": "front",
         "shadow": 3,
         "type": "single source",
         "contrast": "high",
@@ -832,11 +826,11 @@
       "scores": [
         4,
         4,
-        5
+        4
       ],
       "categories": [
         "Lighting",
-        "Style/Technique"
+        "Expression/Emotion"
       ]
     },
     {
@@ -869,7 +863,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
+        "direction": "side",
         "shadow": 1,
         "type": "soft window",
         "contrast": "medium",
@@ -878,14 +872,14 @@
       "lightingScore": 2,
       "lightingType": "soft window",
       "scores": [
-        2,
+        4,
         2,
         2
       ],
       "categories": [
+        "Lighting",
         "Texture/Material",
-        "Historical/Cultural Reference",
-        "Lighting"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -917,7 +911,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "side",
+        "direction": "front",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -932,8 +926,7 @@
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Expression/Emotion"
       ]
     },
     {
@@ -968,11 +961,11 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
-        "shadow": 3,
+        "direction": "side",
+        "shadow": 2,
         "type": "single source",
         "contrast": "high",
-        "readable": "partly"
+        "readable": "yes"
       },
       "lightingScore": 4,
       "lightingType": "single source",
@@ -983,8 +976,7 @@
       ],
       "categories": [
         "Lighting",
-        "Historical/Cultural Reference",
-        "Style/Technique"
+        "Texture/Material"
       ]
     },
     {
@@ -1017,7 +1009,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "top",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -1032,8 +1024,7 @@
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -1066,7 +1057,7 @@
       "lighting": {
         "sources": 1,
         "quality": "hard",
-        "direction": "side",
+        "direction": "front",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -1081,8 +1072,7 @@
       ],
       "categories": [
         "Lighting",
-        "Pose/Anatomy",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -1118,22 +1108,21 @@
         "sources": 1,
         "quality": "soft",
         "direction": "front",
-        "shadow": 2,
+        "shadow": 1,
         "type": "single source",
-        "contrast": "high",
+        "contrast": "medium",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 2,
       "lightingType": "single source",
       "scores": [
-        4,
-        4,
-        4
+        2,
+        2,
+        2
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -1164,7 +1153,7 @@
       "lighting": {
         "sources": 1,
         "quality": "hard",
-        "direction": "top",
+        "direction": "front",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -1175,12 +1164,12 @@
       "scores": [
         4,
         4,
-        5
+        4
       ],
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Style/Technique"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -1216,7 +1205,7 @@
       "artificialLight": false,
       "lighting": {
         "sources": 1,
-        "quality": "soft",
+        "quality": "hard",
         "direction": "side",
         "shadow": 2,
         "type": "single source",
@@ -1233,7 +1222,7 @@
       "categories": [
         "Lighting",
         "Composition",
-        "Historical/Cultural Reference"
+        "Color Palette"
       ]
     },
     {
@@ -1266,7 +1255,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "side",
+        "direction": "front",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -1281,8 +1270,8 @@
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Expression/Emotion"
+        "Expression/Emotion",
+        "Pose/Anatomy"
       ]
     },
     {
@@ -1331,8 +1320,7 @@
       ],
       "categories": [
         "Lighting",
-        "Expression/Emotion",
-        "Style/Technique"
+        "Expression/Emotion"
       ]
     },
     {
@@ -1381,8 +1369,7 @@
       ],
       "categories": [
         "Lighting",
-        "Texture/Material",
-        "Historical/Cultural Reference"
+        "Texture/Material"
       ]
     },
     {
@@ -1429,7 +1416,6 @@
       ],
       "categories": [
         "Texture/Material",
-        "Historical/Cultural Reference",
         "Lighting"
       ]
     },
@@ -1479,7 +1465,6 @@
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
         "Composition"
       ]
     },
@@ -1521,14 +1506,14 @@
       "lightingScore": 4,
       "lightingType": "single source",
       "scores": [
-        null,
+        4,
         4,
         4
       ],
       "categories": [
         "Lighting",
-        "Pose/Anatomy",
-        "Style/Technique"
+        "Texture/Material",
+        "Pose/Anatomy"
       ]
     },
     {
@@ -1561,22 +1546,21 @@
         "sources": 1,
         "quality": "soft",
         "direction": "side",
-        "shadow": 2,
+        "shadow": 1,
         "type": "soft window",
         "contrast": "medium",
         "readable": "yes"
       },
-      "lightingScore": 3,
+      "lightingScore": 2,
       "lightingType": "soft window",
       "scores": [
-        4,
+        2,
         2,
         3
       ],
       "categories": [
         "Lighting",
-        "Historical/Cultural Reference",
-        "Style/Technique"
+        "Expression/Emotion"
       ]
     },
     {
@@ -1614,7 +1598,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
+        "direction": "side",
         "shadow": 1,
         "type": "soft window",
         "contrast": "medium",
@@ -1623,14 +1607,13 @@
       "lightingScore": 2,
       "lightingType": "soft window",
       "scores": [
-        2,
         3,
+        2,
         2
       ],
       "categories": [
         "Composition",
-        "Lighting",
-        "Historical/Cultural Reference"
+        "Lighting"
       ]
     },
     {
@@ -1673,12 +1656,11 @@
       "scores": [
         5,
         5,
-        4
+        5
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -1724,8 +1706,7 @@
       ],
       "categories": [
         "Lighting",
-        "Pose/Anatomy",
-        "Style/Technique"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -1777,8 +1758,7 @@
       ],
       "categories": [
         "Lighting",
-        "Composition",
-        "Historical/Cultural Reference"
+        "Composition"
       ]
     },
     {
@@ -1811,7 +1791,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "top",
+        "direction": "front",
         "shadow": 2,
         "type": "single source",
         "contrast": "medium",
@@ -1821,12 +1801,11 @@
       "lightingType": "single source",
       "scores": [
         3,
-        3,
-        3
+        2,
+        4
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
         "Expression/Emotion"
       ]
     },
@@ -1862,22 +1841,21 @@
         "sources": 1,
         "quality": "soft",
         "direction": "front",
-        "shadow": 2,
+        "shadow": 1,
         "type": "single source",
         "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 3,
       "lightingType": "single source",
       "scores": [
         3,
-        4,
+        3,
         4
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Texture/Material"
       ]
     },
     {
@@ -1923,8 +1901,7 @@
       ],
       "categories": [
         "Texture/Material",
-        "Historical/Cultural Reference",
-        "Lighting"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -1973,7 +1950,7 @@
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Style/Technique"
+        "Texture/Material"
       ]
     },
     {
@@ -2004,8 +1981,8 @@
       "artificialLight": false,
       "lighting": {
         "sources": 1,
-        "quality": "hard",
-        "direction": "top",
+        "quality": "soft",
+        "direction": "front",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -2015,13 +1992,13 @@
       "lightingType": "single source",
       "scores": [
         4,
-        4,
+        null,
         4
       ],
       "categories": [
         "Lighting",
         "Composition",
-        "Expression/Emotion"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -2069,7 +2046,7 @@
       "categories": [
         "Lighting",
         "Pose/Anatomy",
-        "Style/Technique"
+        "Composition"
       ]
     },
     {
@@ -2104,21 +2081,21 @@
         "quality": "soft",
         "direction": "front",
         "shadow": 1,
-        "type": "single source",
-        "contrast": "high",
+        "type": "soft window",
+        "contrast": "medium",
         "readable": "yes"
       },
-      "lightingScore": 3,
-      "lightingType": "single source",
+      "lightingScore": 2,
+      "lightingType": "soft window",
       "scores": [
-        3,
-        3,
-        3
+        2,
+        2,
+        2
       ],
       "categories": [
         "Lighting",
-        "Historical/Cultural Reference",
-        "Texture/Material"
+        "Texture/Material",
+        "Composition"
       ]
     },
     {
@@ -2150,23 +2127,23 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
-        "shadow": 2,
+        "direction": "side",
+        "shadow": 1,
         "type": "single source",
         "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 3,
       "lightingType": "single source",
       "scores": [
-        4,
         3,
-        4
+        3,
+        2
       ],
       "categories": [
         "Lighting",
         "Texture/Material",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -2213,8 +2190,7 @@
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -2265,7 +2241,7 @@
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Style/Technique"
+        "Composition"
       ]
     },
     {
@@ -2318,8 +2294,8 @@
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Composition",
+        "Texture/Material"
       ]
     },
     {
@@ -2377,7 +2353,7 @@
       "artificialLight": false,
       "lighting": {
         "sources": 1,
-        "quality": "hard",
+        "quality": "soft",
         "direction": "front",
         "shadow": 2,
         "type": "single source",
@@ -2388,13 +2364,12 @@
       "lightingType": "single source",
       "scores": [
         4,
-        5,
+        4,
         4
       ],
       "categories": [
         "Lighting",
-        "Composition",
-        "Style/Technique"
+        "Composition"
       ]
     },
     {
@@ -2428,7 +2403,7 @@
       "lighting": {
         "sources": 1,
         "quality": "hard",
-        "direction": "front",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -2444,7 +2419,7 @@
       "categories": [
         "Lighting",
         "Composition",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -2497,14 +2472,14 @@
       "lightingScore": 3,
       "lightingType": "single source",
       "scores": [
-        2,
         3,
+        2,
         3
       ],
       "categories": [
         "Lighting",
         "Texture/Material",
-        "Style/Technique"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -2537,7 +2512,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "side",
+        "direction": "front",
         "shadow": 1,
         "type": "soft window",
         "contrast": "medium",
@@ -2551,9 +2526,9 @@
         2
       ],
       "categories": [
-        "Lighting",
         "Composition",
-        "Historical/Cultural Reference"
+        "Texture/Material",
+        "Pose/Anatomy"
       ]
     },
     {
@@ -2586,12 +2561,12 @@
         "lily",
         "Mary"
       ],
-      "people": true,
+      "people": false,
       "artificialLight": false,
       "lighting": {
         "sources": 1,
-        "quality": "soft",
-        "direction": "top",
+        "quality": "hard",
+        "direction": "side",
         "shadow": 1,
         "type": "single source",
         "contrast": "high",
@@ -2606,8 +2581,8 @@
       ],
       "categories": [
         "Lighting",
-        "Expression/Emotion",
-        "Historical/Cultural Reference"
+        "Composition",
+        "Texture/Material"
       ]
     },
     {
@@ -2668,7 +2643,7 @@
       "categories": [
         "Lighting",
         "Pose/Anatomy",
-        "Style/Technique"
+        "Composition"
       ]
     },
     {
@@ -2704,20 +2679,20 @@
         "direction": "side",
         "shadow": 2,
         "type": "single source",
-        "contrast": "medium",
+        "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 3,
+      "lightingScore": 4,
       "lightingType": "single source",
       "scores": [
-        3,
         4,
-        3
+        3,
+        4
       ],
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Style/Technique"
+        "Texture/Material"
       ]
     },
     {
@@ -2815,12 +2790,12 @@
       "scores": [
         4,
         4,
-        null
+        4
       ],
       "categories": [
         "Lighting",
-        "Historical/Cultural Reference",
-        "Style/Technique"
+        "Texture/Material",
+        "Pose/Anatomy"
       ]
     },
     {
@@ -2841,7 +2816,7 @@
       "via": "eval set",
       "genres": [],
       "depicts": [],
-      "people": false,
+      "people": true,
       "artificialLight": false,
       "lighting": {
         "sources": 1,
@@ -2850,19 +2825,19 @@
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
-        "readable": "yes"
+        "readable": "partly"
       },
-      "lightingScore": 4,
+      "lightingScore": 3,
       "lightingType": "single source",
       "scores": [
-        5,
-        4,
-        4
+        3,
+        3,
+        3
       ],
       "categories": [
         "Lighting",
         "Composition",
-        "Style/Technique"
+        "Expression/Emotion"
       ]
     },
     {
@@ -2900,12 +2875,12 @@
       "scores": [
         2,
         2,
-        3
+        2
       ],
       "categories": [
         "Lighting",
-        "Texture/Material",
-        "Historical/Cultural Reference"
+        "Composition",
+        "Texture/Material"
       ]
     },
     {
@@ -2933,22 +2908,22 @@
         "sources": 1,
         "quality": "soft",
         "direction": "side",
-        "shadow": 1,
+        "shadow": 2,
         "type": "soft window",
         "contrast": "medium",
         "readable": "yes"
       },
-      "lightingScore": 2,
+      "lightingScore": 3,
       "lightingType": "soft window",
       "scores": [
-        2,
-        2,
-        2
+        3,
+        3,
+        3
       ],
       "categories": [
         "Lighting",
         "Composition",
-        "Historical/Cultural Reference"
+        "Environment/Setting"
       ]
     },
     {
@@ -2991,7 +2966,7 @@
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -3019,17 +2994,17 @@
         "sources": 1,
         "quality": "hard",
         "direction": "side",
-        "shadow": 2,
+        "shadow": 1,
         "type": "single source",
         "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 3,
       "lightingType": "single source",
       "scores": [
-        4,
-        4,
-        4
+        3,
+        3,
+        3
       ],
       "categories": [
         "Lighting",
@@ -3076,8 +3051,8 @@
       ],
       "categories": [
         "Pose/Anatomy",
-        "Style/Technique",
-        "Lighting"
+        "Composition",
+        "Texture/Material"
       ]
     },
     {
@@ -3108,17 +3083,16 @@
         "shadow": 1,
         "type": "even / flat",
         "contrast": "low",
-        "readable": "yes"
+        "readable": "partly"
       },
-      "lightingScore": 1,
+      "lightingScore": 0,
       "lightingType": "even / flat",
       "scores": [
-        1,
-        1,
+        0,
+        0,
         0
       ],
       "categories": [
-        "Style/Technique",
         "Composition",
         "Color Palette"
       ]
@@ -3162,8 +3136,7 @@
       ],
       "categories": [
         "Composition",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Environment/Setting"
       ]
     },
     {
@@ -3188,25 +3161,24 @@
       "people": false,
       "artificialLight": false,
       "lighting": {
-        "sources": 3,
+        "sources": 1,
         "quality": "soft",
         "direction": "top",
-        "shadow": 0,
-        "type": "even / flat",
+        "shadow": 1,
+        "type": "sunlight / golden hour",
         "contrast": "low",
         "readable": "yes"
       },
-      "lightingScore": 0,
-      "lightingType": "even / flat",
+      "lightingScore": 2,
+      "lightingType": "sunlight / golden hour",
       "scores": [
-        0,
-        0,
-        1
+        1,
+        2,
+        2
       ],
       "categories": [
         "Environment/Setting",
-        "Composition",
-        "Historical/Cultural Reference"
+        "Composition"
       ]
     },
     {
@@ -3242,14 +3214,13 @@
       "lightingScore": 3,
       "lightingType": "single source",
       "scores": [
-        2,
+        3,
         3,
         3
       ],
       "categories": [
         "Lighting",
-        "Expression/Emotion",
-        "Style/Technique"
+        "Expression/Emotion"
       ]
     },
     {
@@ -3277,22 +3248,22 @@
         "sources": 1,
         "quality": "soft",
         "direction": "side",
-        "shadow": 3,
+        "shadow": 2,
         "type": "side / split",
         "contrast": "high",
-        "readable": "partly"
+        "readable": "yes"
       },
       "lightingScore": 3,
       "lightingType": "side / split",
       "scores": [
         3,
-        4,
+        3,
         3
       ],
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Style/Technique"
+        "Composition"
       ]
     },
     {
@@ -3312,7 +3283,7 @@
       "via": "eval set",
       "genres": [],
       "depicts": [],
-      "people": false,
+      "people": true,
       "artificialLight": false,
       "lighting": {
         "sources": 3,
@@ -3331,8 +3302,8 @@
         0
       ],
       "categories": [
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy",
+        "Composition"
       ]
     },
     {
@@ -3371,9 +3342,7 @@
         0
       ],
       "categories": [
-        "Pose/Anatomy",
-        "Historical/Cultural Reference",
-        "Style/Technique"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -3395,7 +3364,7 @@
       "via": "eval set",
       "genres": [],
       "depicts": [],
-      "people": false,
+      "people": true,
       "artificialLight": false,
       "lighting": {
         "sources": 1,
@@ -3410,13 +3379,13 @@
       "lightingType": "single source",
       "scores": [
         4,
-        4,
+        3,
         4
       ],
       "categories": [
         "Lighting",
-        "Composition",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy",
+        "Color Palette"
       ]
     },
     {
@@ -3445,20 +3414,20 @@
         "quality": "soft",
         "direction": "ambient",
         "shadow": 0,
-        "type": "even / flat",
+        "type": "sunlight / golden hour",
         "contrast": "medium",
         "readable": "yes"
       },
       "lightingScore": 0,
-      "lightingType": "even / flat",
+      "lightingType": "sunlight / golden hour",
       "scores": [
         0,
-        2,
+        1,
         0
       ],
       "categories": [
-        "Style/Technique",
         "Environment/Setting",
+        "Texture/Material",
         "Color Palette"
       ]
     },
@@ -3487,17 +3456,17 @@
         "sources": 1,
         "quality": "soft",
         "direction": "side",
-        "shadow": 2,
+        "shadow": 1,
         "type": "sunlight / golden hour",
         "contrast": "medium",
         "readable": "yes"
       },
-      "lightingScore": 3,
+      "lightingScore": 2,
       "lightingType": "sunlight / golden hour",
       "scores": [
+        2,
         3,
-        3,
-        3
+        2
       ],
       "categories": [
         "Environment/Setting",
@@ -3529,7 +3498,7 @@
       "lighting": {
         "sources": 1,
         "quality": "hard",
-        "direction": "side",
+        "direction": "front",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -3587,8 +3556,8 @@
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Expression/Emotion"
+        "Expression/Emotion",
+        "Composition"
       ]
     },
     {
@@ -3629,9 +3598,8 @@
         0
       ],
       "categories": [
-        "Historical/Cultural Reference",
         "Texture/Material",
-        "Style/Technique"
+        "Color Palette"
       ]
     },
     {
@@ -3672,9 +3640,8 @@
         0
       ],
       "categories": [
-        "Style/Technique",
-        "Historical/Cultural Reference",
-        "Composition"
+        "Composition",
+        "Texture/Material"
       ]
     },
     {
@@ -3696,12 +3663,12 @@
       "via": "Met search: candle",
       "genres": [],
       "depicts": [],
-      "people": false,
+      "people": true,
       "artificialLight": false,
       "lighting": {
-        "sources": 3,
+        "sources": 1,
         "quality": "soft",
-        "direction": "ambient",
+        "direction": "side",
         "shadow": 1,
         "type": "even / flat",
         "contrast": "low",
@@ -3715,8 +3682,8 @@
         1
       ],
       "categories": [
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Composition",
+        "Expression/Emotion"
       ]
     },
     {
@@ -3738,28 +3705,27 @@
       "via": "Met search: candle",
       "genres": [],
       "depicts": [],
-      "people": true,
+      "people": false,
       "artificialLight": false,
       "lighting": {
         "sources": 1,
         "quality": "soft",
         "direction": "front",
         "shadow": 2,
-        "type": "single source",
-        "contrast": "high",
+        "type": "soft window",
+        "contrast": "medium",
         "readable": "yes"
       },
-      "lightingScore": 4,
-      "lightingType": "single source",
+      "lightingScore": 3,
+      "lightingType": "soft window",
       "scores": [
+        3,
         2,
-        4,
-        4
+        3
       ],
       "categories": [
         "Lighting",
-        "Pose/Anatomy",
-        "Historical/Cultural Reference"
+        "Composition"
       ]
     },
     {
@@ -3801,7 +3767,6 @@
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
         "Composition"
       ]
     },
@@ -3829,7 +3794,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
+        "direction": "side",
         "shadow": 1,
         "type": "soft window",
         "contrast": "medium",
@@ -3843,9 +3808,8 @@
         2
       ],
       "categories": [
-        "Historical/Cultural Reference",
         "Texture/Material",
-        "Style/Technique"
+        "Color Palette"
       ]
     },
     {
@@ -3870,274 +3834,24 @@
       "people": false,
       "artificialLight": true,
       "lighting": {
-        "sources": 2,
-        "quality": "soft",
-        "direction": "back",
-        "shadow": 3,
-        "type": "rim / back",
-        "contrast": "medium",
-        "readable": "partly"
-      },
-      "lightingScore": 2,
-      "lightingType": "rim / back",
-      "scores": [
-        2,
-        2,
-        2
-      ],
-      "categories": [
-        "Lighting",
-        "Environment/Setting"
-      ]
-    },
-    {
-      "id": "met-348584",
-      "title": "By Candlelight",
-      "artist": "Julian Alden Weir",
-      "source": "The Metropolitan Museum of Art",
-      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/52169.jpg",
-      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/52169.jpg",
-      "originalLink": "https://www.metmuseum.org/art/collection/search/348584",
-      "sourceLink": "https://www.metmuseum.org",
-      "licenseType": "Public Domain",
-      "classification": "Prints",
-      "culture": "American",
-      "objectDate": "ca. 1885–93",
-      "medium": "Drypoint; only state",
-      "creditLine": "Rogers Fund, 1918",
-      "via": "Met search: candlelight",
-      "genres": [],
-      "depicts": [],
-      "people": false,
-      "artificialLight": false,
-      "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "side",
-        "shadow": 2,
-        "type": "side / split",
-        "contrast": "high",
-        "readable": "yes"
-      },
-      "lightingScore": 4,
-      "lightingType": "side / split",
-      "scores": [
-        4,
-        4,
-        4
-      ],
-      "categories": [
-        "Lighting",
-        "Style/Technique"
-      ]
-    },
-    {
-      "id": "met-365311",
-      "title": "Three Persons Viewing the Gladiator by Candlelight",
-      "artist": "William Pether",
-      "source": "The Metropolitan Museum of Art",
-      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP-18854-001.jpg",
-      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP-18854-001.jpg",
-      "originalLink": "https://www.metmuseum.org/art/collection/search/365311",
-      "sourceLink": "https://www.metmuseum.org",
-      "licenseType": "Public Domain",
-      "classification": "Prints",
-      "culture": "British",
-      "objectDate": "July 10, 1769",
-      "medium": "Mezzotint; third state of three (Clayton)",
-      "creditLine": "Harris Brisbane Dick Fund, 1953",
-      "via": "Met search: candlelight",
-      "genres": [],
-      "depicts": [],
-      "people": true,
-      "artificialLight": false,
-      "lighting": {
-        "sources": 1,
-        "quality": "hard",
-        "direction": "below",
-        "shadow": 2,
-        "type": "single source",
-        "contrast": "high",
-        "readable": "yes"
-      },
-      "lightingScore": 4,
-      "lightingType": "single source",
-      "scores": [
-        5,
-        4,
-        4
-      ],
-      "categories": [
-        "Lighting",
-        "Pose/Anatomy",
-        "Composition"
-      ]
-    },
-    {
-      "id": "met-335448",
-      "title": "Christ on the Cross; verso: St. Jerome Reading by Candlelight, and Sketch of Male Torso (?)",
-      "artist": "Anthony van Dyck",
-      "source": "The Metropolitan Museum of Art",
-      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP802373.jpg",
-      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP802373.jpg",
-      "originalLink": "https://www.metmuseum.org/art/collection/search/335448",
-      "sourceLink": "https://www.metmuseum.org",
-      "licenseType": "Public Domain",
-      "classification": "Drawings",
-      "culture": "Flemish",
-      "objectDate": "n.d.",
-      "medium": "Recto and verso: black and white chalk",
-      "creditLine": "Bequest of Walter C. Baker, 1971",
-      "via": "Met search: candlelight",
-      "genres": [],
-      "depicts": [],
-      "people": true,
-      "artificialLight": false,
-      "lighting": {
-        "sources": 1,
-        "quality": "soft",
-        "direction": "side",
-        "shadow": 1,
-        "type": "single source",
-        "contrast": "medium",
-        "readable": "yes"
-      },
-      "lightingScore": 2,
-      "lightingType": "single source",
-      "scores": [
-        2,
-        2,
-        2
-      ],
-      "categories": [
-        "Pose/Anatomy",
-        "Style/Technique"
-      ]
-    },
-    {
-      "id": "met-820743",
-      "title": "A Quartet of Singers, Lute players, and Bell Ringers Playing in a Tavern by Candlelight",
-      "artist": "Leonaert Bramer",
-      "source": "The Metropolitan Museum of Art",
-      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP887752.jpg",
-      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP887752.jpg",
-      "originalLink": "https://www.metmuseum.org/art/collection/search/820743",
-      "sourceLink": "https://www.metmuseum.org",
-      "licenseType": "Public Domain",
-      "classification": "Drawings",
-      "culture": "Dutch",
-      "objectDate": "mid to late 17th century",
-      "medium": "Brush drawing in gray ink, heightened with white bodycolor; framing lines in brush and gray ink with white bodycolor",
-      "creditLine": "Gift of Kenneth Grebinar, in celebration of the Museum's 150th Anniversary, 2019",
-      "via": "Met search: candlelight",
-      "genres": [],
-      "depicts": [],
-      "people": false,
-      "artificialLight": false,
-      "lighting": {
-        "sources": 1,
-        "quality": "soft",
-        "direction": "side",
-        "shadow": 1,
-        "type": "single source",
-        "contrast": "medium",
-        "readable": "yes"
-      },
-      "lightingScore": 2,
-      "lightingType": "single source",
-      "scores": [
-        3,
-        2,
-        2
-      ],
-      "categories": [
-        "Lighting",
-        "Composition",
-        "Style/Technique"
-      ]
-    },
-    {
-      "id": "met-345483",
-      "title": "Baccio Bandinelli in his studio holding a statuette of Venus, students sketching from a model by candlelight",
-      "artist": "Agostino Veneziano (Agostino dei Musi)",
-      "source": "The Metropolitan Museum of Art",
-      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP843177.jpg",
-      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP843177.jpg",
-      "originalLink": "https://www.metmuseum.org/art/collection/search/345483",
-      "sourceLink": "https://www.metmuseum.org",
-      "licenseType": "Public Domain",
-      "classification": "Prints",
-      "culture": "Italian",
-      "objectDate": "1531",
-      "medium": "Engraving",
-      "creditLine": "The Elisha Whittelsey Collection, The Elisha Whittelsey Fund, 1949",
-      "via": "Met search: candlelight",
-      "genres": [],
-      "depicts": [],
-      "people": false,
-      "artificialLight": false,
-      "lighting": {
-        "sources": 1,
-        "quality": "hard",
-        "direction": "front",
-        "shadow": 2,
-        "type": "single source",
-        "contrast": "high",
-        "readable": "yes"
-      },
-      "lightingScore": 4,
-      "lightingType": "single source",
-      "scores": [
-        4,
-        4,
-        4
-      ],
-      "categories": [
-        "Lighting",
-        "Composition",
-        "Historical/Cultural Reference"
-      ]
-    },
-    {
-      "id": "met-340877",
-      "title": "The Card Players",
-      "artist": "Anonymous, British, 19th century",
-      "source": "The Metropolitan Museum of Art",
-      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP806072.jpg",
-      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP806072.jpg",
-      "originalLink": "https://www.metmuseum.org/art/collection/search/340877",
-      "sourceLink": "https://www.metmuseum.org",
-      "licenseType": "Public Domain",
-      "classification": "Drawings",
-      "culture": "British",
-      "objectDate": "1780–1820",
-      "medium": "Brush and gray and black ink wash heightened with white gouache (bodycolor)",
-      "creditLine": "Bequest of Alexandrine Sinsheimer, 1958",
-      "via": "Met search: candlelight",
-      "genres": [],
-      "depicts": [],
-      "people": false,
-      "artificialLight": false,
-      "lighting": {
-        "sources": 2,
-        "quality": "hard",
-        "direction": "front",
+        "direction": "top",
         "shadow": 3,
         "type": "single source",
-        "contrast": "high",
-        "readable": "partly"
+        "contrast": "medium",
+        "readable": "no"
       },
-      "lightingScore": 3,
+      "lightingScore": 2,
       "lightingType": "single source",
       "scores": [
+        2,
         3,
-        3,
-        3
+        2
       ],
       "categories": [
-        "Lighting",
-        "Composition",
-        "Historical/Cultural Reference"
+        "Environment/Setting",
+        "Lighting"
       ]
     },
     {
@@ -4164,7 +3878,7 @@
       "lighting": {
         "sources": 1,
         "quality": "hard",
-        "direction": "front",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -4202,7 +3916,7 @@
       "via": "Met search: torch",
       "genres": [],
       "depicts": [],
-      "people": false,
+      "people": true,
       "artificialLight": false,
       "lighting": {
         "sources": 2,
@@ -4216,14 +3930,13 @@
       "lightingScore": 1,
       "lightingType": "soft window",
       "scores": [
-        2,
         1,
-        1
+        1,
+        2
       ],
       "categories": [
         "Composition",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -4248,23 +3961,22 @@
       "people": true,
       "artificialLight": false,
       "lighting": {
-        "sources": 1,
+        "sources": 2,
         "quality": "soft",
         "direction": "front",
         "shadow": 1,
-        "type": "even / flat",
+        "type": "soft window",
         "contrast": "medium",
         "readable": "yes"
       },
       "lightingScore": 1,
-      "lightingType": "even / flat",
+      "lightingType": "soft window",
       "scores": [
         1,
         1,
         1
       ],
       "categories": [
-        "Historical/Cultural Reference",
         "Pose/Anatomy"
       ]
     },
@@ -4292,23 +4004,22 @@
       "lighting": {
         "sources": 1,
         "quality": "hard",
-        "direction": "below",
+        "direction": "front",
         "shadow": 3,
-        "type": "under / top",
+        "type": "single source",
         "contrast": "high",
         "readable": "partly"
       },
       "lightingScore": 4,
-      "lightingType": "under / top",
+      "lightingType": "single source",
       "scores": [
-        4,
+        5,
         4,
         4
       ],
       "categories": [
         "Lighting",
-        "Composition",
-        "Historical/Cultural Reference"
+        "Composition"
       ]
     },
     {
@@ -4336,22 +4047,21 @@
         "sources": 3,
         "quality": "soft",
         "direction": "ambient",
-        "shadow": 0,
+        "shadow": 1,
         "type": "even / flat",
         "contrast": "low",
         "readable": "yes"
       },
-      "lightingScore": 0,
+      "lightingScore": 1,
       "lightingType": "even / flat",
       "scores": [
-        0,
-        0,
-        0
+        1,
+        1,
+        1
       ],
       "categories": [
         "Composition",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Color Palette"
       ]
     },
     {
@@ -4393,8 +4103,7 @@
       ],
       "categories": [
         "Pose/Anatomy",
-        "Composition",
-        "Style/Technique"
+        "Composition"
       ]
     },
     {
@@ -4435,9 +4144,8 @@
         1
       ],
       "categories": [
-        "Environment/Setting",
         "Composition",
-        "Historical/Cultural Reference"
+        "Environment/Setting"
       ]
     },
     {
@@ -4459,12 +4167,1183 @@
       "via": "Met search: torch",
       "genres": [],
       "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Composition",
+        "Expression/Emotion"
+      ]
+    },
+    {
+      "id": "met-436423",
+      "title": "The Night-Hag Visiting Lapland Witches",
+      "artist": "Henry Fuseli",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-26884-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-26884-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436423",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Swiss",
+      "objectDate": "1796",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905322",
+      "creditLine": "Purchase, Bequest of Lillian S. Timken, by exchange, and Victor Wilbour Memorial, The Alfred N. Punnett Endowment, Marquand and Charles B. Curtis Funds, 1980",
+      "via": "Met search: night",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "under / top",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "under / top",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Expression/Emotion"
+      ]
+    },
+    {
+      "id": "met-437631",
+      "title": "Night Scene on the Volga",
+      "artist": "Alexei Kondratievich Savrasov",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-23542-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-23542-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437631",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Russian",
+      "objectDate": "1871",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19913288",
+      "creditLine": "Gift of Humanities Fund Inc., 1972",
+      "via": "Met search: night",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "back",
+        "shadow": 3,
+        "type": "silhouette",
+        "contrast": "low",
+        "readable": "no"
+      },
+      "lightingScore": 2,
+      "lightingType": "silhouette",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "met-437188",
+      "title": "Interior of a Gothic Church at Night",
+      "artist": "Pieter Neeffs the Elder",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/ep30.58.21.bw.R.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/ep30.58.21.bw.R.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437188",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Flemish",
+      "objectDate": "probably ca. 1635–40",
+      "medium": "Oil on copper",
+      "wikidataId": "Q19912901",
+      "creditLine": "Bequest of Edward C. Post, 1915",
+      "via": "Met search: night",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 2,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "no"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        2,
+        1
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-437189",
+      "title": "Interior of a Gothic Church at Night",
+      "artist": "Pieter Neeffs the Younger",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-23544-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-23544-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437189",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Flemish",
+      "objectDate": "ca. 1660",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19912902",
+      "creditLine": "Purchase, 1871",
+      "via": "Met search: night",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "partly"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        2,
+        1
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Lighting",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-437784",
+      "title": "Alexander the Great Rescued from the River Cydnus",
+      "artist": "Pietro Testa",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-22844-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-22844-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437784",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "ca. 1650",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19912554",
+      "creditLine": "Gift of Eula M. Ganz, in memory of Paul H. Ganz, 1987",
+      "via": "Met search: night",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        null
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-441769",
+      "title": "Virgil's Tomb by Moonlight, with Silius Italicus Declaiming",
+      "artist": "Joseph Wright (Wright of Derby)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP322015.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP322015.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/441769",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "British",
+      "objectDate": "1779",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19912176",
+      "creditLine": "Purchase, Lila Acheson Wallace Gift, Gifts of Mrs. William M. Haupt, Josephine Bay Paul, and Estate of George Quackenbush, in his memory, by exchange, The Morris and Alma Schapiro Fund Gift, and funds from various donors, 2013",
+      "via": "Met search: lantern",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "partly"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        3,
+        2
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Lighting",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-436598",
+      "title": "Santa Maria della Salute",
+      "artist": "Francesco Guardi",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-28008-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-28008-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436598",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "mid- to late 1760s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19912421",
+      "creditLine": "Purchase, 1871",
+      "via": "Met search: lantern",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "sunlight / golden hour",
+        "contrast": "medium",
+        "readable": "no"
+      },
+      "lightingScore": 2,
+      "lightingType": "sunlight / golden hour",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-436200",
+      "title": "The Adoration of the Shepherds",
+      "artist": "Christian Wilhelm Ernst Dietrich",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/ep71.162.bw.R.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/ep71.162.bw.R.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436200",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "German",
+      "objectDate": "1760s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911972",
+      "creditLine": "Purchase, 1871",
+      "via": "Met search: lantern",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "below",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        3,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-438105",
+      "title": "A Lock, a Column, and a Church beside a Lagoon",
+      "artist": "Canaletto (Giovanni Antonio Canal)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/Wrightsman20.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/Wrightsman20.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/438105",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q78639914",
+      "creditLine": "Bequest of Mrs. Charles Wrightsman, 2019",
+      "via": "Met search: lantern",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "sunlight / golden hour",
+        "contrast": "medium",
+        "readable": "no"
+      },
+      "lightingScore": 2,
+      "lightingType": "sunlight / golden hour",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-435967",
+      "title": "The Burning of Sodom (formerly \"The Destruction of Sodom\")",
+      "artist": "Camille Corot",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT2014.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DT2014.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435967",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "1843 and 1857",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911614",
+      "creditLine": "H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929",
+      "via": "Met search: fire",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        4,
+        1
+      ],
+      "categories": [
+        "Composition",
+        "Environment/Setting"
+      ]
+    },
+    {
+      "id": "met-817124",
+      "title": "Cain Slaying Abel",
+      "artist": "Pier Francesco Mola",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-19625-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-19625-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/817124",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "ca. 1650–52",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q111272643",
+      "creditLine": "Gift of Alan M. May, in memory of his wife, Marcia W. May, and in celebration of the Museum's 150th Anniversary, 2020",
+      "via": "Met search: fire",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        null,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-436230",
+      "title": "Card Players in a Drawing Room",
+      "artist": "Pierre Louis Dumesnil the Younger",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP356146.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP356146.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436230",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "ca. 1756–59",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19912341",
+      "creditLine": "Bequest of Harry G. Sperling, 1971",
+      "via": "Met search: fire",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Environment/Setting"
+      ]
+    },
+    {
+      "id": "met-437652",
+      "title": "The Virgin Adoring the Child with the Infant Saint John the Baptist",
+      "artist": "Jacopo di Arcangelo (called Jacopo del Sellaio)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-42550-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-42550-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437652",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "late 1480s",
+      "medium": "Tempera and gold on wood",
+      "wikidataId": "Q19906253",
+      "creditLine": "Gift of George Blumenthal, 1941",
+      "via": "Met search: fire",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-438661",
+      "title": "Study of a Female Nude",
+      "artist": "Henri Lehmann",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP103071.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP103071.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/438661",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "1840",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q20167232",
+      "creditLine": "The Whitney Collection, Gift of Wheelock Whitney III, and Purchase, Gift of Mr. and Mrs. Charles S. McVeigh, by exchange, 2003",
+      "via": "Met search: fire",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "back",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        3
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "met-437283",
+      "title": "A Hunting Scene",
+      "artist": "Piero di Cosimo (Piero di Lorenzo di Piero d'Antonio)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-19296-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-19296-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437283",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "ca. 1494–1500",
+      "medium": "Tempera and oil transferred to Masonite",
+      "wikidataId": "Q3649298",
+      "creditLine": "Gift of Robert Gordon, 1875",
+      "via": "Met search: fire",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "medium",
+        "readable": "partly"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        1,
+        0
+      ],
+      "categories": [
+        "Composition",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-436084",
+      "title": "Boats on the Seacoast at Etaples",
+      "artist": "Charles-François Daubigny",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT1981.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DT1981.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436084",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "1871",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19912321",
+      "creditLine": "Catharine Lorillard Wolfe Collection, Wolfe Fund, 1903",
+      "via": "Met search: fire",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Texture/Material"
+      ]
+    },
+    {
+      "id": "met-348584",
+      "title": "By Candlelight",
+      "artist": "Julian Alden Weir",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/52169.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/52169.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/348584",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "American",
+      "objectDate": "ca. 1885–93",
+      "medium": "Drypoint; only state",
+      "creditLine": "Rogers Fund, 1918",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "below",
+        "shadow": 2,
+        "type": "under / top",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "under / top",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion"
+      ]
+    },
+    {
+      "id": "met-365311",
+      "title": "Three Persons Viewing the Gladiator by Candlelight",
+      "artist": "William Pether",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP-18854-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP-18854-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/365311",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "British",
+      "objectDate": "July 10, 1769",
+      "medium": "Mezzotint; third state of three (Clayton)",
+      "creditLine": "Harris Brisbane Dick Fund, 1953",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 3,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 5,
+      "lightingType": "single source",
+      "scores": [
+        5,
+        5,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-335448",
+      "title": "Christ on the Cross; verso: St. Jerome Reading by Candlelight, and Sketch of Male Torso (?)",
+      "artist": "Anthony van Dyck",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP802373.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP802373.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/335448",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Drawings",
+      "culture": "Flemish",
+      "objectDate": "n.d.",
+      "medium": "Recto and verso: black and white chalk",
+      "creditLine": "Bequest of Walter C. Baker, 1971",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-820743",
+      "title": "A Quartet of Singers, Lute players, and Bell Ringers Playing in a Tavern by Candlelight",
+      "artist": "Leonaert Bramer",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP887752.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP887752.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/820743",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Drawings",
+      "culture": "Dutch",
+      "objectDate": "mid to late 17th century",
+      "medium": "Brush drawing in gray ink, heightened with white bodycolor; framing lines in brush and gray ink with white bodycolor",
+      "creditLine": "Gift of Kenneth Grebinar, in celebration of the Museum's 150th Anniversary, 2019",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        2,
+        3
+      ],
+      "categories": [
+        "Composition",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-345483",
+      "title": "Baccio Bandinelli in his studio holding a statuette of Venus, students sketching from a model by candlelight",
+      "artist": "Agostino Veneziano (Agostino dei Musi)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP843177.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP843177.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/345483",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Italian",
+      "objectDate": "1531",
+      "medium": "Engraving",
+      "creditLine": "The Elisha Whittelsey Collection, The Elisha Whittelsey Fund, 1949",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Environment/Setting"
+      ]
+    },
+    {
+      "id": "met-340877",
+      "title": "The Card Players",
+      "artist": "Anonymous, British, 19th century",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP806072.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP806072.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/340877",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Drawings",
+      "culture": "British",
+      "objectDate": "1780–1820",
+      "medium": "Brush and gray and black ink wash heightened with white gouache (bodycolor)",
+      "creditLine": "Bequest of Alexandrine Sinsheimer, 1958",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
       "people": false,
       "artificialLight": false,
       "lighting": {
         "sources": 2,
-        "quality": "soft",
+        "quality": "hard",
         "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "partly"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Lighting",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-386049",
+      "title": "Diversarum Iconum...Series Secunda",
+      "artist": "Anton Maria Zanetti the Elder",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/MM6083.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/MM6083.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/386049",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Albums",
+      "culture": "Italian",
+      "objectDate": "1749",
+      "medium": "Chiaroscuro woodcuts, etchings, and engravings",
+      "creditLine": "Harris Brisbane Dick Fund, 1932",
+      "via": "Met search: chiaroscuro",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "side / split",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "side / split",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "met-638336",
+      "title": "The Israelites Passing the Red Sea, from Diversarum Iconum...Series Secunda",
+      "artist": "Anton Maria Zanetti the Elder",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP887819.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP887819.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/638336",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Italian",
+      "objectDate": "1740",
+      "medium": "Chiaroscuro woodcut from four blocks in yellow-green ink",
+      "creditLine": "Harris Brisbane Dick Fund, 1932",
+      "via": "Met search: chiaroscuro",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-335627",
+      "title": "Diversarum Iconum...",
+      "artist": "Anton Maria Zanetti the Elder",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/MM6091.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/MM6091.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/335627",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Albums",
+      "culture": "Italian",
+      "objectDate": "ca. 1749",
+      "medium": "Chiaroscuro woodcuts and engravings",
+      "creditLine": "Harris Brisbane Dick Fund, 1923",
+      "via": "Met search: chiaroscuro",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-825915",
+      "title": "The Apostle Saint James",
+      "artist": "Anton Maria Zanetti the Elder",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP885858.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP885858.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/825915",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Italian",
+      "objectDate": "1722",
+      "medium": "Chiaroscuro woodcut from three blocks in ochre and blue",
+      "creditLine": "Gift of Mr. and Mrs. Daniel B. Fuller, 1957",
+      "via": "Met search: chiaroscuro",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "back",
+        "shadow": 2,
+        "type": "rim / back",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "rim / back",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-357255",
+      "title": "Diogenes seated with his barrel behind him, and reading a book while holding a stick that rests on a geometry book to his right",
+      "artist": "Giovanni Jacopo Caraglio",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP851666.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP851666.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/357255",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Italian",
+      "objectDate": "ca. 1526–27",
+      "medium": "Engraving",
+      "creditLine": "Harris Brisbane Dick Fund, 1917",
+      "via": "Met search: chiaroscuro",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "side / split",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "side / split",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-633627",
+      "title": "Allegory of a thesis, two women hold inscribed tablets",
+      "artist": "Bartolomeo Coriolano",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP880162.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP880162.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/633627",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Italian",
+      "objectDate": "1640",
+      "medium": "Chiaroscuro woodcut from two blocks printed and green (only state)",
+      "creditLine": "Purchase, Joseph Pulitzer Bequest, 1917",
+      "via": "Met search: chiaroscuro",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
         "shadow": 1,
         "type": "even / flat",
         "contrast": "medium",
@@ -4473,14 +5352,591 @@
       "lightingScore": 1,
       "lightingType": "even / flat",
       "scores": [
-        2,
         1,
-        1
+        1,
+        3
       ],
       "categories": [
         "Composition",
-        "Historical/Cultural Reference",
-        "Style/Technique"
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-397294",
+      "title": "The Sacrifice, or Mucius Scaevola",
+      "artist": "Parmigianino (Girolamo Francesco Maria Mazzola)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP832080.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP832080.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/397294",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Italian",
+      "objectDate": "16th century",
+      "medium": "Chiaroscuro woodcut",
+      "creditLine": "Bequest of Phyllis Massar, 2011",
+      "via": "Met search: chiaroscuro",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "partly"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        2,
+        2
+      ],
+      "categories": [
+        "Composition",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "met-360259",
+      "title": "A Woman Peeling Pears",
+      "artist": "Wallerant Vaillant",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP104274.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP104274.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/360259",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Dutch",
+      "objectDate": "mid-17th century",
+      "medium": "Mezzotint; second state of two",
+      "creditLine": "The Elisha Whittelsey Collection, The Elisha whittelsey Fund, 1956",
+      "via": "Met search: mezzotint",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        null,
+        2
+      ],
+      "categories": [
+        "Composition",
+        "Texture/Material",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "met-363260",
+      "title": "The Life Class of the Vienna Academy",
+      "artist": "Johann Jacobe",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP-1390-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP-1390-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/363260",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Austrian",
+      "objectDate": "1790",
+      "medium": "Mezzotint; proof",
+      "creditLine": "The Elisha Whittelsey Collection, The Elisha Whittelsey Fund, 2003",
+      "via": "Met search: mezzotint",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "under / top",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "under / top",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Environment/Setting"
+      ]
+    },
+    {
+      "id": "met-334135",
+      "title": "Self-Portrait",
+      "artist": "Jean Etienne Liotard",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP104263.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP104263.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/334135",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Swiss",
+      "objectDate": "ca. 1778–80",
+      "medium": "Roulette, engraving, over mezzotint; proof before letters",
+      "creditLine": "The Elisha Whittelsey Collection, The Elisha Whittelsey Fund, 1949",
+      "via": "Met search: mezzotint",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-359770",
+      "title": "The Great Lansquenet or Standard Bearer",
+      "artist": "Prince Rupert of the Rhine",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP841418.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP841418.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/359770",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Bohemian",
+      "objectDate": "1658",
+      "medium": "Mezzotint; first state of two",
+      "creditLine": "Harris Brisbane Dick Fund, 1933",
+      "via": "Met search: mezzotint",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-366027",
+      "title": "Whiskers",
+      "artist": "Dox Thrash",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP888616.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP888616.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/366027",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "American",
+      "objectDate": "ca. 1939–40",
+      "medium": "Carborundum mezzotint",
+      "wikidataId": "Q97101237",
+      "creditLine": "Gift of the Work Projects Administration, Pennsylvania, 1943",
+      "via": "Met search: mezzotint",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Texture/Material",
+        "Expression/Emotion"
+      ]
+    },
+    {
+      "id": "met-383023",
+      "title": "Mêr de Glace, Valley of Chamouni-Savoy (Liber Studiorum, part X, plate 50)",
+      "artist": "Joseph Mallord William Turner",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP847237.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP847237.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/383023",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "British",
+      "objectDate": "May 23, 1812",
+      "medium": "Etching and mezzotint; fifth state of five (Finberg)",
+      "creditLine": "Gift of Edwin De T. Bechtel, 1951",
+      "via": "Met search: mezzotint",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 2,
+        "type": "sunlight / golden hour",
+        "contrast": "medium",
+        "readable": "no"
+      },
+      "lightingScore": 2,
+      "lightingType": "sunlight / golden hour",
+      "scores": [
+        3,
+        2,
+        2
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition",
+        "Texture/Material"
+      ]
+    },
+    {
+      "id": "met-382953",
+      "title": "Mêr de Glace, Valley of Chamouni-Savoy, part X, plate 50 from \"Liber Studiorum\"",
+      "artist": "Joseph Mallord William Turner",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP821483.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP821483.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/382953",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "British",
+      "objectDate": "May 23, 1812",
+      "medium": "Etching and mezzotint; third state of five (Finberg)",
+      "creditLine": "Harris Brisbane Dick Fund, 1928",
+      "via": "Met search: mezzotint",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "sunlight / golden hour",
+        "contrast": "medium",
+        "readable": "no"
+      },
+      "lightingScore": 2,
+      "lightingType": "sunlight / golden hour",
+      "scores": [
+        2,
+        4,
+        2
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-671399",
+      "title": "The Great Executioner with the Head of Saint John the Baptist",
+      "artist": "Prince Rupert of the Rhine",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP846852.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP846852.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/671399",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Bohemian",
+      "objectDate": "1658",
+      "medium": "Mezzotint with engraving; third state",
+      "creditLine": "Purchase, Lila Acheson Wallace Gift, in honor of George R. Goldner, 2015",
+      "via": "Met search: mezzotint",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-372551",
+      "title": "Price's Candle-Works (Price's Candle Factory)",
+      "artist": "James McNeill Whistler",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP813450.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP813450.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/372551",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "American",
+      "objectDate": "1876–77",
+      "medium": "Drypoint, printed in black ink on dark ivory Japan; ninth state of thirteen (Glasgow)",
+      "creditLine": "Harris Brisbane Dick Fund, 1917",
+      "via": "Met search: candle",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "no"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-359863",
+      "title": "Designs for Four Candle Fixtures",
+      "artist": "Anonymous, French, 19th century",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP809273.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP809273.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/359863",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Drawings",
+      "culture": "French",
+      "objectDate": "19th century",
+      "medium": "Pen and brown ink",
+      "creditLine": "Rogers Fund, 1966",
+      "via": "Met search: candle",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        1,
+        0
+      ],
+      "categories": [
+        "Texture/Material"
+      ]
+    },
+    {
+      "id": "met-633473",
+      "title": "Design for a Candlestick with Candle Wick Trimmers",
+      "artist": "Erasmus Hornick",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP854146.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP854146.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/633473",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Netherlandish",
+      "objectDate": "1560–70",
+      "medium": "Etching (unique sheet)",
+      "creditLine": "Anonymous Gift, in memory of Walter E. Stait, 2013",
+      "via": "Met search: candle",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Texture/Material",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-390560",
+      "title": "Candle Stands, in Chippendale Drawings, Vol. I",
+      "artist": "Thomas Chippendale",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP104205.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP104205.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/390560",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Drawings",
+      "culture": "British",
+      "objectDate": "1753",
+      "medium": "Black ink, gray wash",
+      "creditLine": "Rogers Fund, 1920",
+      "via": "Met search: candle",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Texture/Material"
+      ]
+    },
+    {
+      "id": "met-390563",
+      "title": "Candle Stands, in Chippendale Drawings, Vol. I",
+      "artist": "Thomas Chippendale",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP104126.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP104126.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/390563",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Drawings",
+      "culture": "British",
+      "objectDate": "1753",
+      "medium": "Black ink, gray wash",
+      "creditLine": "Rogers Fund, 1920",
+      "via": "Met search: candle",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        1,
+        0
+      ],
+      "categories": [
+        "Texture/Material"
       ]
     },
     {
@@ -4503,7 +5959,7 @@
       "people": false,
       "artificialLight": false,
       "lighting": {
-        "sources": 1,
+        "sources": 3,
         "quality": "soft",
         "direction": "ambient",
         "shadow": 0,
@@ -4511,17 +5967,16 @@
         "contrast": "low",
         "readable": "no"
       },
-      "lightingScore": 1,
+      "lightingScore": 0,
       "lightingType": "even / flat",
       "scores": [
-        1,
         0,
-        2
+        1,
+        0
       ],
       "categories": [
-        "Color Palette",
         "Environment/Setting",
-        "Style/Technique"
+        "Color Palette"
       ]
     },
     {
@@ -4566,8 +6021,7 @@
       ],
       "categories": [
         "Lighting",
-        "Pose/Anatomy",
-        "Style/Technique"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -4591,24 +6045,24 @@
       "artificialLight": false,
       "lighting": {
         "sources": 1,
-        "quality": "soft",
-        "direction": "top",
-        "shadow": 2,
-        "type": "dappled / patterned",
+        "quality": "hard",
+        "direction": "back",
+        "shadow": 3,
+        "type": "sunlight / golden hour",
         "contrast": "medium",
         "readable": "yes"
       },
       "lightingScore": 3,
-      "lightingType": "dappled / patterned",
+      "lightingType": "sunlight / golden hour",
       "scores": [
         3,
-        2,
+        3,
         3
       ],
       "categories": [
         "Composition",
-        "Style/Technique",
-        "Color Palette"
+        "Color Palette",
+        "Environment/Setting"
       ]
     },
     {
@@ -4643,12 +6097,12 @@
       "lightingType": "sunlight / golden hour",
       "scores": [
         3,
-        3,
+        2,
         3
       ],
       "categories": [
         "Color Palette",
-        "Style/Technique",
+        "Environment/Setting",
         "Lighting"
       ]
     },
@@ -4678,7 +6132,7 @@
         "shadow": 0,
         "type": "even / flat",
         "contrast": "low",
-        "readable": "no"
+        "readable": "yes"
       },
       "lightingScore": 0,
       "lightingType": "even / flat",
@@ -4690,7 +6144,7 @@
       "categories": [
         "Color Palette",
         "Environment/Setting",
-        "Style/Technique"
+        "Texture/Material"
       ]
     },
     {
@@ -4710,7 +6164,7 @@
       "via": "eval set",
       "genres": [],
       "depicts": [],
-      "people": false,
+      "people": true,
       "artificialLight": false,
       "lighting": {
         "sources": 3,
@@ -4731,7 +6185,7 @@
       "categories": [
         "Composition",
         "Environment/Setting",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -4756,23 +6210,22 @@
       "lighting": {
         "sources": 3,
         "quality": "soft",
-        "direction": "front",
-        "shadow": 1,
+        "direction": "ambient",
+        "shadow": 0,
         "type": "even / flat",
         "contrast": "low",
         "readable": "yes"
       },
-      "lightingScore": 1,
+      "lightingScore": 0,
       "lightingType": "even / flat",
       "scores": [
         1,
-        1,
-        1
+        0,
+        0
       ],
       "categories": [
         "Color Palette",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Composition"
       ]
     },
     {
@@ -4808,7 +6261,7 @@
       "scores": [
         3,
         3,
-        4
+        3
       ],
       "categories": [
         "Lighting",
@@ -4841,20 +6294,20 @@
         "direction": "front",
         "shadow": 1,
         "type": "single source",
-        "contrast": "high",
+        "contrast": "medium",
         "readable": "yes"
       },
-      "lightingScore": 3,
+      "lightingScore": 2,
       "lightingType": "single source",
       "scores": [
         2,
-        3,
-        3
+        2,
+        2
       ],
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -4879,7 +6332,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "top",
+        "direction": "front",
         "shadow": 1,
         "type": "soft window",
         "contrast": "low",
@@ -4895,7 +6348,7 @@
       "categories": [
         "Pose/Anatomy",
         "Composition",
-        "Style/Technique"
+        "Color Palette"
       ]
     },
     {
@@ -4981,7 +6434,7 @@
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Color Palette"
+        "Composition"
       ]
     },
     {
@@ -5008,28 +6461,28 @@
         "chain",
         "gorget"
       ],
-      "people": false,
+      "people": true,
       "artificialLight": false,
       "lighting": {
         "sources": 1,
-        "quality": "hard",
-        "direction": "front",
-        "shadow": 2,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 3,
         "type": "single source",
         "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 5,
       "lightingType": "single source",
       "scores": [
-        4,
-        4,
-        4
+        5,
+        5,
+        null
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Texture/Material",
+        "Expression/Emotion"
       ]
     },
     {
@@ -5058,7 +6511,7 @@
       "lighting": {
         "sources": 1,
         "quality": "hard",
-        "direction": "top",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -5073,8 +6526,8 @@
       ],
       "categories": [
         "Lighting",
-        "Composition",
-        "Pose/Anatomy"
+        "Pose/Anatomy",
+        "Composition"
       ]
     },
     {
@@ -5094,7 +6547,7 @@
       "via": "eval set",
       "genres": [],
       "depicts": [],
-      "people": true,
+      "people": false,
       "artificialLight": false,
       "lighting": {
         "sources": 1,
@@ -5103,19 +6556,19 @@
         "shadow": 2,
         "type": "even / flat",
         "contrast": "medium",
-        "readable": "yes"
+        "readable": "partly"
       },
-      "lightingScore": 1,
+      "lightingScore": 0,
       "lightingType": "even / flat",
       "scores": [
-        1,
-        1,
-        0
+        0,
+        0,
+        3
       ],
       "categories": [
-        "Composition",
         "Environment/Setting",
-        "Pose/Anatomy"
+        "Composition",
+        "Texture/Material"
       ]
     },
     {
@@ -5155,8 +6608,8 @@
       ],
       "categories": [
         "Lighting",
-        "Expression/Emotion",
-        "Environment/Setting"
+        "Environment/Setting",
+        "Pose/Anatomy"
       ]
     },
     {
@@ -5201,7 +6654,7 @@
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Style/Technique"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -5224,25 +6677,25 @@
       "people": false,
       "artificialLight": false,
       "lighting": {
-        "sources": 1,
+        "sources": 2,
         "quality": "hard",
         "direction": "front",
-        "shadow": 2,
+        "shadow": 1,
         "type": "single source",
         "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 2,
       "lightingType": "single source",
       "scores": [
-        2,
         4,
-        4
+        2,
+        2
       ],
       "categories": [
         "Lighting",
         "Composition",
-        "Style/Technique"
+        "Color Palette"
       ]
     },
     {
@@ -5287,7 +6740,7 @@
       "categories": [
         "Lighting",
         "Composition",
-        "Pose/Anatomy"
+        "Expression/Emotion"
       ]
     },
     {
@@ -5312,7 +6765,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
+        "direction": "top",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -5321,14 +6774,13 @@
       "lightingScore": 4,
       "lightingType": "single source",
       "scores": [
-        null,
+        4,
         4,
         4
       ],
       "categories": [
         "Lighting",
-        "Pose/Anatomy",
-        "Expression/Emotion"
+        "Pose/Anatomy"
       ]
     },
     {
@@ -5361,7 +6813,7 @@
       "lighting": {
         "sources": 1,
         "quality": "hard",
-        "direction": "front",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -5377,7 +6829,7 @@
       "categories": [
         "Lighting",
         "Expression/Emotion",
-        "Historical/Cultural Reference"
+        "Composition"
       ]
     },
     {
@@ -5407,7 +6859,7 @@
       "lighting": {
         "sources": 1,
         "quality": "soft",
-        "direction": "front",
+        "direction": "side",
         "shadow": 2,
         "type": "single source",
         "contrast": "high",
@@ -5422,8 +6874,8 @@
       ],
       "categories": [
         "Lighting",
-        "Historical/Cultural Reference",
-        "Style/Technique"
+        "Texture/Material",
+        "Expression/Emotion"
       ]
     },
     {
@@ -5465,12 +6917,12 @@
       "scores": [
         4,
         4,
-        4
+        3
       ],
       "categories": [
         "Lighting",
-        "Style/Technique",
-        "Historical/Cultural Reference"
+        "Pose/Anatomy",
+        "Texture/Material"
       ]
     },
     {
@@ -5498,22 +6950,21 @@
         "sources": 1,
         "quality": "hard",
         "direction": "below",
-        "shadow": 2,
+        "shadow": 3,
         "type": "under / top",
         "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 5,
       "lightingType": "under / top",
       "scores": [
+        5,
         4,
-        4,
-        4
+        5
       ],
       "categories": [
         "Lighting",
-        "Expression/Emotion",
-        "Style/Technique"
+        "Expression/Emotion"
       ]
     },
     {
@@ -5539,17 +6990,17 @@
         "sources": 1,
         "quality": "hard",
         "direction": "below",
-        "shadow": 2,
+        "shadow": 1,
         "type": "under / top",
         "contrast": "high",
         "readable": "yes"
       },
-      "lightingScore": 4,
+      "lightingScore": 3,
       "lightingType": "under / top",
       "scores": [
+        3,
         4,
-        4,
-        4
+        3
       ],
       "categories": [
         "Lighting",
@@ -5596,8 +7047,8 @@
       ],
       "categories": [
         "Lighting",
-        "Texture/Material",
-        "Historical/Cultural Reference"
+        "Composition",
+        "Texture/Material"
       ]
     },
     {
@@ -5628,21 +7079,20 @@
         "quality": "soft",
         "direction": "front",
         "shadow": 1,
-        "type": "single source",
+        "type": "soft window",
         "contrast": "medium",
         "readable": "yes"
       },
       "lightingScore": 2,
-      "lightingType": "single source",
+      "lightingType": "soft window",
       "scores": [
         2,
         2,
         2
       ],
       "categories": [
-        "Environment/Setting",
         "Pose/Anatomy",
-        "Composition"
+        "Environment/Setting"
       ]
     },
     {
@@ -5669,21 +7119,20 @@
         "quality": "soft",
         "direction": "top",
         "shadow": 2,
-        "type": "single source",
+        "type": "soft window",
         "contrast": "medium",
         "readable": "no"
       },
       "lightingScore": 2,
-      "lightingType": "single source",
+      "lightingType": "soft window",
       "scores": [
-        2,
+        1,
         2,
         2
       ],
       "categories": [
         "Environment/Setting",
-        "Composition",
-        "Historical/Cultural Reference"
+        "Composition"
       ]
     }
   ]

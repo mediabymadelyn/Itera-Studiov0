@@ -19,7 +19,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import catalog from "../lib/data/dramatic-lighting-works.json";
 import { fetchAicCommonsImages } from "../lib/sources/wikidataAicImages";
-import { clearJudgmentCache, judgeResultImages, visionJudgeSettings } from "../lib/search/visionJudge";
+import { clearJudgmentCache, judgeResultImages, setDiskCacheEnabled, visionJudgeSettings } from "../lib/search/visionJudge";
 import type { VisionJudgment } from "../lib/search/visionJudge";
 import type { ArtworkResult } from "../lib/types/artwork";
 
@@ -36,10 +36,17 @@ const SEARCH_LIMIT = 8;
 // The judge needs a search to judge against; only the lighting part of its
 // answer is kept, so this just names the kind of subject.
 const LIBRARY_QUERY = "dramatic light on a figure";
+// Department 11 = European Paintings, 9 = Drawings and Prints (etchings and
+// mezzotints are often pure chiaroscuro), 19 = Photographs.
 const MET_SEARCHES: [number, string][] = [
-  [11, "candlelight"], [11, "candle"], [11, "lamplight"], [9, "candlelight"], [11, "torch"]
+  [11, "candlelight"], [11, "candle"], [11, "lamplight"], [11, "torch"], [11, "night"], [11, "lantern"], [11, "fire"],
+  [9, "candlelight"], [9, "chiaroscuro"], [9, "mezzotint"], [9, "candle"], [9, "night"],
+  [19, "candlelight"]
 ];
-const AIC_SEARCHES = ["candlelight", "lamplight", "café-concert", "footlights", "gaslight", "theater stage"];
+const AIC_SEARCHES = [
+  "candlelight", "lamplight", "café-concert", "footlights", "gaslight", "theater stage",
+  "nocturne", "chiaroscuro", "candle"
+];
 const AIC_FIELDS = "id,title,artist_title,artist_display,date_display,is_public_domain,main_reference_number,artwork_type_title,place_of_origin,credit_line";
 
 type Candidate = { source: "met" | "aic"; objectId: string; via: string; genres?: string[]; depicts?: string[]; commonsImage?: string };
@@ -74,6 +81,8 @@ async function mapLimited<T, R>(items: T[], limit: number, worker: (item: T) => 
   return results;
 }
 
+// Each of the RUNS judgments must be a fresh answer.
+setDiskCacheEnabled(false);
 mkdirSync(CACHE_DIR, { recursive: true });
 const candidates = new Map<string, Candidate>();
 const add = (candidate: Candidate) => {

@@ -9,6 +9,7 @@ import {
   detectLightingIntent,
   statedBackground,
   statedBackgroundVariants,
+  withoutBackground,
   statedGender,
   withBackgroundFirst,
   isDemographicWord,
@@ -270,7 +271,12 @@ async function rewriteWithLlm(query: string): Promise<LlmRewrite | null> {
  * query, and keywords may add synonyms but never a demographic word
  * (gender/age/background) the user didn't type.
  */
-function mergeRewrite(parsed: ParsedRequest, rewrite: LlmRewrite, queryWords: Set<string>): ParsedRequest {
+function mergeRewrite(
+  parsed: ParsedRequest,
+  rewrite: LlmRewrite,
+  queryWords: Set<string>,
+  background: string | null
+): ParsedRequest {
   const grounded = (text: string) =>
     tokenize(text).every((word) => queryWords.has(word) || queryWords.has(`${word}s`) || queryWords.has(word.replace(/s$/, "")));
 
@@ -281,7 +287,10 @@ function mergeRewrite(parsed: ParsedRequest, rewrite: LlmRewrite, queryWords: Se
   // A medium ("oil painting") is only the subject when the parse found
   // nothing else; the rewrite doesn't get to undo that.
   const mediumOnly = tokenize(rewrite.subject).every(isMediumWord) && parsed.medium !== "";
-  const subject = rewrite.subject && grounded(rewrite.subject) && !mediumOnly ? rewrite.subject : parsed.subject;
+  // Nor can it make the person's background the subject.
+  const rewriteSubject = background ? withoutBackground(rewrite.subject, background) : rewrite.subject;
+  const subject =
+    rewriteSubject && grounded(rewriteSubject) && !mediumOnly ? rewriteSubject : parsed.subject;
 
   return {
     subject,
@@ -315,7 +324,13 @@ export type PlanOptions = {
 export async function planQuery(query: string, options: PlanOptions = {}): Promise<QueryPlan> {
   const lighting = detectLightingIntent(query);
   const stripped = options.passthrough ? query.toLowerCase() : stripDescriptors(query) || query.toLowerCase();
-  let parsed = parseDeterministically(stripped);
+  // Who the user named ("african american", "black dancer") is a
+  // description of the person, never the thing to search for: taken out
+  // before choosing the subject, so "african american dancer" searches for
+  // a dancer, not portraits of people.
+  const background =
+    !options.passthrough && isPeopleQuery(tokenize(query)) ? statedBackground(query) : null;
+  let parsed = parseDeterministically(background ? withoutBackground(stripped, background) : stripped);
   let rewrittenByLlm = false;
 
   if (
@@ -325,7 +340,7 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   ) {
     const rewrite = await rewriteWithLlm(query);
     if (rewrite) {
-      parsed = mergeRewrite(parsed, rewrite, new Set(tokenize(query)));
+      parsed = mergeRewrite(parsed, rewrite, new Set(tokenize(query)), background);
       rewrittenByLlm = true;
     }
   }
@@ -392,7 +407,6 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   const peopleQuery = !options.passthrough && isPeopleQuery(allTokens);
   // A named background stays in front of the subject: the reordered
   // "dancer motion black" found 5 photos, "Black dancer motion" a full page.
-  const background = peopleQuery ? statedBackground(query) : null;
   const photoQuery = background ? withBackgroundFirst(basePhotoQuery, background) : basePhotoQuery;
   const subjectActionQuery = parsed.action ? `${parsed.subject} ${parsed.action}` : "";
   const photoSecondaryQuery =
@@ -412,7 +426,7 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   const photoBackgroundQueries = !peopleQuery
     ? []
     : background
-      ? statedBackgroundVariants(background, parsed.subject, MAX_STATED_BACKGROUND_VARIANTS, statedGender(allTokens))
+      ? statedBackgroundVariants(background, parsed.subject, MAX_STATED_BACKGROUND_VARIANTS, statedGender(allTokens), parsed.action)
       : backgroundVariants(query, photoQuery, bodyPartSubject, MAX_BACKGROUND_VARIANTS, isFaceSubject(subjectWords));
 
   return {

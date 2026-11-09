@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
 import {
   CATEGORY_LABELS,
@@ -58,6 +58,22 @@ export default function SearchBar() {
   const [results, setResults] = useState<ArtworkResult[]>([]);
   const [typeFilter, setTypeFilter] = useState<ResultTypeFilter>("all");
   const [loading, setLoading] = useState(false);
+  // After the first search the hero folds away, so results start near the
+  // top of the page.
+  const [hasSearched, setHasSearched] = useState(false);
+  // The search block only gets a background while it's actually stuck to
+  // the top (scrolled past its own spot); otherwise it would sit on the
+  // page as a dark band. A 1px marker just above it says when that is.
+  const stickyMarkerRef = useRef<HTMLDivElement>(null);
+  const [isStuck, setIsStuck] = useState(false);
+
+  useEffect(() => {
+    const marker = stickyMarkerRef.current;
+    if (!hasSearched || !marker) return;
+    const observer = new IntersectionObserver(([entry]) => setIsStuck(!entry.isIntersecting));
+    observer.observe(marker);
+    return () => observer.disconnect();
+  }, [hasSearched]);
   const [error, setError] = useState<string | null>(null);
   const [expandedResult, setExpandedResult] = useState<ArtworkResult | null>(null);
   const [unavailableIds, setUnavailableIds] = useState<Set<string>>(new Set());
@@ -151,6 +167,7 @@ export default function SearchBar() {
     }
 
     setLoading(true);
+    setHasSearched(true);
     setError(null);
 
     const controller = new AbortController();
@@ -187,6 +204,15 @@ export default function SearchBar() {
 
   return (
     <section>
+      <div className={hasSearched ? "hero is-collapsed" : "hero"} aria-hidden={hasSearched}>
+        <h1 className="hero-title brand-gradient-text">ItEra Studio</h1>
+        <p className="hero-subhead">Find real references from real artists.</p>
+      </div>
+
+      <div ref={stickyMarkerRef} className="sticky-marker" aria-hidden="true" />
+      <div
+        className={["search-sticky", hasSearched && "is-active", isStuck && "is-stuck"].filter(Boolean).join(" ")}
+      >
       <form className="search-form" onSubmit={handleSubmit}>
         <div className="search-input-wrap">
           <svg
@@ -221,8 +247,18 @@ export default function SearchBar() {
 
       {toolbarShown && (
         <div className="toolbar" role="toolbar" aria-label="Filter results">
-          <div className="segmented" role="group" aria-label="Show" ref={typeHighlight.groupRef}>
-            <span className="chip-highlight" style={typeHighlight.highlightStyle} aria-hidden="true" />
+          <div
+            className="segmented"
+            role="group"
+            aria-label="Show"
+            ref={typeHighlight.groupRef}
+            {...typeHighlight.groupHandlers}
+          >
+            <span
+              className={typeHighlight.previewing ? "chip-highlight is-previewing" : "chip-highlight"}
+              style={typeHighlight.highlightStyle}
+              aria-hidden="true"
+            />
             {TYPE_OPTIONS.map((option) => (
               <button
                 key={option.value}
@@ -237,8 +273,12 @@ export default function SearchBar() {
             ))}
           </div>
 
-          <div className="chip-row" ref={categoryHighlight.groupRef}>
-            <span className="chip-highlight" style={categoryHighlight.highlightStyle} aria-hidden="true" />
+          <div className="chip-row" ref={categoryHighlight.groupRef} {...categoryHighlight.groupHandlers}>
+            <span
+              className={categoryHighlight.previewing ? "chip-highlight is-previewing" : "chip-highlight"}
+              style={categoryHighlight.highlightStyle}
+              aria-hidden="true"
+            />
             {MATCH_REASON_CATEGORIES.map((category) => {
               const count = categoryCounts.get(category) ?? 0;
               const active = categoryFilter === category;
@@ -276,8 +316,13 @@ export default function SearchBar() {
           role="group"
           aria-label={`${CATEGORY_LABELS[categoryFilter]} types`}
           ref={subtagHighlight.groupRef}
+          {...subtagHighlight.groupHandlers}
         >
-          <span className="chip-highlight" style={subtagHighlight.highlightStyle} aria-hidden="true" />
+          <span
+            className={subtagHighlight.previewing ? "chip-highlight is-previewing" : "chip-highlight"}
+            style={subtagHighlight.highlightStyle}
+            aria-hidden="true"
+          />
           {subtags.map((tag) => {
             const count = subtagCount(tag);
             const active = subtagFilter === tag;
@@ -298,6 +343,8 @@ export default function SearchBar() {
           })}
         </div>
       )}
+
+      </div>
 
       {error && <p className="state-text">{error}</p>}
       {!error && !loading && results.length > 0 && availableResults.length === 0 && (
@@ -334,14 +381,24 @@ export default function SearchBar() {
         </>
       )}
 
+      {/* Nothing matched every part of the search: say so plainly at the
+          top instead of opening the page on a "More results" divider. */}
+      {!loading && bestMatches.length === 0 && moreResults.length > 0 && (
+        <p className="state-text no-match-note">
+          No exact matches for this search. Here are the closest.
+        </p>
+      )}
+
       {!loading && moreResults.length > 0 && (
         <>
+          {bestMatches.length > 0 && (
           <div className="section-divider" role="separator">
             <span>
               More results <span className="section-count">{moreResults.length}</span>
               <span className="section-note">partial matches, or weaker on part of your search</span>
             </span>
           </div>
+          )}
           <MasonryGrid>{renderCards(moreResults)}</MasonryGrid>
         </>
       )}

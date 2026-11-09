@@ -22,3 +22,6 @@ data/eval/external/
 
 # Cached museum API responses for scripts/build-museum-library.mts.
 data/library-cache/
+
+# Saved vision judgments (lib/search/visionJudge.ts).
+.cache/

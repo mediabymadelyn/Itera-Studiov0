@@ -19,6 +19,7 @@ import {
   clearJudgmentCache,
   isVisionJudgeEnabled,
   judgeResultImages,
+  setDiskCacheEnabled,
   visionJudgeSettings
 } from "../../lib/search/visionJudge";
 import type { ArtworkResult } from "../../lib/types/artwork";
@@ -95,6 +96,8 @@ if (!isVisionJudgeEnabled()) {
   process.exit(1);
 }
 
+// Every run must ask the model; saved judgments would make runs identical.
+setDiskCacheEnabled(false);
 const runs = Number(argValue("runs") ?? DEFAULT_RUNS);
 const only = argValue("only")?.split(",");
 const provenanceById = new Map(loadProvenance().map((row) => [row.id, row]));

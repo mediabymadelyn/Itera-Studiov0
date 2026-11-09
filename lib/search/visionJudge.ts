@@ -1,3 +1,6 @@
+import { createHash } from "node:crypto";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import sharp from "sharp";
 import { ArtworkResult } from "@/lib/types/artwork";
 import { MATCH_REASON_CATEGORIES, MatchReasonCategory } from "@/lib/search/categories";
@@ -357,6 +360,50 @@ async function judgeOne(result: ArtworkResult, query: string): Promise<VisionJud
  * Judgments are cached per (query, result), since relevance depends on
  * the query.
  */
+// --- Lasting cache ---------------------------------------------------------
+// Judgments also go to disk, so a restarted server (or a warm Vercel
+// instance) doesn't pay Gemini again for an image it already judged for the
+// same search. Files are named by a hash of the key -- prompt version,
+// model, search, result and image -- so no search text is stored, and the
+// key can't reach outside the folder. Entries older than DISK_CACHE_MAX_AGE
+// are ignored. On Vercel only /tmp is writable, and it lasts as long as
+// one server instance.
+const DISK_CACHE_DIR =
+  process.env.JUDGMENT_CACHE_DIR || (process.env.VERCEL ? "/tmp/itera-judgments" : ".cache/judgments");
+const DISK_CACHE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+let diskCacheEnabled = process.env.JUDGMENT_DISK_CACHE !== "off";
+
+/** The eval and the library build need fresh answers, not saved ones. */
+export function setDiskCacheEnabled(enabled: boolean): void {
+  diskCacheEnabled = enabled;
+}
+
+function diskPath(cacheKey: string): string {
+  return join(DISK_CACHE_DIR, `${createHash("sha256").update(cacheKey).digest("hex")}.json`);
+}
+
+async function readDisk(cacheKey: string): Promise<VisionJudgment | null> {
+  if (!diskCacheEnabled) return null;
+  try {
+    const saved = JSON.parse(await readFile(diskPath(cacheKey), "utf8")) as { savedAt: number; judgment: VisionJudgment };
+    if (Date.now() - saved.savedAt > DISK_CACHE_MAX_AGE_MS) return null;
+    if (![0, 1, 2].includes(saved.judgment?.match) || !saved.judgment.lighting) return null;
+    return saved.judgment;
+  } catch {
+    return null;
+  }
+}
+
+async function writeDisk(cacheKey: string, judgment: VisionJudgment): Promise<void> {
+  if (!diskCacheEnabled) return;
+  try {
+    await mkdir(DISK_CACHE_DIR, { recursive: true });
+    await writeFile(diskPath(cacheKey), JSON.stringify({ savedAt: Date.now(), judgment }));
+  } catch {
+    // A read-only or full disk just means no lasting cache.
+  }
+}
+
 export async function judgeResultImages(
   results: ArtworkResult[],
   query: string
@@ -365,14 +412,18 @@ export async function judgeResultImages(
 
   const entries = await Promise.all(
     results.map(async (result) => {
-      const cacheKey = `${PROMPT_VERSION}|${normalizedQuery}|${result.id}`;
-      const cached = judgmentCache.get(cacheKey);
-      if (cached) return [result.id, cached] as const;
+      const cacheKey = `${PROMPT_VERSION}|${visionModel()}|${normalizedQuery}|${result.id}|${analysisUrl(result)}`;
+      const cached = judgmentCache.get(cacheKey) ?? (await readDisk(cacheKey));
+      if (cached) {
+        judgmentCache.set(cacheKey, cached);
+        return [result.id, cached] as const;
+      }
 
       const judgment = await judgeOne(result, query);
       if (judgment) {
         if (judgmentCache.size >= JUDGMENT_CACHE_MAX_SIZE) judgmentCache.clear();
         judgmentCache.set(cacheKey, judgment);
+        void writeDisk(cacheKey, judgment);
       }
       return [result.id, judgment] as const;
     })

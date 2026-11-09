@@ -254,11 +254,25 @@ const PERSON_WORDS = new Set([
 // If the user already named a background, the variant would override what
 // they asked for, so it's skipped.
 const STATED_BACKGROUND_WORDS = [
-  "black", "african", "asian", "east asian", "south asian", "indian",
-  "latina", "latino", "latinx", "hispanic", "mexican", "middle eastern",
-  "arab", "indigenous", "native", "white", "european", "caucasian",
-  "chinese", "japanese", "korean", "filipino", "vietnamese", "pacific islander"
+  "black", "african", "african american", "afro latina", "afro latino",
+  "asian", "east asian", "south asian", "southeast asian", "indian",
+  "latina", "latino", "latinx", "hispanic", "mexican", "latin american",
+  "middle eastern", "arab", "indigenous", "native", "native american",
+  "first nations", "native hawaiian", "pacific islander", "white",
+  "european", "caucasian", "chinese", "japanese", "korean", "filipino",
+  "vietnamese"
 ];
+// Color words name a background only right before a person ("black
+// dancer", "a white woman"): "woman in a black dress", "black and white
+// portrait" and "white horse" are about color. Body parts and "portrait"
+// don't count as the person here ("black face" reads as blackface).
+const COLOR_BACKGROUND_WORDS = ["black", "white"];
+const NOT_A_PERSON_AFTER_COLOR = new Set(["portrait", "portraits", "face", "faces", "hand", "hands", "figure", "figures"]);
+// Subjects that already are the person, so variants don't add another.
+const GENERIC_PERSON_WORDS = new Set([
+  "man", "men", "woman", "women", "person", "people", "girl", "girls", "boy", "boys",
+  "child", "children", "kid", "kids", "lady", "ladies"
+]);
 
 // Unsplash results skew heavily toward white subjects (P5, P6) and, for
 // some subjects, toward one gender (P4: all women for "dancer"). Rather
@@ -366,20 +380,42 @@ export function isPeopleQuery(tokens: string[]): boolean {
   return tokens.some((token) => PERSON_WORDS.has(token));
 }
 
-/** The background the user named ("black", "south asian"), longest match first. */
+/**
+ * The background the user named for a person ("african american",
+ * "black"), longest phrase first, so "african american dancer" is one
+ * background and the subject stays "dancer". Null when none is named.
+ */
 export function statedBackground(query: string): string | null {
-  const normalized = ` ${query.toLowerCase()} `;
-  return (
-    [...STATED_BACKGROUND_WORDS]
-      .sort((a, b) => b.length - a.length)
-      .find((word) => normalized.includes(` ${word} `)) ?? null
-  );
+  const tokens = tokenize(query);
+  const phrases = [...STATED_BACKGROUND_WORDS].sort((a, b) => b.split(" ").length - a.split(" ").length);
+
+  for (const phrase of phrases) {
+    const words = phrase.split(" ");
+    for (let i = 0; i + words.length <= tokens.length; i++) {
+      if (!words.every((word, k) => tokens[i + k] === word)) continue;
+      if (COLOR_BACKGROUND_WORDS.includes(phrase)) {
+        if (wantsMonochrome(query)) continue;
+        const next = tokens.slice(i + 1).find((token) => !isFillerWord(token));
+        if (!next || !PERSON_WORDS.has(next) || NOT_A_PERSON_AFTER_COLOR.has(next)) continue;
+      }
+      return phrase;
+    }
+  }
+  return null;
+}
+
+/** The text with the background phrase taken out, for choosing the subject. */
+export function withoutBackground(text: string, background: string): string {
+  const words = background.split(" ");
+  const tokens = tokenize(text);
+  const start = tokens.findIndex((_, i) => words.every((word, k) => tokens[i + k] === word));
+  return start === -1 ? text : [...tokens.slice(0, start), ...tokens.slice(start + words.length)].join(" ");
 }
 
 // Other ways photographers caption the same background, tried as one more
 // search ("African American dancer" found as many full matches as "Black
 // dancer in motion" for "black dancer mid motion").
-const BACKGROUND_SEARCH_SYNONYMS: Record<string, string> = { black: "African American" };
+const BACKGROUND_SEARCH_SYNONYMS: Record<string, string> = { black: "African American", "african american": "Black" };
 
 const titleCase = (text: string) => text.replace(/\b\w/g, (letter) => letter.toUpperCase());
 
@@ -400,11 +436,20 @@ export function statedBackgroundVariants(
   background: string,
   subject: string,
   count: number,
-  gender: "female" | "male" | null = null
+  gender: "female" | "male" | null = null,
+  action = ""
 ): string[] {
   const descriptor = titleCase(background);
-  const activity = activityOf(subject);
   const synonym = BACKGROUND_SEARCH_SYNONYMS[background];
+  const withAction = (text: string) => (action ? `${text} ${action}` : text);
+
+  // The subject already is the person ("south asian man cooking"): only
+  // the synonym adds anything.
+  if (tokenize(subject).some((word) => GENERIC_PERSON_WORDS.has(word))) {
+    return (synonym ? [withAction(`${synonym} ${subject}`)] : []).slice(0, count);
+  }
+
+  const activity = activityOf(subject);
   // A stated gender ("ballerina", "man") keeps only that person phrasing.
   const people = gender === "female" ? ["woman"] : gender === "male" ? ["man"] : ["woman", "man"];
   return [

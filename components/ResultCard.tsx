@@ -114,7 +114,6 @@ export default function ResultCard({
           Unsplash, in its "Photo by X on Unsplash" form (photographer
           profile + Unsplash, with referral parameters; see unsplash.ts). */}
       <div className="result-content">
-        <span className="info-tag">{typeLabel}</span>
         <span className="result-title-value" title={result.title}>
           {result.title}
         </span>
@@ -133,6 +132,7 @@ export default function ResultCard({
           )}
         </span>
         <span className="result-footer">
+          <span className="info-tag">{typeLabel}</span>
           {result.licenseType && <span className="result-license">{result.licenseType}</span>}
           <a
             className="result-link"

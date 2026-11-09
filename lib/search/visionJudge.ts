@@ -30,6 +30,8 @@ import { analysisUrl, downloadImage } from "@/lib/search/imageAnalysis";
 // also left out of the prompt, so a Rembrandt is judged on the image, not
 // the painter's reputation. A face hidden behind a hand counts as no match
 // for a face search ("Woman shielding face with hand" was approved).
+// Direction is judged from the subject's point of view, not the camera's
+// (the user's call): a profile face turned toward the light is front-lit.
 //
 // Uses the Gemini API directly (not the Hugging Face router) for JSON
 // output and the image-detail setting.
@@ -40,12 +42,14 @@ const DEFAULT_VISION_MODEL = "gemini-3.8-flash";
 // the slowest of 40 took ~6s at medium detail.
 const JUDGE_TIMEOUT_MS = 8000;
 const IMAGE_SIZE = 512;
+const MEDIA_RESOLUTION = "MEDIA_RESOLUTION_MEDIUM";
+const THINKING_LEVEL = "low";
 const MAX_CATEGORIES = 3;
 
 const JUDGMENT_CACHE_MAX_SIZE = 2000;
 // Part of the cache key, so judgments made under an earlier prompt aren't
 // reused. Bump when buildPrompt changes.
-const PROMPT_VERSION = 4;
+const PROMPT_VERSION = 5;
 
 // What kind of light falls on the subject. Shown to users in the expanded
 // view; "even" and "patterned" light also cap the dramatic score.
@@ -159,8 +163,11 @@ function buildPrompt(result: ArtworkResult, query: string): string {
     `or more, or ambient light with no clear source.\n` +
     `  - quality: "hard" = crisp shadow edges, a sharp line between lit and dark; "soft" = ` +
     `gradual, blended shadows.\n` +
-    `  - direction: where the main light comes from, relative to the subject. "ambient" ` +
-    `if there's no clear direction.\n` +
+    `  - direction: where the main light comes from, from the subject's own point of view, ` +
+    `not the camera's: "front" = the light hits the side the subject is facing (a face in ` +
+    `profile turned toward the light is front-lit), "side" = from the subject's left or ` +
+    `right, "back" = from behind the subject, "top" / "below" = from above / below. ` +
+    `"ambient" if there's no clear direction.\n` +
     `  - shadow: how much of the subject itself falls into deep shadow: 0 = none, evenly ` +
     `lit; 1 = a little (under the chin, eye sockets); 2 = about a third; 3 = half or more.\n` +
     `  - type: the one best fit from ${JSON.stringify(LIGHTING_TYPES)}. Glowing or ` +
@@ -237,9 +244,9 @@ async function judgeOne(result: ArtworkResult, query: string): Promise<VisionJud
         ],
         generationConfig: {
           responseMimeType: "application/json",
-          mediaResolution: "MEDIA_RESOLUTION_MEDIUM",
+          mediaResolution: MEDIA_RESOLUTION,
           temperature: 0,
-          thinkingConfig: { thinkingLevel: "low" }
+          thinkingConfig: { thinkingLevel: THINKING_LEVEL }
         }
       }),
       signal: AbortSignal.timeout(JUDGE_TIMEOUT_MS)
@@ -287,4 +294,24 @@ export async function judgeResultImages(
   return new Map(
     entries.filter((entry): entry is readonly [string, VisionJudgment] => entry[1] !== null)
   );
+}
+
+/** The settings judgments are made under; eval runs record these. */
+export function visionJudgeSettings() {
+  return {
+    model: visionModel(),
+    promptVersion: PROMPT_VERSION,
+    imageSize: IMAGE_SIZE,
+    mediaResolution: MEDIA_RESOLUTION,
+    thinkingLevel: THINKING_LEVEL,
+    timeoutMs: JUDGE_TIMEOUT_MS
+  };
+}
+
+/**
+ * Forgets every cached judgment. Only for the eval (scripts/eval), which
+ * judges each image several times to measure how consistent the model is.
+ */
+export function clearJudgmentCache(): void {
+  judgmentCache.clear();
 }

@@ -31,13 +31,43 @@ const MET_BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1";
 // The Met retired v1/search on 2026-10-01 (it now returns 410 Gone). v1.1 is
 // the paginated replacement; object lookups still live under v1.
 const MET_SEARCH_URL = "https://collectionapi.metmuseum.org/public/collection/v1.1/search";
-const MET_SEARCH_LIMIT = 18;
+const MET_SEARCH_LIMIT = 10;
 // The Met's CDN (Imperva) temporarily blocks clients that send too many
 // requests in a short window -- every search costs one request per object,
 // so object records (which rarely change) are cached for a day and search
 // results for an hour.
 const MET_SEARCH_REVALIDATE_SECONDS = 3600;
 const MET_OBJECT_REVALIDATE_SECONDS = 86400;
+// One search used to send ~45 Met requests at once; the CDN answered some
+// with 403 and those works silently vanished (La Tour's Magdalen dropped out
+// of "dramatic lighting on face"). Every Met request now waits its turn,
+// this many at a time.
+const MET_MAX_CONCURRENT = 4;
+const USER_AGENT = "IteraStudioArtSearch/1.0";
+// Works the search lists under hasImages but returns no image for (mostly
+// still in copyright). Remembered per server instance so later searches
+// don't spend a request on them again.
+const NO_IMAGE_MEMORY_MAX = 5000;
+const metIdsWithoutImage = new Set<number>();
+
+let metActive = 0;
+const metWaiting: (() => void)[] = [];
+
+async function metFetch(url: string, revalidate: number): Promise<Response> {
+  if (metActive >= MET_MAX_CONCURRENT) {
+    // A finishing request hands its slot straight to the next waiter.
+    await new Promise<void>((resolve) => metWaiting.push(resolve));
+  } else {
+    metActive++;
+  }
+  try {
+    return await fetch(url, { headers: { "User-Agent": USER_AGENT }, next: { revalidate } });
+  } finally {
+    const next = metWaiting.shift();
+    if (next) next();
+    else metActive--;
+  }
+}
 
 // Met departments whose collections are under-represented in a plain
 // keyword search (P6: "no African art"). searchAll.ts runs one small extra
@@ -108,16 +138,16 @@ export async function searchMetArtworks(
 
   const searchUrl = `${MET_SEARCH_URL}?${searchParams.toString()}`;
 
-  const searchResponse = await fetch(searchUrl, {
-    next: { revalidate: MET_SEARCH_REVALIDATE_SECONDS }
-  });
+  const searchResponse = await metFetch(searchUrl, MET_SEARCH_REVALIDATE_SECONDS);
 
   if (!searchResponse.ok) {
     throw new Error(`Failed to search the Met API (HTTP ${searchResponse.status}).`);
   }
 
   const searchData = (await searchResponse.json()) as MetSearchResponse;
-  const objectIds = (searchData.objectIDs ?? []).slice(0, objectLimit);
+  const objectIds = (searchData.objectIDs ?? [])
+    .filter((objectId) => !metIdsWithoutImage.has(objectId))
+    .slice(0, objectLimit);
 
   if (objectIds.length === 0) {
     return [];
@@ -134,15 +164,18 @@ export async function searchMetArtworks(
 export async function fetchMetObjects(objectIds: number[]): Promise<ArtworkResult[]> {
   const objectResponses = await Promise.all(
     objectIds.map(async (objectId) => {
-      const objectResponse = await fetch(`${MET_BASE_URL}/objects/${objectId}`, {
-        next: { revalidate: MET_OBJECT_REVALIDATE_SECONDS }
-      });
+      const objectResponse = await metFetch(`${MET_BASE_URL}/objects/${objectId}`, MET_OBJECT_REVALIDATE_SECONDS);
 
       if (!objectResponse.ok) {
         return null;
       }
 
-      return (await objectResponse.json()) as MetObjectResponse;
+      const object = (await objectResponse.json()) as MetObjectResponse;
+      if (!object.primaryImage && !object.primaryImageSmall) {
+        if (metIdsWithoutImage.size >= NO_IMAGE_MEMORY_MAX) metIdsWithoutImage.clear();
+        metIdsWithoutImage.add(objectId);
+      }
+      return object;
     })
   );
 

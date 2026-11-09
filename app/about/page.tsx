@@ -4,8 +4,8 @@ import Navbar from "@/components/Navbar";
 const values = [
   {
     icon: "M12 22q-2.05 0-3.875-.788t-3.187-2.15t-2.15-3.187T2 12q0-2.075.813-3.9t2.2-3.175T8.25 2.788T12.2 2q2 0 3.775.688t3.113 1.9t2.125 2.875T22 11.05q0 2.875-1.75 4.413T16 17h-1.85q-.225 0-.312.125t-.088.275q0 .3.375.863t.375 1.287q0 1.25-.687 1.85T12 22m-4.425-9.425Q8 12.15 8 11.5t-.425-1.075T6.5 10t-1.075.425T5 11.5t.425 1.075T6.5 13t1.075-.425m3-4Q11 8.15 11 7.5t-.425-1.075T9.5 6t-1.075.425T8 7.5t.425 1.075T9.5 9t1.075-.425m5 0Q16 8.15 16 7.5t-.425-1.075T14.5 6t-1.075.425T13 7.5t.425 1.075T14.5 9t1.075-.425m3 4Q19 12.15 19 11.5t-.425-1.075T17.5 10t-1.075.425T16 11.5t.425 1.075T17.5 13t1.075-.425M12 20q.225 0 .363-.125t.137-.325q0-.35-.375-.825T11.75 17.3q0-1.05.725-1.675T14.25 15H16q1.65 0 2.825-.962T20 11.05q0-3.025-2.312-5.038T12.2 4Q8.8 4 6.4 6.325T4 12q0 3.325 2.338 5.663T12 20",
-    title: "Our purpose",
-    text: "Artists spend more time searching for references than creating. ItEra gives that time back. Instead of generating images, it finds real artwork from museums and working photographers, with full credit."
+    title: "Purpose Statement",
+    text: "Artists spend more time searching for references than creating. ItEra gives that time back. Instead of generating images, it finds artwork from museums and working photographers, with full credit."
   },
   {
     icon: "M12 22q-3.475-.875-5.738-3.988T4 11.1V5l8-3l8 3v6.1q0 3.8-2.262 6.913T12 22m0-2.1q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.25l-6 2.25V11.1q0 3.025 1.7 5.5t4.3 3.3m0-7.9",
@@ -16,7 +16,7 @@ const values = [
     icon: "M15.188 14.688Q16.5 13.375 16.5 11.5t-1.312-3.187T12 7T8.813 8.313T7.5 11.5t1.313 3.188T12 16t3.188-1.312m-5.1-1.276Q9.3 12.625 9.3 11.5t.788-1.912T12 8.8t1.913.788t.787 1.912t-.787 1.913T12 14.2t-1.912-.787m-4.738 3.55Q2.35 14.925 1 11.5q1.35-3.425 4.35-5.462T12 4t6.65 2.038T23 11.5q-1.35 3.425-4.35 5.463T12 19t-6.65-2.037m11.838-1.45Q19.55 14.025 20.8 11.5q-1.25-2.525-3.613-4.012T12 6T6.813 7.488T3.2 11.5q1.25 2.525 3.613 4.013T12 17t5.188-1.487",
     title: "Transparency",
     text: (
-      <>
+      <> 
         You should always know where a result came from. Every card shows the artist, the
         source, and the license. When AI ranks or labels results, we say so, and{" "}
         <Link href="#how-it-works" className="about-inline-link">
@@ -127,7 +127,7 @@ export default function AboutPage() {
           <aside className="how-callout">
             <h3 className="how-callout-title">Why this approach?</h3>
             <p className="how-step-text">
-              Traditional image search is great until you want to know where your references come
+              Traditional image search is great until you want to know where your references came
               from. It has no filters for artists or for the qualities you look for while creating
               and illustrating. AI helps surface and categorize results, so you find better
               references faster.

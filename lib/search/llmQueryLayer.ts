@@ -68,13 +68,11 @@ const LIGHTING_CHECK_TIMEOUT_MS = 4000;
 const LIGHTING_MIN_CONFIDENCE = 0.5;
 const LIGHTING_MIN_SCORE = 2;
 
-// Every category should have something to show when it's selected. After
-// the final set is labeled, any category still empty gets one fast-model
-// call over the candidates that didn't make the page, picking up to this
-// many per category. Those "bench" results only appear under that
-// category's filter, so the main grid is unchanged.
-const BENCH_PER_CATEGORY = 2;
-const BENCH_TIMEOUT_MS = 3000;
+// Approved results that didn't make the selected set still join the page,
+// under "More results" (see searchAll.ts), up to this many. They used to sit
+// hidden under one category filter ("bench" picks), which read as results
+// appearing in a filter but not on the page.
+const MORE_RESULTS_EXTRA = 6;
 
 // Closed category vocabulary: see lib/search/categories.ts.
 
@@ -515,106 +513,6 @@ async function relevanceFilterChunk(
   return Array.from(approved.values());
 }
 
-function buildBenchPrompt(
-  query: string,
-  categories: string[],
-  candidates: CandidateSummary[]
-): string {
-  const listing = candidates
-    .map(
-      (c) =>
-        `${c.index}. "${c.title}" by ${c.artist} (${c.source})${c.tags ? ` -- ${c.tags}` : ""}`
-    )
-    .join("\n");
-
-  return (
-    `A user searched an art-reference tool for: "${query}"\n\n` +
-    `Candidate results:\n${listing}\n\n` +
-    `For each of these reference categories: ${categories.map((c) => `"${c}"`).join(", ")} -- ` +
-    `pick up to ${BENCH_PER_CATEGORY} candidates that are relevant to the search AND genuinely ` +
-    `useful as a reference for that category. Use [] for a category when nothing fits; never ` +
-    `pick something irrelevant just to fill it. Only pick "Lighting" when the light itself ` +
-    `(direction, contrast, shadows) is notable.\n\n` +
-    `Reply with ONLY a JSON object mapping each category to an array of index numbers, e.g. ` +
-    `{"Lighting":[4],"Composition":[]}. No other text.`
-  );
-}
-
-function parseBenchPicks(raw: string, maxIndex: number): Map<number, string[]> {
-  const picks = new Map<number, string[]>();
-  const start = raw.indexOf("{");
-  const end = raw.lastIndexOf("}");
-  if (start === -1 || end <= start) return picks;
-
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(raw.slice(start, end + 1));
-  } catch {
-    return picks;
-  }
-  if (!parsed || typeof parsed !== "object") return picks;
-
-  for (const [rawCategory, indices] of Object.entries(parsed as Record<string, unknown>)) {
-    const category = normalizeMatchReason(rawCategory);
-    if (!category || !Array.isArray(indices)) continue;
-
-    for (const value of indices.slice(0, BENCH_PER_CATEGORY)) {
-      const index = Number(value);
-      if (!Number.isInteger(index) || index < 0 || index > maxIndex) continue;
-      picks.set(index, [...(picks.get(index) ?? []), category]);
-    }
-  }
-
-  return picks;
-}
-
-/**
- * Fills categories the final set left empty with candidates that didn't
- * make the page (see BENCH_PER_CATEGORY). Best-effort: a failed or slow
- * call just means no bench, and Lighting picks still go through the
- * vision check like any other Lighting label.
- */
-async function benchEmptyCategories(
-  labeled: ArtworkResult[],
-  candidates: ArtworkResult[],
-  query: string
-): Promise<ArtworkResult[]> {
-  const covered = new Set(labeled.flatMap((result) => result.matchReasons ?? []));
-  const emptyCategories = MATCH_REASON_CATEGORIES.filter((category) => !covered.has(category));
-  const shownIds = new Set(labeled.map((result) => result.id));
-  const leftovers = candidates.filter((result) => !shownIds.has(result.id));
-
-  if (emptyCategories.length === 0 || leftovers.length === 0) return [];
-
-  const content = await callModel(
-    buildBenchPrompt(query, emptyCategories, leftovers.map(summarizeCandidate)),
-    300,
-    BENCH_TIMEOUT_MS,
-    fastModel()
-  );
-  if (!content) return [];
-
-  const picks = parseBenchPicks(content, leftovers.length - 1);
-  const benched = Array.from(picks.entries()).map(([index, reasons]) => ({
-    ...leftovers[index],
-    matchReasons: reasons,
-    benchOnly: true
-  }));
-
-  const checked = await Promise.all(
-    benched.map(async (result) => {
-      if (!result.matchReasons.includes(LIGHTING_CATEGORY)) return result;
-
-      const verified = await verifyLighting(result);
-      return verified
-        ? { ...result, matchReasons: verified.reasons, lightingScore: verified.lightingScore }
-        : result;
-    })
-  );
-
-  return checked.filter((result) => result.matchReasons.length > 0);
-}
-
 export type RerankOptions = {
   selection?: SelectionOptions;
   // Used instead of `selection` when the vision model judged the pool:
@@ -721,9 +619,10 @@ export async function selectWithLlmRerank(
 
   const filled = topUp(assembled, candidates, Math.min(options.minResults ?? 0, limit));
   const labeled = await attachMatchReasons(filled, query);
-  const bench = await benchEmptyCategories(labeled, candidates, query);
+  const shownIds = new Set(labeled.map((result) => result.id));
+  const extras = relevant.filter((result) => !shownIds.has(result.id)).slice(0, MORE_RESULTS_EXTRA);
 
-  return { results: [...labeled, ...bench], rejectedIds: new Set() };
+  return { results: [...labeled, ...extras], rejectedIds: new Set() };
 }
 
 // --- Vision path (Gemini; see visionJudge.ts) -------------------------------
@@ -738,15 +637,21 @@ const FULL_MATCH_BONUS = 0.3;
 function withJudgment(result: ArtworkResult, judgment: VisionJudgment | undefined): ArtworkResult {
   if (!judgment) return result;
 
+  // Library works keep their stable, pre-scored lighting.
+  const lightingScore = result.lightingFromLibrary ? result.lightingScore ?? judgment.lightingScore : judgment.lightingScore;
+  const lightingType = result.lightingFromLibrary ? result.lightingType ?? judgment.lighting.type : judgment.lighting.type;
+  const lighting = result.lightingFromLibrary ? result.lighting ?? judgment.lighting : judgment.lighting;
   const reasons = judgment.categories.filter(
-    (category) => category !== LIGHTING_CATEGORY || judgment.lightingScore >= VISION_LIGHTING_LABEL_MIN
+    (category) => category !== LIGHTING_CATEGORY || lightingScore >= VISION_LIGHTING_LABEL_MIN
   );
   const bonus = judgment.match === 2 ? FULL_MATCH_BONUS : 0;
   return {
     ...result,
     matchReasons: reasons.length > 0 ? reasons : undefined,
-    lightingScore: judgment.lightingScore,
-    lightingType: judgment.lighting.type,
+    lightingScore,
+    lightingType,
+    lighting,
+    color: judgment.color,
     visionMatch: judgment.match === 0 ? undefined : judgment.match,
     score: Number(((result.score ?? 0) + bonus).toFixed(4))
   };
@@ -754,9 +659,9 @@ function withJudgment(result: ArtworkResult, judgment: VisionJudgment | undefine
 
 /**
  * Same shape as the text path below it -- relevance filter, score
- * adjustments, diversity selection, top-up, labels, bench -- but every
+ * adjustments, diversity selection, top-up, labels, extras -- but every
  * answer comes from one vision call per image, made in parallel, so
- * labels and the bench need no further model calls. Returns null when no
+ * labels need no further model calls. Returns null when no
  * image could be judged at all (key or API problem), so the caller falls
  * back to the text path.
  */
@@ -790,16 +695,8 @@ async function selectWithVisionJudge(
   const unjudged = judged.filter((result) => !judgments.has(result.id));
   const filled = topUp(assembled, unjudged, Math.min(options.minResults ?? 0, limit));
 
-  const covered = new Set(filled.flatMap((result) => result.matchReasons ?? []));
   const shownIds = new Set(filled.map((result) => result.id));
-  const leftovers = relevant.filter((result) => !shownIds.has(result.id));
-  const bench = MATCH_REASON_CATEGORIES.filter((category) => !covered.has(category)).flatMap(
-    (category) =>
-      leftovers
-        .filter((result) => result.matchReasons?.includes(category))
-        .slice(0, BENCH_PER_CATEGORY)
-        .map((result) => ({ ...result, matchReasons: [category], benchOnly: true }))
-  );
+  const extras = relevant.filter((result) => !shownIds.has(result.id)).slice(0, MORE_RESULTS_EXTRA);
 
   const rejectedIds = new Set(
     Array.from(judgments.entries())
@@ -807,5 +704,5 @@ async function selectWithVisionJudge(
       .map(([id]) => id)
   );
 
-  return { results: [...filled, ...bench], rejectedIds };
+  return { results: [...filled, ...extras], rejectedIds };
 }

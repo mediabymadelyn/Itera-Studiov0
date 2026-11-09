@@ -1,0 +1,5690 @@
+{
+  "builtAt": "2026-11-09T21:32:17.020Z",
+  "judge": {
+    "model": "gemini-3.8-flash",
+    "promptVersion": 7,
+    "imageSize": 512,
+    "mediaResolution": "MEDIA_RESOLUTION_MEDIUM",
+    "thinkingLevel": "low",
+    "timeoutMs": 8000
+  },
+  "query": "dramatic light on a figure",
+  "runs": 3,
+  "works": [
+    {
+      "id": "met-437402",
+      "title": "Woman with a Pink",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145910.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145910.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437402",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "early 1660s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q1057817",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "Dianthus caryophyllus",
+        "flower"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-834308",
+      "title": "Roman Charity",
+      "artist": "Hendrick ter Brugghen",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-21075-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-21075-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/834308",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1622",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q111272665",
+      "creditLine": "Wrightsman Fund, 2020",
+      "via": "curated list",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-442491",
+      "title": "Saints Peter and Paul",
+      "artist": "Bartolomeo Manfredi",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-23364-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-23364-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/442491",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "1620s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q126131221",
+      "creditLine": "Bequest of Alexis Gregory, 2020",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-436626",
+      "title": "Boy with a Lute",
+      "artist": "Frans Hals",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145900.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145900.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436626",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1625",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q17609277",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "boy",
+        "lute",
+        "wine glass",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437401",
+      "title": "Portrait of a Man Holding Gloves",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP120783.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP120783.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437401",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1648",
+      "medium": "Oil on wood",
+      "wikidataId": "Q18589381",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "glove",
+        "man",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437395",
+      "title": "The Standard Bearer (probably Floris Soop, 1604–1657)",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP121330.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP121330.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437395",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1654",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q18649144",
+      "creditLine": "The Jules Bache Collection, 1949",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Historical/Cultural Reference",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437392",
+      "title": "Herman Doomer (ca. 1595–1650)",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145921.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145921.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437392",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1640",
+      "medium": "Oil on wood",
+      "wikidataId": "Q18760265",
+      "creditLine": "H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Herman Doomer",
+        "man",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437393",
+      "title": "The Toilet of Bathsheba",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145915.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145915.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437393",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1643",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19863030",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "religious art",
+        "nude",
+        "genre art"
+      ],
+      "depicts": [
+        "Bathsheba",
+        "woman",
+        "washing",
+        "sitting",
+        "breast",
+        "nipple",
+        "group of humans",
+        "fountain",
+        "navel",
+        "nude"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437969",
+      "title": "Battle between Christians and Muslims at El Sotillo",
+      "artist": "Francisco de Zurbarán",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-20747-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-20747-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437969",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Spanish",
+      "objectDate": "ca. 1637–39",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19904793",
+      "creditLine": "Kretschmar Fund, 1920",
+      "via": "curated list",
+      "genres": [
+        "religious art",
+        "history painting"
+      ],
+      "depicts": [
+        "man"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "partly"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        3,
+        3
+      ],
+      "categories": [
+        "Composition",
+        "Lighting",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437399",
+      "title": "Man with a Magnifying Glass",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145909.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145909.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437399",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "early 1660s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19904868",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "magnifying glass",
+        "Pieter Haringh"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 3,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "partly"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        5,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437400",
+      "title": "Portrait of a Man",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145947.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145947.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437400",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1655–60",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905154",
+      "creditLine": "Marquand Collection, Gift of Henry G. Marquand, 1890",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "hat",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        5,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Historical/Cultural Reference",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437406",
+      "title": "Portrait of a Man (\"The Auctioneer\")",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145912.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145912.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437406",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "probably ca. 1658–62",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905155",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        5,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437413",
+      "title": "Man in a Red Cloak",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145928.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145928.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437413",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19905221",
+      "creditLine": "The Jules Bache Collection, 1949",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        5
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437387",
+      "title": "Portrait of a Man",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145938.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145938.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437387",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1632",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19905235",
+      "creditLine": "Gift of Mrs. Lincoln Ellsworth, in memory of Lincoln Ellsworth, 1964",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Historical/Cultural Reference",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-435596",
+      "title": "Old Woman in an Armchair",
+      "artist": "Jacob Backer",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146473.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146473.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435596",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905253",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "chair",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437419",
+      "title": "Rembrandt (1606–1669) as a Young Man",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145931.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145931.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437419",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19905287",
+      "creditLine": "Bequest of Evander B. Schley, 1952",
+      "via": "curated list",
+      "genres": [
+        "portrait",
+        "self-portrait"
+      ],
+      "depicts": [
+        "Rembrandt",
+        "man",
+        "portrait",
+        "artist"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437408",
+      "title": "Man in a Beret",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146507.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146507.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437408",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905289",
+      "creditLine": "Gift of Charles S. Payson, 1975",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "beret",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 3,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "partly"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        5
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-435597",
+      "title": "Portrait of an Old Woman",
+      "artist": "Jacob Backer",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP121324.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP121324.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435597",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19905326",
+      "creditLine": "H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "fur",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Texture/Material",
+        "Historical/Cultural Reference",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "met-437417",
+      "title": "Lieven Willemsz van Coppenol (born about 1599, died 1671 or later)",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146489.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146489.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437417",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on oak",
+      "wikidataId": "Q19905364",
+      "creditLine": "Bequest of Mary Stillman Harkness, 1950",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437410",
+      "title": "Portrait of a Man with a Breastplate and Plumed Hat",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146482.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146482.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437410",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905365",
+      "creditLine": "H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "gorget",
+        "feather",
+        "hat",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 3,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "partly"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Historical/Cultural Reference",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-436212",
+      "title": "Young Woman with a Pearl Necklace",
+      "artist": "Willem Drost",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145914.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145914.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436212",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905418",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "necklace",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437970",
+      "title": "Saint Benedict",
+      "artist": "Francisco de Zurbarán",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-25223-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-25223-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437970",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Spanish",
+      "objectDate": "ca. 1640–45",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905433",
+      "creditLine": "Bequest of Harry G. Sperling, 1971",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "man",
+        "saint",
+        "pitcher"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437409",
+      "title": "Portrait of a Woman",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146483.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146483.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437409",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905459",
+      "creditLine": "H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "chair",
+        "hand fan",
+        "pearl",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-441971",
+      "title": "The Tears of Saint Peter",
+      "artist": "Jusepe de Ribera (called Lo Spagnoletto)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP286357.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP286357.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/441971",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Spanish",
+      "objectDate": "ca. 1612–13",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911506",
+      "creditLine": "Purchase, Gift of Mrs. William M. Haupt, from the collection of Mrs. James B. Haggin, by exchange, and 2011 Benefit Fund, 2012",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Saint Peter"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        5
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437455",
+      "title": "The Holy Family with Saints Anne and Catherine of Alexandria",
+      "artist": "Jusepe de Ribera (called Lo Spagnoletto)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT16.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DT16.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437455",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Spanish",
+      "objectDate": "1648",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911538",
+      "creditLine": "Samuel D. Lee Fund, 1934",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Mary",
+        "Christ Child",
+        "Saint Joseph",
+        "Saint Anne",
+        "Catherine of Alexandria",
+        "Holy Family",
+        "Jesus Christ"
+      ],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437396",
+      "title": "Hendrickje Stoffels (1626–1663)",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145920.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145920.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437396",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "mid-1650s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911539",
+      "creditLine": "Gift of Archer M. Huntington, in memory of his father, Collis Potter Huntington, 1926",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Hendrickje Stoffels",
+        "woman",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Expression/Emotion"
+      ]
+    },
+    {
+      "id": "met-437407",
+      "title": "Christ with a Staff",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT1347.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DT1347.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437407",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911565",
+      "creditLine": "The Jules Bache Collection, 1949",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "man",
+        "walking stick",
+        "Jesus Christ",
+        "Christ"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437389",
+      "title": "Bellona",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146454.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146454.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437389",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1633",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911626",
+      "creditLine": "The Friedsam Collection, Bequest of Michael Friedsam, 1931",
+      "via": "curated list",
+      "genres": [
+        "tronie"
+      ],
+      "depicts": [
+        "woman",
+        "Bellona",
+        "goddess",
+        "armor"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Texture/Material",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437391",
+      "title": "Portrait of a Young Woman with a Fan",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-16969-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-16969-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437391",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1633",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911644",
+      "creditLine": "Gift of Helen Swift Neilson, 1943",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "unidentified woman"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Texture/Material",
+        "Historical/Cultural Reference",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "met-437414",
+      "title": "Pilate Washing His Hands",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145903.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145903.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437414",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "probably 1660s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911776",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "man",
+        "Pontius Pilatus",
+        "Pilate washing his hands",
+        "hand washing"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-437412",
+      "title": "Old Woman Cutting Her Nails",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146474.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146474.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437412",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1655–60",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911779",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "woman",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        null,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437390",
+      "title": "Portrait of a Woman",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145913.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145913.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437390",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1633",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19911781",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "soft window",
+      "scores": [
+        4,
+        2,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Historical/Cultural Reference",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-436210",
+      "title": "Self-Portrait",
+      "artist": "Gerrit Dou",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145902.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145902.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436210",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1665",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19911869",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "self-portrait"
+      ],
+      "depicts": [
+        "Gerrit Dou",
+        "Infants playing with a He-goat",
+        "palette",
+        "birdcage",
+        "book",
+        "man",
+        "self-portrait",
+        "artist"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        3,
+        2
+      ],
+      "categories": [
+        "Composition",
+        "Lighting",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437411",
+      "title": "Man with a Steel Gorget",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146472.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146472.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437411",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911900",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 3,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 5,
+      "lightingType": "single source",
+      "scores": [
+        5,
+        5,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-439933",
+      "title": "Lute Player",
+      "artist": "Valentin de Boulogne",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP168811.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP168811.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/439933",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "ca. 1625–26",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911949",
+      "creditLine": "Purchase, Walter and Leonore Annenberg Acquisitions Endowment Fund; Director's Fund; Acquisitions Fund; James and Diane Burke and Mark Fisch and Rachel Davidson Gifts; Louis V. Bell, Harris Brisbane Dick, Fletcher, and Rogers Funds and Joseph Pulitzer Bequest, 2008",
+      "via": "curated list",
+      "genres": [],
+      "depicts": [
+        "man",
+        "lute",
+        "musician"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-436209",
+      "title": "An Evening School",
+      "artist": "Gerrit Dou",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP101529.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP101529.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436209",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1655–57",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19911973",
+      "creditLine": "Bequest of Lillian M. Ellis, 1940",
+      "via": "curated list",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "man",
+        "girl",
+        "boy",
+        "reading",
+        "student",
+        "teacher",
+        "candle"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 3,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 5,
+      "lightingType": "single source",
+      "scores": [
+        5,
+        5,
+        5
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-438379",
+      "title": "Young Woman with a Red Necklace",
+      "artist": "Rembrandt",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP120418.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP120418.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/438379",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1645",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19912063",
+      "creditLine": "From the Collection of Rita and Frits Markus, Bequest of Rita Markus, 2005",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "necklace",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Expression/Emotion"
+      ]
+    },
+    {
+      "id": "met-437405",
+      "title": "A Young Woman as a Shepherdess",
+      "artist": "Govert Flinck",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146492.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146492.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437405",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on canvas, transferred from wood",
+      "wikidataId": "Q19912274",
+      "creditLine": "Bequest of Lillian S. Timken, 1959",
+      "via": "curated list",
+      "genres": [
+        "tronie"
+      ],
+      "depicts": [
+        "woman",
+        "Flora",
+        "Saskia van Uylenburgh",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437954",
+      "title": "Portrait of a Woman",
+      "artist": "Joseph Wright (Wright of Derby)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP169653.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP169653.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437954",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "British",
+      "objectDate": "ca. 1770",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19912370",
+      "creditLine": "Gift of Heathcote Art Foundation, 1986",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Texture/Material",
+        "Historical/Cultural Reference",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "met-437757",
+      "title": "Old Woman Praying",
+      "artist": "Matthias Stom",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146510.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146510.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437757",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "late 1630s or early 1640s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19912884",
+      "creditLine": "Gift of Ian Woodner, 1981",
+      "via": "curated list",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "woman",
+        "rosary",
+        "prayer"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437633",
+      "title": "Cephalus and Procris",
+      "artist": "Godfried Schalcken",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-18164-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-18164-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437633",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "probably 1680s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19913114",
+      "creditLine": "Rogers Fund, 1974",
+      "via": "curated list",
+      "genres": [
+        "mythological painting"
+      ],
+      "depicts": [
+        "woman",
+        "man"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Expression/Emotion"
+      ]
+    },
+    {
+      "id": "met-436992",
+      "title": "The Sense of Sight",
+      "artist": "Master of the Annunciation to the Shepherds",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT8845.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DT8845.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436992",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19913150",
+      "creditLine": "The Jack and Belle Linsky Collection, 1982",
+      "via": "curated list",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "woman",
+        "mirror"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437386",
+      "title": "Portrait of a Man, probably a Member of the Van Beresteyn Family",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP121326.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP121326.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437386",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1632",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q20167032",
+      "creditLine": "H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "portrait",
+        "Cornelis van Beresteyn"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Historical/Cultural Reference",
+        "Texture/Material"
+      ]
+    },
+    {
+      "id": "met-437388",
+      "title": "Portrait of a Woman, probably a Member of the Van Beresteyn Family",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP145399.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP145399.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437388",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1632",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q20167179",
+      "creditLine": "H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "woman",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        3,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Texture/Material",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-459082",
+      "title": "Portrait of Gerard de Lairesse",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/rl/original/DP121332.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/rl/web-large/DP121332.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/459082",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1665–67",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q20183551",
+      "creditLine": "Robert Lehman Collection, 1975",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Gerard de Lairesse",
+        "man"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437986",
+      "title": "The Denial of Saint Peter",
+      "artist": "Caravaggio (Michelangelo Merisi)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-12413-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-12413-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437986",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "1610",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q2270778",
+      "creditLine": "Gift of Herman and Lila Shickman, and Purchase, Lila Acheson Wallace Gift, 1997",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Denial of Peter",
+        "Saint Peter",
+        "soldier",
+        "woman",
+        "man"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 3,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 5,
+      "lightingType": "single source",
+      "scores": [
+        5,
+        5,
+        5
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437394",
+      "title": "Aristotle with a Bust of Homer",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-30758-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-30758-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437394",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1653",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q2404992",
+      "creditLine": "Purchase, special contributions and funds given or bequeathed by friends of the Museum, 1961",
+      "via": "curated list",
+      "genres": [
+        "historiated portrait"
+      ],
+      "depicts": [
+        "Aristotle",
+        "Homer",
+        "bust",
+        "statue",
+        "belt",
+        "robe",
+        "man",
+        "portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-436839",
+      "title": "The Penitent Magdalen",
+      "artist": "Georges de La Tour",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-27910-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-27910-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436839",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "ca. 1640",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q3210251",
+      "creditLine": "Gift of Mr. and Mrs. Charles Wrightsman, 1978",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Mary Magdalene",
+        "woman",
+        "sitting",
+        "shirt",
+        "skirt",
+        "brown hair",
+        "waist-length hair",
+        "dressing table",
+        "mirror",
+        "specular reflection",
+        "bougeoir",
+        "candle",
+        "flame",
+        "frame",
+        "bijou",
+        "pearl",
+        "human skull",
+        "eyelashes",
+        "contre-jour",
+        "light source",
+        "drapery",
+        "hermit",
+        "shadow",
+        "prayer",
+        "wall",
+        "décolletage",
+        "mirror image",
+        "mortification of the flesh",
+        "skull"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        5,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-436453",
+      "title": "Esther before Ahasuerus",
+      "artist": "Artemisia Gentileschi",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-20748-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-20748-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436453",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "1620s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q3733425",
+      "creditLine": "Gift of Elinor Dorrance Ingersoll, 1969",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Esther",
+        "Ahasuerus",
+        "woman",
+        "man"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437398",
+      "title": "Flora",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP120785.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP120785.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437398",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1654",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q3784800",
+      "creditLine": "Gift of Archer M. Huntington, in memory of his father, Collis Potter Huntington, 1926",
+      "via": "curated list",
+      "genres": [
+        "mythological painting",
+        "portrait"
+      ],
+      "depicts": [
+        "Hendrickje Stoffels",
+        "Flora",
+        "woman",
+        "red hair",
+        "chignon",
+        "hat",
+        "earring",
+        "necklace",
+        "shirt",
+        "skirt",
+        "flower",
+        "branch",
+        "leaf"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Texture/Material",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-436838",
+      "title": "The Fortune-Teller",
+      "artist": "Georges de La Tour",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-14286-015.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-14286-015.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436838",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "probably 1630s",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q379906",
+      "creditLine": "Rogers Fund, 1960",
+      "via": "curated list",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "fortune teller",
+        "woman",
+        "man"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        3,
+        2,
+        2
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437971",
+      "title": "The Young Virgin",
+      "artist": "Francisco de Zurbarán",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-26971-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-26971-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437971",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Spanish",
+      "objectDate": "ca. 1632–33",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q6163639",
+      "creditLine": "Fletcher Fund, 1927",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Mary",
+        "basket",
+        "flower",
+        "scissors",
+        "sewing",
+        "embroidery",
+        "lily",
+        "Mary"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-435844",
+      "title": "The Musicians",
+      "artist": "Caravaggio (Michelangelo Merisi)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-687-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-687-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435844",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "1597",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q655705",
+      "creditLine": "Rogers Fund, 1952",
+      "via": "curated list",
+      "genres": [
+        "genre art",
+        "allegory",
+        "portrait",
+        "self-portrait"
+      ],
+      "depicts": [
+        "Caravaggio",
+        "man",
+        "lute",
+        "lutenist",
+        "cornett",
+        "cornettist",
+        "Cupid",
+        "musician",
+        "madrigal",
+        "grape",
+        "music",
+        "violin"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437397",
+      "title": "Self-Portrait",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-16323-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-16323-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437397",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1660",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q7311573",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "curated list",
+      "genres": [
+        "self-portrait"
+      ],
+      "depicts": [
+        "Rembrandt",
+        "man",
+        "self-portrait"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        4,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-435817",
+      "title": "The Crucifixion with the Virgin and Saint John",
+      "artist": "Hendrick ter Brugghen",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146490.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146490.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435817",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1624–25",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q7728258",
+      "creditLine": "Funds from various donors, 1956",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "crucifixion of Jesus",
+        "Mary",
+        "Jesus Christ",
+        "skull",
+        "John the Evangelist",
+        "crucifixion",
+        "Christ"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-437385",
+      "title": "Man in a Turban",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146479.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146479.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437385",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1632",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q987985",
+      "creditLine": "Bequest of William K. Vanderbilt, 1920",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Orientalism",
+        "man",
+        "portrait",
+        "Orientalist painting"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        null
+      ],
+      "categories": [
+        "Lighting",
+        "Historical/Cultural Reference",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-391694",
+      "title": "Student at a Table by Candlelight",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP820342.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP820342.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/391694",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Dutch",
+      "objectDate": "ca. 1642",
+      "medium": "Etching; first of two states",
+      "creditLine": "Bequest of Harry G. Friedman, 1965",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        5,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437881",
+      "title": "Young Woman with a Water Pitcher",
+      "artist": "Johannes Vermeer",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP353257.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP353257.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437881",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1662",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q386453",
+      "creditLine": "Marquand Collection, Gift of Henry G. Marquand, 1889",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Texture/Material",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437878",
+      "title": "A Maid Asleep",
+      "artist": "Johannes Vermeer",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP355525.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP355525.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437878",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1656–57",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q684935",
+      "creditLine": "Bequest of Benjamin Altman, 1913",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437869",
+      "title": "Juan de Pareja (ca. 1608–1670)",
+      "artist": "Velázquez (Diego Rodríguez de Silva y Velázquez)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-14286-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-14286-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437869",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Spanish",
+      "objectDate": "1650",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q4717953",
+      "creditLine": "Purchase, Fletcher and Rogers Funds, and Bequest of Miss Adelaide Milton de Groot (1876-1967), by exchange, supplemented by gifts from friends of the Museum, 1971",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-436105",
+      "title": "The Death of Socrates",
+      "artist": "Jacques Louis David",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-13139-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-13139-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436105",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "1787",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q1752990",
+      "creditLine": "Catharine Lorillard Wolfe Collection, Wolfe Fund, 1931",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-12127",
+      "title": "Madame X (Virginie Amélie Avegno Gautreau)",
+      "artist": "John Singer Sargent",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ad/original/DP-29006-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ad/web-large/DP-29006-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/12127",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "American",
+      "objectDate": "1883–84",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q2664039",
+      "creditLine": "Arthur Hoppock Hearn Fund, 1916",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Style/Technique",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "met-437654",
+      "title": "Circus Sideshow (Parade de cirque)",
+      "artist": "Georges Seurat",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP375450_cropped.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP375450_cropped.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437654",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "1887–88",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q3823444",
+      "creditLine": "Bequest of Stephen C. Clark, 1960",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        1,
+        0
+      ],
+      "categories": [
+        "Style/Technique",
+        "Composition",
+        "Color Palette"
+      ]
+    },
+    {
+      "id": "met-45434",
+      "title": "Under the Wave off Kanagawa (Kanagawa oki nami ura), also known as The Great Wave, from the series Thirty-six Views of Mount Fuji (Fugaku sanjūrokkei)",
+      "artist": "Katsushika Hokusai",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/as/original/DP130155.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/as/web-large/DP130155.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/45434",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Japan",
+      "objectDate": "ca. 1830–32",
+      "medium": "Woodblock print; ink and color on paper",
+      "wikidataId": "Q28912605",
+      "creditLine": "H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "no"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Composition",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-435809",
+      "title": "The Harvesters",
+      "artist": "Pieter Bruegel the Elder",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP119115.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP119115.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435809",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Netherlandish",
+      "objectDate": "1565",
+      "medium": "Oil on oak",
+      "wikidataId": "Q776175",
+      "creditLine": "Rogers Fund, 1919",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        1
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-282064",
+      "title": "Sir John Herschel",
+      "artist": "Julia Margaret Cameron",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ph/original/DT210878.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ph/web-large/DT210878.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/282064",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Photographs",
+      "culture": "British, born India",
+      "objectDate": "April 1867",
+      "medium": "Albumen silver print from glass negative",
+      "wikidataId": "Q98821366",
+      "creditLine": "The Rubel Collection, Gift of William Rubel, 2013",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-267426",
+      "title": "Julia Jackson",
+      "artist": "Julia Margaret Cameron",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ph/original/DT1121.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ph/web-large/DT1121.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/267426",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Photographs",
+      "culture": "British, born India",
+      "objectDate": "1867",
+      "medium": "Albumen silver print from glass negative",
+      "wikidataId": "Q29384064",
+      "creditLine": "Purchase, Joseph Pulitzer Bequest, 1996",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 3,
+        "type": "side / split",
+        "contrast": "high",
+        "readable": "partly"
+      },
+      "lightingScore": 3,
+      "lightingType": "side / split",
+      "scores": [
+        3,
+        4,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-451264",
+      "title": "\"Jahangir and his Father, Akbar\", Folio from the Shah Jahan Album",
+      "artist": "Balchand",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/is/original/DP240813.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/is/web-large/DP240813.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/451264",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Codices",
+      "objectDate": "verso: ca. 1630; recto: ca.1540–50",
+      "medium": "Ink, opaque watercolor, and gold on paper",
+      "creditLine": "Purchase, Rogers Fund and The Kevorkian Foundation Gift, 1955",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-448277",
+      "title": "Portrait of Emperor Jahangir Praying",
+      "artist": "Unknown artist",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/is/original/sf1929-160-19a.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/is/web-large/sf1929-160-19a.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/448277",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Codices",
+      "objectDate": "early 17th century",
+      "medium": "Ink and opaque watercolor on paper",
+      "creditLine": "H. O. Havemeyer Collection, Gift of Horace Havemeyer, 1929",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Historical/Cultural Reference",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437745",
+      "title": "Judith with the Head of Holofernes",
+      "artist": "Massimo Stanzione",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT1446.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DT1446.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437745",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "ca. 1640",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q12172896",
+      "creditLine": "Gift of Edward W. Carter, 1959",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-436535",
+      "title": "Wheat Field with Cypresses",
+      "artist": "Vincent van Gogh",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-42549-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-42549-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436535",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "1889",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q18689458",
+      "creditLine": "Purchase, The Annenberg Foundation Gift, 1993",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        2,
+        0
+      ],
+      "categories": [
+        "Style/Technique",
+        "Environment/Setting",
+        "Color Palette"
+      ]
+    },
+    {
+      "id": "met-437326",
+      "title": "Blind Orion Searching for the Rising Sun",
+      "artist": "Nicolas Poussin",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP148490.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP148490.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437326",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "1658",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911450",
+      "creditLine": "Fletcher Fund, 1924",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "sunlight / golden hour",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "sunlight / golden hour",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-437250",
+      "title": "The Annunciation",
+      "artist": "Girolamo Mazzola Bedoli",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-18296-031.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-18296-031.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437250",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19911516",
+      "creditLine": "Purchase, Gwynne Andrews Fund, James S. Deely Gift, special funds, and other gifts and bequests, by exchange, 1982",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-436344",
+      "title": "Holy Family with Saint Anne",
+      "artist": "French Painter",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-44678-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-44678-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436344",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "early 17th century",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19913233",
+      "creditLine": "Bequest of Harry G. Sperling, 1971",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "below",
+        "shadow": 2,
+        "type": "under / top",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "under / top",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Expression/Emotion"
+      ]
+    },
+    {
+      "id": "met-436908",
+      "title": "Saint Catherine of Alexandria",
+      "artist": "Pietro Lorenzetti",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/SF Lorenzetti.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/SF Lorenzetti.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436908",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "ca. 1342",
+      "medium": "Tempera on wood, gold ground",
+      "wikidataId": "Q20167186",
+      "creditLine": "Rogers Fund, 1913",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Historical/Cultural Reference",
+        "Texture/Material",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-437612",
+      "title": "Madonna and Child with Angels",
+      "artist": "Sassetta (Stefano di Giovanni)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT7229.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DT7229.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437612",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "ca. 1445–50",
+      "medium": "Tempera on wood, gold ground",
+      "wikidataId": "Q19911555",
+      "creditLine": "Gift of George Blumenthal, 1941",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Style/Technique",
+        "Historical/Cultural Reference",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-438754",
+      "title": "Madonna and Child",
+      "artist": "Duccio di Buoninsegna",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP142735.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP142735.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/438754",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "ca. 1290–1300",
+      "medium": "Tempera and gold on wood",
+      "wikidataId": "Q6728394",
+      "creditLine": "Purchase, Rogers Fund, Walter and Leonore Annenberg and The Annenberg Foundation Gift, Lila Acheson Wallace Gift, Annette de la Renta Gift, Harris Brisbane Dick, Fletcher, Louis V. Bell, and Dodge Funds, Joseph Pulitzer Bequest, several members of The Chairman's Council Gifts, Elaine L. Rosenberg and Stephenson Family Foundation Gifts, 2003 Benefit Fund, and other gifts and funds from various donors, 2004",
+      "via": "Met search: candle",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "categories": [
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-437193",
+      "title": "The Reader",
+      "artist": "Eglon van der Neer",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP146484.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP146484.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437193",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905134",
+      "creditLine": "The Friedsam Collection, Bequest of Michael Friedsam, 1931",
+      "via": "Met search: candle",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-436798",
+      "title": "The Holy Family with Shepherds",
+      "artist": "Jacob Jordaens",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-15761-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-15761-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436798",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Flemish",
+      "objectDate": "1616",
+      "medium": "Oil on canvas, transferred from wood",
+      "wikidataId": "Q19906057",
+      "creditLine": "Bequest of Miss Adelaide Milton de Groot (1876-1967), 1967",
+      "via": "Met search: candle",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-437199",
+      "title": "Saint Donatian; Saint Victor Presenting a Donor",
+      "artist": "Netherlandish (Bruges) Painter",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT8850.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DT8850.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437199",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Netherlandish",
+      "objectDate": "",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19913005",
+      "creditLine": "The Jack and Belle Linsky Collection, 1982",
+      "via": "Met search: candle",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Historical/Cultural Reference",
+        "Texture/Material",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-788905",
+      "title": "Schloss Milkel in Moonlight",
+      "artist": "Carl Gustav Carus",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-16387-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-16387-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/788905",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "German",
+      "objectDate": "ca. 1833–35",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q61363155",
+      "creditLine": "Purchase, Fern and George Wachter Gift, 2018",
+      "via": "Met search: lamplight",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": true,
+      "lighting": {
+        "sources": 2,
+        "quality": "soft",
+        "direction": "back",
+        "shadow": 3,
+        "type": "rim / back",
+        "contrast": "medium",
+        "readable": "partly"
+      },
+      "lightingScore": 2,
+      "lightingType": "rim / back",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Lighting",
+        "Environment/Setting"
+      ]
+    },
+    {
+      "id": "met-348584",
+      "title": "By Candlelight",
+      "artist": "Julian Alden Weir",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/52169.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/52169.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/348584",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "American",
+      "objectDate": "ca. 1885–93",
+      "medium": "Drypoint; only state",
+      "creditLine": "Rogers Fund, 1918",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "side / split",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "side / split",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-365311",
+      "title": "Three Persons Viewing the Gladiator by Candlelight",
+      "artist": "William Pether",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP-18854-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP-18854-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/365311",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "British",
+      "objectDate": "July 10, 1769",
+      "medium": "Mezzotint; third state of three (Clayton)",
+      "creditLine": "Harris Brisbane Dick Fund, 1953",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "below",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        5,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "met-335448",
+      "title": "Christ on the Cross; verso: St. Jerome Reading by Candlelight, and Sketch of Male Torso (?)",
+      "artist": "Anthony van Dyck",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP802373.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP802373.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/335448",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Drawings",
+      "culture": "Flemish",
+      "objectDate": "n.d.",
+      "medium": "Recto and verso: black and white chalk",
+      "creditLine": "Bequest of Walter C. Baker, 1971",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-820743",
+      "title": "A Quartet of Singers, Lute players, and Bell Ringers Playing in a Tavern by Candlelight",
+      "artist": "Leonaert Bramer",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP887752.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP887752.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/820743",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Drawings",
+      "culture": "Dutch",
+      "objectDate": "mid to late 17th century",
+      "medium": "Brush drawing in gray ink, heightened with white bodycolor; framing lines in brush and gray ink with white bodycolor",
+      "creditLine": "Gift of Kenneth Grebinar, in celebration of the Museum's 150th Anniversary, 2019",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        2,
+        2
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-345483",
+      "title": "Baccio Bandinelli in his studio holding a statuette of Venus, students sketching from a model by candlelight",
+      "artist": "Agostino Veneziano (Agostino dei Musi)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP843177.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP843177.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/345483",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Prints",
+      "culture": "Italian",
+      "objectDate": "1531",
+      "medium": "Engraving",
+      "creditLine": "The Elisha Whittelsey Collection, The Elisha Whittelsey Fund, 1949",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-340877",
+      "title": "The Card Players",
+      "artist": "Anonymous, British, 19th century",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP806072.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/dp/web-large/DP806072.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/340877",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Drawings",
+      "culture": "British",
+      "objectDate": "1780–1820",
+      "medium": "Brush and gray and black ink wash heightened with white gouache (bodycolor)",
+      "creditLine": "Bequest of Alexandrine Sinsheimer, 1958",
+      "via": "Met search: candlelight",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 2,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 3,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "partly"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-438338",
+      "title": "The Burial of Christ",
+      "artist": "Annibale Carracci",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP312834.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP312834.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/438338",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "1595",
+      "medium": "Oil on copper",
+      "wikidataId": "Q18613324",
+      "creditLine": "Purchase, Edwin L. Weisl Jr. Gift, 1998",
+      "via": "Met search: torch",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-435741",
+      "title": "Allegory of Lyric Poetry",
+      "artist": "François Boucher",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP259113.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP259113.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435741",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "1753",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19913373",
+      "creditLine": "Purchase, Mr. and Mrs. Charles Wrightsman Gift, 1969",
+      "via": "Met search: torch",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 2,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        1,
+        1
+      ],
+      "categories": [
+        "Composition",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-435932",
+      "title": "Portrait of a Woman",
+      "artist": "Continental Painter",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/175520.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/175520.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435932",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Miniatures",
+      "culture": "Continental",
+      "objectDate": "",
+      "medium": "Ivory",
+      "wikidataId": "Q19913970",
+      "creditLine": "Bequest of Millie Bruhl Fredrick, 1962",
+      "via": "Met search: torch",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "categories": [
+        "Historical/Cultural Reference",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "met-437088",
+      "title": "The Serenade",
+      "artist": "Frans van Mieris the Elder",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP143182.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP143182.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/437088",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Dutch",
+      "objectDate": "ca. 1678–80",
+      "medium": "Oil on wood",
+      "wikidataId": "Q19905128",
+      "creditLine": "Bequest of Lillian S. Timken, 1959",
+      "via": "Met search: torch",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "below",
+        "shadow": 3,
+        "type": "under / top",
+        "contrast": "high",
+        "readable": "partly"
+      },
+      "lightingScore": 4,
+      "lightingType": "under / top",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-435619",
+      "title": "The Betrayal of Christ",
+      "artist": "Bartolomeo di Tommaso",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DT200598.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DT200598.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435619",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "Italian",
+      "objectDate": "ca. 1445–50",
+      "medium": "Tempera on wood",
+      "wikidataId": "Q19912855",
+      "creditLine": "Gwynne Andrews Fund, 1958",
+      "via": "Met search: torch",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Composition",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-435747",
+      "title": "Jupiter, in the Guise of Diana, and Callisto",
+      "artist": "François Boucher",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP339911.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP339911.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435747",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "1763",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19912200",
+      "creditLine": "The Jack and Belle Linsky Collection, 1982",
+      "via": "Met search: torch",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Composition",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "met-435908",
+      "title": "The Trojan Women Setting Fire to Their Fleet",
+      "artist": "Claude Lorrain (Claude Gellée)",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP226145.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP226145.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/435908",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "French",
+      "objectDate": "ca. 1643",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19911726",
+      "creditLine": "Fletcher Fund, 1955",
+      "via": "Met search: torch",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 1,
+        "type": "sunlight / golden hour",
+        "contrast": "medium",
+        "readable": "partly"
+      },
+      "lightingScore": 1,
+      "lightingType": "sunlight / golden hour",
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "met-436201",
+      "title": "Surprised, or Infidelity Found Out",
+      "artist": "Christian Wilhelm Ernst Dietrich",
+      "source": "The Metropolitan Museum of Art",
+      "imageUrl": "https://images.metmuseum.org/CRDImages/ep/original/DP-42621-001.jpg",
+      "thumbnailUrl": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-42621-001.jpg",
+      "originalLink": "https://www.metmuseum.org/art/collection/search/436201",
+      "sourceLink": "https://www.metmuseum.org",
+      "licenseType": "Public Domain",
+      "classification": "Paintings",
+      "culture": "German",
+      "objectDate": "",
+      "medium": "Oil on canvas",
+      "wikidataId": "Q19905417",
+      "creditLine": "Purchase, 1871",
+      "via": "Met search: torch",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 2,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        2,
+        1,
+        1
+      ],
+      "categories": [
+        "Composition",
+        "Historical/Cultural Reference",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "aic-56905",
+      "title": "Nocturne: Blue and Gold—Southampton Water",
+      "artist": "James McNeill Whistler",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/James%20McNeill%20Whistler%20-%20Nocturne%2C%20Blue%20and%20Gold%E2%80%94Southampton%20Water%20-%201900.52%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/James%20McNeill%20Whistler%20-%20Nocturne%2C%20Blue%20and%20Gold%E2%80%94Southampton%20Water%20-%201900.52%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/56905",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "London",
+      "objectDate": "1872",
+      "creditLine": "James McNeill Whistler. Nocturne: Blue and Gold—Southampton Water, 1872. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "no"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        0,
+        2
+      ],
+      "categories": [
+        "Color Palette",
+        "Environment/Setting",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "aic-80084",
+      "title": "The Crucifixion",
+      "artist": "Francisco de Zurbarán",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Francisco%20de%20Zurbar%C3%A1n%20-%20The%20Crucifixion%20-%201954.15%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Francisco%20de%20Zurbar%C3%A1n%20-%20The%20Crucifixion%20-%201954.15%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/80084",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Spain",
+      "objectDate": "1627",
+      "creditLine": "Francisco de Zurbarán. The Crucifixion, 1627. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Jesus Christ",
+        "man"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "aic-27992",
+      "title": "A Sunday on La Grande Jatte — 1884",
+      "artist": "Georges Seurat",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/A%20Sunday%20on%20La%20Grande%20Jatte%2C%20Georges%20Seurat%2C%201884.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/A%20Sunday%20on%20La%20Grande%20Jatte%2C%20Georges%20Seurat%2C%201884.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/27992",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "France",
+      "objectDate": "1884–86, border added 1888–89",
+      "creditLine": "Georges Seurat. A Sunday on La Grande Jatte — 1884, 1884–86, border added 1888–89. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 2,
+        "type": "dappled / patterned",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "dappled / patterned",
+      "scores": [
+        3,
+        2,
+        3
+      ],
+      "categories": [
+        "Composition",
+        "Style/Technique",
+        "Color Palette"
+      ]
+    },
+    {
+      "id": "aic-64818",
+      "title": "Stacks of Wheat (End of Summer)",
+      "artist": "Claude Monet",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Claude%20Monet%20-%20Stacks%20of%20Wheat%20%28End%20of%20Summer%29%20-%201985.1103%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Claude%20Monet%20-%20Stacks%20of%20Wheat%20%28End%20of%20Summer%29%20-%201985.1103%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/64818",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "France",
+      "objectDate": "1890–91",
+      "creditLine": "Claude Monet. Stacks of Wheat (End of Summer), 1890–91. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "sunlight / golden hour",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "sunlight / golden hour",
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "categories": [
+        "Color Palette",
+        "Style/Technique",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "aic-28560",
+      "title": "The Bedroom",
+      "artist": "Vincent van Gogh",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Vincent%20van%20Gogh%20-%20The%20Bedroom%20-%20Google%20Art%20Project.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Vincent%20van%20Gogh%20-%20The%20Bedroom%20-%20Google%20Art%20Project.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/28560",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Saint-Rémy-de-Provence",
+      "objectDate": "1889",
+      "creditLine": "Vincent van Gogh. The Bedroom, 1889. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 0,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "no"
+      },
+      "lightingScore": 0,
+      "lightingType": "even / flat",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "categories": [
+        "Color Palette",
+        "Environment/Setting",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "aic-20684",
+      "title": "Paris Street; Rainy Day",
+      "artist": "Gustave Caillebotte",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Gustave%20Caillebotte%20-%20Paris%20Street%2C%20Rainy%20Day%20-%201964.336%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Gustave%20Caillebotte%20-%20Paris%20Street%2C%20Rainy%20Day%20-%201964.336%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/20684",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Paris",
+      "objectDate": "1877",
+      "creditLine": "Gustave Caillebotte. Paris Street; Rainy Day, 1877. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "ambient",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "categories": [
+        "Composition",
+        "Environment/Setting",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "aic-14655",
+      "title": "Two Sisters (On the Terrace)",
+      "artist": "Pierre-Auguste Renoir",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Pierre-Auguste%20Renoir%20-%20Two%20Sisters%20%28On%20the%20Terrace%29%20-%201933.455%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Pierre-Auguste%20Renoir%20-%20Two%20Sisters%20%28On%20the%20Terrace%29%20-%201933.455%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/14655",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "France",
+      "objectDate": "1881",
+      "creditLine": "Pierre-Auguste Renoir. Two Sisters (On the Terrace), 1881. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 3,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "even / flat",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "categories": [
+        "Color Palette",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "aic-16499",
+      "title": "Jesus Mocked by the Soldiers",
+      "artist": "Édouard Manet",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/%C3%89douard%20Manet%20-%20Jesus%20Mocked%20by%20the%20Soldiers%20-%20Google%20Art%20Project.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/%C3%89douard%20Manet%20-%20Jesus%20Mocked%20by%20the%20Soldiers%20-%20Google%20Art%20Project.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/16499",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "France",
+      "objectDate": "1865",
+      "creditLine": "Édouard Manet. Jesus Mocked by the Soldiers, 1865. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        3,
+        3,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "aic-193664",
+      "title": "The Captive Slave (Ira Aldridge)",
+      "artist": "John Philip Simpson",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/John%20Philip%20Simpson%20-%20The%20Captive%20Slave%20-%202008.188%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/John%20Philip%20Simpson%20-%20The%20Captive%20Slave%20-%202008.188%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/193664",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "England",
+      "objectDate": "1827",
+      "creditLine": "John Philip Simpson. The Captive Slave (Ira Aldridge), 1827. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 3,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        3,
+        3
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "aic-111442",
+      "title": "The Child's Bath",
+      "artist": "Mary Cassatt",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Mary%20Cassatt%20-%20The%20Child%27s%20Bath%20-%20Google%20Art%20Project.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Mary%20Cassatt%20-%20The%20Child%27s%20Bath%20-%20Google%20Art%20Project.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/111442",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "France",
+      "objectDate": "1893",
+      "creditLine": "Mary Cassatt. The Child's Bath, 1893. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 1,
+        "type": "soft window",
+        "contrast": "low",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "soft window",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Pose/Anatomy",
+        "Composition",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "aic-59847",
+      "title": "Cupid Chastised",
+      "artist": "Bartolomeo Manfredi",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/ManfrediMarsCupid.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/ManfrediMarsCupid.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/59847",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Italy",
+      "objectDate": "1613",
+      "creditLine": "Bartolomeo Manfredi. Cupid Chastised, 1613. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "mythological painting"
+      ],
+      "depicts": [
+        "Cupid"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "aic-87643",
+      "title": "The Two Disciples at the Tomb",
+      "artist": "Henry Ossawa Tanner",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Henry%20Ossawa%20Tanner%20-%20The%20Two%20Disciples%20at%20the%20Tomb%20-%201906.300%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Henry%20Ossawa%20Tanner%20-%20The%20Two%20Disciples%20at%20the%20Tomb%20-%201906.300%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/87643",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Paris",
+      "objectDate": "c. 1906",
+      "creditLine": "Henry Ossawa Tanner. The Two Disciples at the Tomb, c. 1906. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Color Palette"
+      ]
+    },
+    {
+      "id": "aic-95998",
+      "title": "Old Man with a Gold Chain",
+      "artist": "Rembrandt van Rijn",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Rembrandt%20Harmensz.%20van%20Rijn%20-%20Old%20Man%20with%20a%20Gold%20Chain%20-%20Google%20Art%20Project.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Rembrandt%20Harmensz.%20van%20Rijn%20-%20Old%20Man%20with%20a%20Gold%20Chain%20-%20Google%20Art%20Project.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/95998",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Holland",
+      "objectDate": "1631",
+      "creditLine": "Rembrandt van Rijn. Old Man with a Gold Chain, 1631. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "Rembrandt's father",
+        "feather",
+        "chain",
+        "gorget"
+      ],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "aic-19336",
+      "title": "The Resurrection",
+      "artist": "Cecco del Caravaggio",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Francesco%20Buoneri%2C%20called%20Cecco%20del%20Caravaggio%20-%20The%20Resurrection%20-%20Google%20Art%20Project.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Francesco%20Buoneri%2C%20called%20Cecco%20del%20Caravaggio%20-%20The%20Resurrection%20-%20Google%20Art%20Project.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/19336",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Italy",
+      "objectDate": "c. 1619-20",
+      "creditLine": "Cecco del Caravaggio. The Resurrection, c. 1619-20. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Jesus Christ"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "aic-25865",
+      "title": "The Herring Net",
+      "artist": "Winslow Homer",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Winslow%20Homer%20-%20The%20Herring%20Net%20-%20Google%20Art%20Project.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Winslow%20Homer%20-%20The%20Herring%20Net%20-%20Google%20Art%20Project.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/25865",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Prouts Neck",
+      "objectDate": "1885",
+      "creditLine": "Winslow Homer. The Herring Net, 1885. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 2,
+        "type": "even / flat",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "even / flat",
+      "scores": [
+        1,
+        1,
+        0
+      ],
+      "categories": [
+        "Composition",
+        "Environment/Setting",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "aic-94841",
+      "title": "The Song of the Lark",
+      "artist": "Jules Breton",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Jules%20Breton%2C%20le%20chant%20de%20l%27alouette.1884.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Jules%20Breton%2C%20le%20chant%20de%20l%27alouette.1884.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/94841",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "France",
+      "objectDate": "1884",
+      "creditLine": "Jules Breton. The Song of the Lark, 1884. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 2,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "sunlight / golden hour",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 1,
+      "lightingType": "sunlight / golden hour",
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Environment/Setting"
+      ]
+    },
+    {
+      "id": "aic-120172",
+      "title": "Penitent Saint Peter",
+      "artist": "Jusepe de Ribera",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Jusepe%20de%20Ribera%20-%20Penitent%20Saint%20Peter%20-%201993.60%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Jusepe%20de%20Ribera%20-%20Penitent%20Saint%20Peter%20-%201993.60%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/120172",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Spain",
+      "objectDate": "c. 1630",
+      "creditLine": "Jusepe de Ribera. Penitent Saint Peter, c. 1630. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Saint Peter"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "aic-87479",
+      "title": "The Assumption of the Virgin",
+      "artist": "Domenico Theotokópoulos, called El Greco",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Domenikos%20Theotok%C3%B3poulos%2C%20called%20El%20Greco%20-%20The%20Assumption%20of%20the%20Virgin%20-%20Google%20Art%20Project.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Domenikos%20Theotok%C3%B3poulos%2C%20called%20El%20Greco%20-%20The%20Assumption%20of%20the%20Virgin%20-%20Google%20Art%20Project.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/87479",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Greece",
+      "objectDate": "1577–79",
+      "creditLine": "Domenico Theotokópoulos, called El Greco. The Assumption of the Virgin, 1577–79. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "aic-30901",
+      "title": "The Denial of Saint Peter",
+      "artist": "Hendrick Terbrugghen",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Hendrick%20Terbrugghen%20-%20The%20Denial%20of%20Saint%20Peter%20-%201969.3%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Hendrick%20Terbrugghen%20-%20The%20Denial%20of%20Saint%20Peter%20-%201969.3%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/30901",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Netherlands",
+      "objectDate": "c. 1626",
+      "creditLine": "Hendrick Terbrugghen. The Denial of Saint Peter, c. 1626. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "Saint Peter"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "below",
+        "shadow": 3,
+        "type": "under / top",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 5,
+      "lightingType": "under / top",
+      "scores": [
+        5,
+        5,
+        5
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Pose/Anatomy"
+      ]
+    },
+    {
+      "id": "aic-16558",
+      "title": "A Lamplight Study: Herr Joachim",
+      "artist": "George Frederick Watts",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/George%20Frederick%20Watts%20-%20A%20Lamplight%20Study%2C%20Herr%20Joachim%20-%201925.725%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/George%20Frederick%20Watts%20-%20A%20Lamplight%20Study%2C%20Herr%20Joachim%20-%201925.725%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/16558",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "England",
+      "objectDate": "1868",
+      "creditLine": "George Frederick Watts. A Lamplight Study: Herr Joachim, 1868. The Art Institute of Chicago.",
+      "via": "AIC search: lamplight",
+      "genres": [],
+      "depicts": [],
+      "people": true,
+      "artificialLight": true,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        null,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Pose/Anatomy",
+        "Expression/Emotion"
+      ]
+    },
+    {
+      "id": "aic-59894",
+      "title": "The Rommel-Pot Player",
+      "artist": "Workshop of Frans Hals",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Follower%20of%20Frans%20Hals%20-%20The%20Rommel-Pot%20Player%20-%201947.78%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Follower%20of%20Frans%20Hals%20-%20The%20Rommel-Pot%20Player%20-%201947.78%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/59894",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Netherlands",
+      "objectDate": "c. 1630",
+      "creditLine": "Workshop of Frans Hals. The Rommel-Pot Player, c. 1630. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "man",
+        "rummelpott",
+        "boy",
+        "girl",
+        "friction drum"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "aic-80548",
+      "title": "Young Man in a Turban",
+      "artist": "Follower of Rembrandt van Rijn",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Follower%20of%20Rembrandt%20Harmenszoon%20van%20Rijn%20-%20Young%20Man%20in%20a%20Turban%20-%201954.297%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Follower%20of%20Rembrandt%20Harmenszoon%20van%20Rijn%20-%20Young%20Man%20in%20a%20Turban%20-%201954.297%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/80548",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Holland",
+      "objectDate": "c. 1650",
+      "creditLine": "Follower of Rembrandt van Rijn. Young Man in a Turban, c. 1650. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "portrait"
+      ],
+      "depicts": [
+        "man",
+        "turban"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Historical/Cultural Reference",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "aic-94840",
+      "title": "Young Woman at an Open Half-Door",
+      "artist": "Workshop of Rembrandt van Rijn",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Samuel%20van%20Hoogstraten%20-%20Young%20woman%20at%20an%20open%20half-door%20%281645%29.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Samuel%20van%20Hoogstraten%20-%20Young%20woman%20at%20an%20open%20half-door%20%281645%29.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/94840",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Holland",
+      "objectDate": "1645",
+      "creditLine": "Workshop of Rembrandt van Rijn. Young Woman at an Open Half-Door, 1645. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [
+        "woman",
+        "door",
+        "girl"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Style/Technique",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "aic-243872",
+      "title": "A Boy Blowing on a Firebrand",
+      "artist": "Gerrit van Honthorst",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Honthorst%20-%20A%20Boy%20Blowing%20on%20a%20Firebrand%2C%201621-22%2C%202018.135.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Honthorst%20-%20A%20Boy%20Blowing%20on%20a%20Firebrand%2C%201621-22%2C%202018.135.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/243872",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Netherlands",
+      "objectDate": "1621–22",
+      "creditLine": "Gerrit van Honthorst. A Boy Blowing on a Firebrand, 1621–22. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "genre art"
+      ],
+      "depicts": [],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "below",
+        "shadow": 2,
+        "type": "under / top",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "under / top",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Expression/Emotion",
+        "Style/Technique"
+      ]
+    },
+    {
+      "id": "aic-61128",
+      "title": "At the Moulin Rouge",
+      "artist": "Henri de Toulouse-Lautrec",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Henri%20de%20Toulouse-Lautrec%20-%20At%20the%20Moulin%20Rouge%20-%201928.610%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Henri%20de%20Toulouse-Lautrec%20-%20At%20the%20Moulin%20Rouge%20-%201928.610%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/61128",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "France",
+      "objectDate": "1892–95",
+      "creditLine": "Henri de Toulouse-Lautrec. At the Moulin Rouge, 1892–95. The Art Institute of Chicago.",
+      "via": "eval set",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": true,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "below",
+        "shadow": 2,
+        "type": "under / top",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "under / top",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Composition",
+        "Color Palette"
+      ]
+    },
+    {
+      "id": "aic-61665",
+      "title": "Saint Romanus of Antioch and Saint Barulas",
+      "artist": "Francisco de Zurbarán",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Francisco%20de%20Zurbar%C3%A1n%20-%20Saint%20Romanus%20of%20Antioch%20and%20Saint%20Barulas%20-%201947.793%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Francisco%20de%20Zurbar%C3%A1n%20-%20Saint%20Romanus%20of%20Antioch%20and%20Saint%20Barulas%20-%201947.793%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/61665",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Spain",
+      "objectDate": "1638",
+      "creditLine": "Francisco de Zurbarán. Saint Romanus of Antioch and Saint Barulas, 1638. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [],
+      "people": false,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "hard",
+        "direction": "side",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "high",
+        "readable": "yes"
+      },
+      "lightingScore": 4,
+      "lightingType": "single source",
+      "scores": [
+        4,
+        4,
+        4
+      ],
+      "categories": [
+        "Lighting",
+        "Texture/Material",
+        "Historical/Cultural Reference"
+      ]
+    },
+    {
+      "id": "aic-213758",
+      "title": "Saint John the Baptist in the Wilderness",
+      "artist": "Adam Elsheimer",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Adam%20Elsheimer%20%28Umkreis%29%20-%20Johannes%20der%20T%C3%A4ufer%20in%20der%20W%C3%BCste.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Adam%20Elsheimer%20%28Umkreis%29%20-%20Johannes%20der%20T%C3%A4ufer%20in%20der%20W%C3%BCste.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/213758",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Germany",
+      "objectDate": "c. 1605",
+      "creditLine": "Adam Elsheimer. Saint John the Baptist in the Wilderness, c. 1605. The Art Institute of Chicago.",
+      "via": "curated list",
+      "genres": [
+        "religious art"
+      ],
+      "depicts": [
+        "John the Baptist"
+      ],
+      "people": true,
+      "artificialLight": false,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "front",
+        "shadow": 1,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "yes"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Pose/Anatomy",
+        "Composition"
+      ]
+    },
+    {
+      "id": "aic-9",
+      "title": "Interior of St. Mark's, Venice",
+      "artist": "David Dalhoff Neal",
+      "source": "Art Institute of Chicago",
+      "imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/David%20Dalhoff%20Neal%20-%20Interior%20of%20St.%20Mark%27s%2C%20Venice%20-%201887.232%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/David%20Dalhoff%20Neal%20-%20Interior%20of%20St.%20Mark%27s%2C%20Venice%20-%201887.232%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
+      "originalLink": "https://www.artic.edu/artworks/9",
+      "sourceLink": "https://www.artic.edu",
+      "licenseType": "Public Domain",
+      "classification": "Painting",
+      "culture": "Venice",
+      "objectDate": "1869",
+      "creditLine": "David Dalhoff Neal. Interior of St. Mark's, Venice, 1869. The Art Institute of Chicago.",
+      "via": "AIC search: footlights",
+      "genres": [],
+      "depicts": [],
+      "people": false,
+      "artificialLight": true,
+      "lighting": {
+        "sources": 1,
+        "quality": "soft",
+        "direction": "top",
+        "shadow": 2,
+        "type": "single source",
+        "contrast": "medium",
+        "readable": "no"
+      },
+      "lightingScore": 2,
+      "lightingType": "single source",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "categories": [
+        "Environment/Setting",
+        "Composition",
+        "Historical/Cultural Reference"
+      ]
+    }
+  ]
+}

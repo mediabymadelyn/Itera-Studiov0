@@ -14,7 +14,6 @@
  */
 import { execSync } from "node:child_process";
 import { mkdirSync, writeFileSync, appendFileSync } from "node:fs";
-import { MATCH_REASON_CATEGORIES } from "../../lib/search/categories";
 import {
   LIGHTING_TYPES as JUDGE_LIGHTING_TYPES,
   clearJudgmentCache,
@@ -23,7 +22,7 @@ import {
   visionJudgeSettings
 } from "../../lib/search/visionJudge";
 import type { ArtworkResult } from "../../lib/types/artwork";
-import { CATEGORIES, LIGHTING_TYPES, loadManifest, loadProvenance } from "./manifest.mts";
+import { LIGHTING_TYPES, loadManifest, loadProvenance } from "./manifest.mts";
 import type { ManifestRow, ProvenanceRow } from "./manifest.mts";
 
 const RUNS_DIR = "data/eval/runs";
@@ -64,7 +63,9 @@ function toResult(row: ManifestRow, provenance: ProvenanceRow): ArtworkResult {
     source: SOURCE_LABELS[row.source],
     imageUrl: provenance.image_url!,
     thumbnailUrl: provenance.thumbnail_url ?? provenance.image_url!,
-    originalLink: row.page_url
+    originalLink: row.page_url,
+    // Decides whether the painting rule applies, as it does in search.
+    classification: provenance.classification ?? undefined
   };
 }
 
@@ -82,9 +83,11 @@ async function mapLimited<T, R>(items: T[], limit: number, worker: (item: T) => 
   return results;
 }
 
-// The eval's allowed values must be the judge's, or agreement is skewed.
-if (!sameList(LIGHTING_TYPES, JUDGE_LIGHTING_TYPES) || !sameList(CATEGORIES, MATCH_REASON_CATEGORIES)) {
-  console.error("scripts/eval/manifest.mts lighting types or categories no longer match the app's. Update them first.");
+// The eval's lighting types must be the judge's, or agreement is skewed.
+// Categories may differ: the labels keep the original nine, and the report
+// compares only the ones the app still uses.
+if (!sameList(LIGHTING_TYPES, JUDGE_LIGHTING_TYPES)) {
+  console.error("scripts/eval/manifest.mts lighting types no longer match the app's. Update them first.");
   process.exit(1);
 }
 if (!isVisionJudgeEnabled()) {

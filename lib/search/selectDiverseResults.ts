@@ -1,8 +1,9 @@
 import { ArtworkResult } from "@/lib/types/artwork";
 
 // Testers valued cross-referencing photos against art, so museum works keep
-// at least this many slots whenever enough relevant ones exist.
-const MIN_MUSEUM_RESULTS = 2;
+// at least this many slots whenever enough relevant ones exist (raised from
+// 2 when testers still found too few for "hands holding coffee cup").
+const MIN_MUSEUM_RESULTS = 3;
 // Slots held for results from the diversity searches (named-background and
 // gender-balance Unsplash variants, Met non-Western departments), so
 // they aren't crowded out by the sources' default skew.
@@ -36,11 +37,16 @@ export type SelectionOptions = {
 
 const UNKNOWN_ARTISTS = new Set(["", "unknown", "unknown artist", "unknown photographer", "anonymous"]);
 
-// null for unnamed creators: "Unknown artist" covers many different
-// anonymous makers, so it isn't capped.
+// Unnamed creators ("Unknown artist") cover many different makers, so they
+// aren't capped as one -- but a numbered series by one ("Ballerina, from the
+// Actresses series (N668)", five near-identical cigarette cards for "black
+// ballerina") is, by its title without the parenthetical numbering.
 function artistKey(result: ArtworkResult): string | null {
   const key = result.artist.trim().toLowerCase();
-  return UNKNOWN_ARTISTS.has(key) ? null : key;
+  if (!UNKNOWN_ARTISTS.has(key)) return key;
+
+  const series = result.title.toLowerCase().replace(/\([^)]*\)|\[[^\]]*\]|\d+/g, "").replace(/\s+/g, " ").trim();
+  return series ? `series:${series}` : null;
 }
 
 /** Drops results past MAX_RESULTS_PER_ARTIST, keeping each creator's first (best-placed) ones. */

@@ -19,3 +19,6 @@ pnpm-debug.log*
 data/eval/runs/
 data/eval/cache/
 data/eval/external/
+
+# Cached museum API responses for scripts/build-museum-library.mts.
+data/library-cache/

@@ -44,6 +44,7 @@ export const CATEGORIES = [
   "Historical/Cultural Reference"
 ] as const;
 export const CONFIDENCE = ["high", "medium", "low"] as const;
+export const CONTRASTS = ["low", "medium", "high"] as const;
 export const YES_NO = ["yes", "no"] as const;
 // Who gave the dramatic verdict: "maddi" for reviewed labels, "claude" for
 // proposed ones still waiting on review.
@@ -66,7 +67,9 @@ export type ManifestLabels = {
   // Proposed fields the judge doesn't return yet; kept, not scored.
   pattern_proposed: string;
   color_temp: string;
-  contrast: string;
+  // Also judged by the model since prompt v6 (with readable): feeds the
+  // isolated-light part of the scoring rule.
+  contrast: (typeof CONTRASTS)[number];
   categories: (typeof CATEGORIES)[number][];
 };
 
@@ -107,6 +110,9 @@ export type ProvenanceRow = {
   image_url: string | null;
   thumbnail_url: string | null;
   credit_line: string | null;
+  // The museum's own type for the work ("Paintings", "Photographs",
+  // "Print"...): decides whether the painting rule applies.
+  classification: string | null;
   // Manifest eligibility AND every check passing.
   eval_allowed: boolean;
   reasons: string[];

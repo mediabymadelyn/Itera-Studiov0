@@ -7,7 +7,10 @@ import {
   contentTokens,
   detectAgeGroup,
   detectLightingIntent,
-  hasStatedBackground,
+  statedBackground,
+  statedBackgroundVariants,
+  statedGender,
+  withBackgroundFirst,
   isDemographicWord,
   isFillerWord,
   isMediumWord,
@@ -19,6 +22,8 @@ import {
   settingMatchWords,
   backgroundVariants,
   isFaceSubject,
+  MET_EUROPEAN_PAINTINGS,
+  wantsMonochrome,
   hasStatedGender,
   isBodyPartSubject,
   queryWantsBlur,
@@ -52,6 +57,18 @@ export type QueryPlan = {
   namesFlatMedium: boolean;
   // Content words of the whole request, used for ranking.
   rankWords: string[];
+  // The background the user named for a people search ("black"), if any.
+  // Its variant searches are then main results, not diversity extras.
+  statedBackground: string | null;
+  // The search asked for black-and-white images, which lifts the cap on
+  // them in Best matches (see arrangeSections in searchAll.ts).
+  wantsMonochrome: boolean;
+  // For body-part subjects, what the body part is doing or holding
+  // ("coffee", "cup" in "hands holding coffee cup"). Museums catalog the
+  // scene, not the hands -- Pissarro's "Young Peasant Having Her Coffee"
+  // never says "hands" -- so these also confirm the subject
+  // (subjectFilter.ts) and get their own museum search. Empty otherwise.
+  companionWords: string[];
   lighting: LightingIntent | null;
   ageGroup: ReturnType<typeof detectAgeGroup>;
   // Met: tried in order until one returns results.
@@ -62,6 +79,9 @@ export type QueryPlan = {
   photoQuery: string;
   // Tighter subject + action photo search for compound queries.
   photoSecondaryQuery?: string;
+  // One photo search per lighting pattern ("face side lit"), for lighting
+  // searches that define patterns (see LightingIntent.photoPatterns).
+  photoLightingQueries: string[];
   // Named-background variants of photoQuery for people queries, in the
   // order they should be spent (searchAll.ts decides how many run).
   photoBackgroundQueries: string[];
@@ -80,6 +100,9 @@ export type QueryPlan = {
 
 // Enough variants for the largest per-search budget (see searchAll.ts).
 const MAX_BACKGROUND_VARIANTS = 2;
+// When the user named a background, the variant searches all look for it
+// (see statedBackgroundVariants), so they get one more.
+const MAX_STATED_BACKGROUND_VARIANTS = 3;
 
 // Only long requests are worth an LLM round trip; short ones are already
 // keyword-shaped and the word-based plan handles them fine.
@@ -94,8 +117,6 @@ export type MuseumSearch = {
   // Tried in order until one returns results.
   queries: string[];
   departmentId?: number;
-  // Tags results as retrievedVia "lighting" instead of "secondary".
-  forLighting?: boolean;
 };
 
 type LlmRewrite = {
@@ -321,6 +342,10 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
         .join(" ") || parsed.subject;
 
   const subjectWords = contentTokens(parsed.subject);
+  const bodyPartSubject = isBodyPartSubject(subjectWords);
+  const companionWords = bodyPartSubject
+    ? contentTokens(stripped).filter((word) => !subjectWords.includes(word) && !actionWords.includes(word))
+    : [];
   const museumSubject = museumSubjectTerm(parsed.subject);
   const museumQueries = options.passthrough
     ? [query]
@@ -332,28 +357,26 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
         museumSubject
       ]);
 
-  // Only for people and faces: candlelit paintings almost always show a
-  // figure, and these results skip the subject-word check (subjectFilter.ts),
-  // leaving the vision check to confirm the subject from the image.
-  const lightSourceSearches: MuseumSearch[] =
-    lighting?.metLightSearch && isPeopleQuery(allTokens)
-      ? [{ ...lighting.metLightSearch, forLighting: true }]
-      : [];
   const museumSecondarySearches: MuseumSearch[] = options.passthrough
     ? []
     : lighting
-      ? [
-          ...lighting.metDepartmentIds.map((departmentId) => ({
-            queries: [museumSubject],
-            departmentId
-          })),
-          ...lightSourceSearches
-        ]
+      ? lighting.metDepartmentIds.map((departmentId) => ({
+          queries: [museumSubject],
+          departmentId
+        }))
       : actionSearch
         ? [{ queries: unique([`${museumSubject} ${actionSearch}`, actionSearch]) }]
         : [];
+  // The Met's plain search for these words returns the objects themselves
+  // (coffee cups, urns), so this one looks only at paintings.
+  if (companionWords.length > 0 && !options.passthrough) {
+    museumSecondarySearches.push({
+      queries: unique([companionWords.join(" "), companionWords[0]]),
+      departmentId: MET_EUROPEAN_PAINTINGS
+    });
+  }
 
-  const photoQuery = [
+  const basePhotoQuery = [
     withChildQualifier(keywordQuery, allTokens),
     lighting && !options.passthrough ? lighting.photoTerms : ""
   ]
@@ -367,7 +390,10 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   // alone, so a compound query still returns usable pose references for
   // the part that's hard to find.
   const peopleQuery = !options.passthrough && isPeopleQuery(allTokens);
-  const bodyPartSubject = isBodyPartSubject(subjectWords);
+  // A named background stays in front of the subject: the reordered
+  // "dancer motion black" found 5 photos, "Black dancer motion" a full page.
+  const background = peopleQuery ? statedBackground(query) : null;
+  const photoQuery = background ? withBackgroundFirst(basePhotoQuery, background) : basePhotoQuery;
   const subjectActionQuery = parsed.action ? `${parsed.subject} ${parsed.action}` : "";
   const photoSecondaryQuery =
     !peopleQuery && parsed.action && !options.passthrough
@@ -375,10 +401,19 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
         ? parsed.action
         : subjectActionQuery
       : undefined;
-  const photoBackgroundQueries =
-    peopleQuery && !hasStatedBackground(query)
-      ? backgroundVariants(query, photoQuery, bodyPartSubject, MAX_BACKGROUND_VARIANTS, isFaceSubject(subjectWords))
+  const photoLightingQueries =
+    lighting?.photoPatterns && !options.passthrough
+      ? lighting.photoPatterns.map((pattern, index) =>
+          `${withChildQualifier(keywordQuery, allTokens)} ${
+            index === 0 && !peopleQuery && lighting.nonPeoplePattern ? lighting.nonPeoplePattern : pattern
+          }`
+        )
       : [];
+  const photoBackgroundQueries = !peopleQuery
+    ? []
+    : background
+      ? statedBackgroundVariants(background, parsed.subject, MAX_STATED_BACKGROUND_VARIANTS, statedGender(allTokens))
+      : backgroundVariants(query, photoQuery, bodyPartSubject, MAX_BACKGROUND_VARIANTS, isFaceSubject(subjectWords));
 
   return {
     original: query,
@@ -386,9 +421,12 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
     subjectWords,
     actionWords,
     settingWords: parsed.setting ? settingMatchWords(parsed.setting) : [],
-    allowsObjects: queryAllowsObjects(allTokens),
+    allowsObjects: queryAllowsObjects(allTokens, bodyPartSubject),
     namesFlatMedium: allTokens.some(isMediumWord),
     rankWords: contentTokens(stripped),
+    companionWords,
+    wantsMonochrome: wantsMonochrome(query),
+    statedBackground: background,
     lighting,
     ageGroup: detectAgeGroup(allTokens),
     museumQueries,
@@ -396,6 +434,7 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
     keywordQuery,
     photoQuery,
     photoSecondaryQuery,
+    photoLightingQueries,
     photoBackgroundQueries,
     balanceGender: peopleQuery && !hasStatedGender(allTokens),
     bodyPartSubject,

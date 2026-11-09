@@ -8,6 +8,7 @@
 import {
   CATEGORIES,
   CONFIDENCE,
+  CONTRASTS,
   DIRECTIONS,
   LABELERS,
   LIGHT_SOURCES,
@@ -67,7 +68,8 @@ function checkRow(row: Record<string, any>): string[] {
   if (!oneOf(labels.dramatic, YES_NO)) fail(`labels.dramatic "${labels.dramatic}" not yes/no`);
   if (!oneOf(labels.dramatic_confidence, CONFIDENCE)) fail(`labels.dramatic_confidence "${labels.dramatic_confidence}" not high/medium/low`);
   if (!oneOf(labels.dramatic_by, LABELERS)) fail(`labels.dramatic_by "${labels.dramatic_by}" not one of ${LABELERS.join(", ")}`);
-  for (const field of ["pattern_proposed", "color_temp", "contrast"]) {
+  if (!oneOf(labels.contrast, CONTRASTS)) fail(`labels.contrast "${labels.contrast}" not low/medium/high`);
+  for (const field of ["pattern_proposed", "color_temp"]) {
     if (typeof labels[field] !== "string") fail(`labels.${field} must be a string`);
   }
   if (!Array.isArray(labels.categories) || labels.categories.length < 1 || labels.categories.length > 3) {

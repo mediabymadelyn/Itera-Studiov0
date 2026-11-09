@@ -13,9 +13,10 @@
  */
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename } from "node:path";
-import { lightingScoreFor } from "../../lib/search/visionJudge";
+import { MATCH_REASON_CATEGORIES } from "../../lib/search/categories";
+import { isPaintedResult, lightingScoreFor } from "../../lib/search/visionJudge";
 import type { VisionJudgment } from "../../lib/search/visionJudge";
-import { judgeSourceCount, loadManifest } from "./manifest.mts";
+import { judgeSourceCount, loadManifest, loadProvenance } from "./manifest.mts";
 import type { ManifestRow } from "./manifest.mts";
 
 const RUNS_DIR = "data/eval/runs";
@@ -41,16 +42,23 @@ for (const line of lines.filter((line) => line.type === "judgment")) {
   judgedById.set(line.id, list.sort((a, b) => a.run - b.run));
 }
 const rows = manifest.filter((row) => judgedById.has(row.id));
+const classificationById = new Map(loadProvenance().map((row) => [row.id, row.classification]));
+// Categories the app still uses; label categories outside these (dropped
+// from the app) aren't counted against the model.
+const appCategory = (category: string) => (MATCH_REASON_CATEGORIES as readonly string[]).includes(category);
 
 function expectedScore(row: ManifestRow): number {
   const labels = row.labels;
+  const painted = isPaintedResult({ source: row.source, classification: classificationById.get(row.id) ?? undefined });
   return lightingScoreFor({
     sources: judgeSourceCount(labels.sources),
     quality: labels.quality,
     direction: labels.direction,
     shadow: labels.shadow,
-    type: labels.type
-  });
+    type: labels.type,
+    contrast: labels.contrast,
+    readable: labels.readable
+  }, { painted });
 }
 
 type Pair = { row: ManifestRow; run: number; judgment: VisionJudgment; elapsed_ms: number };
@@ -98,7 +106,10 @@ out.push(`\n## Agreement with your labels, per part\nOver every answered judgmen
 const n = pairs.length;
 const shadowExact = count((p) => p.judgment.lighting.shadow === p.row.labels.shadow);
 const shadowNear = count((p) => Math.abs(p.judgment.lighting.shadow - p.row.labels.shadow) <= 1);
-const jaccards = pairs.map((p) => jaccard(p.row.labels.categories, p.judgment.categories));
+// Temperature is compared on color images only; monochrome rows are scored
+// as black and white instead.
+const colorPairs = pairs.filter((p) => !p.row.labels.color_temp.startsWith("n/a"));
+const jaccards = pairs.map((p) => jaccard(p.row.labels.categories.filter(appCategory), p.judgment.categories));
 out.push(
   table(["Part", "Agreement", "Most common disagreements (label → model)"], [
     ["Sources (1 / 2 / 3+ or ambient)", pct(count((p) => p.judgment.lighting.sources === judgeSourceCount(p.row.labels.sources)), n), disagreements((r) => String(judgeSourceCount(r.labels.sources)), (j) => String(j.lighting.sources))],
@@ -107,6 +118,10 @@ out.push(
     ["Shadow, exact", pct(shadowExact, n), disagreements((r) => String(r.labels.shadow), (j) => String(j.lighting.shadow))],
     ["Shadow, within 1", pct(shadowNear, n), ""],
     ["Type", pct(count((p) => p.judgment.lighting.type === p.row.labels.type), n), disagreements((r) => r.labels.type, (j) => j.lighting.type, 6)],
+    ["Contrast (low / medium / high)", pct(count((p) => p.judgment.lighting.contrast === p.row.labels.contrast), n), disagreements((r) => r.labels.contrast, (j) => j.lighting.contrast)],
+    ["Readable (yes / partly / no)", pct(count((p) => p.judgment.lighting.readable === p.row.labels.readable), n), disagreements((r) => r.labels.readable, (j) => j.lighting.readable)],
+    ["Color temperature (your color_temp)", pct(colorPairs.filter((p) => p.judgment.color?.temperature === p.row.labels.color_temp).length, colorPairs.length), `${disagreements((r) => r.labels.color_temp, (j) => j.color?.temperature ?? "none")}; calling everything warm would get ${pct(colorPairs.filter((p) => p.row.labels.color_temp === "warm").length, colorPairs.length)}`],
+    ["Black and white (your monochrome rows)", pct(pairs.filter((p) => (p.row.labels.color_temp.startsWith("n/a")) === (p.judgment.color?.saturation === "black and white")).length, n), ""],
     ["Categories, any overlap", pct(jaccards.filter((value) => value > 0).length, n), `mean overlap (Jaccard) ${(jaccards.reduce((a, b) => a + b, 0) / Math.max(1, n)).toFixed(2)}`]
   ])
 );
@@ -189,9 +204,9 @@ if (unstable.length) {
 
 // --- Readability --------------------------------------------------------------
 const hardToRead = rows.filter((row) => row.labels.readable !== "yes");
-out.push(`\n## Readability: rows you marked partly or not readable\nThe judge doesn't rate readability yet, so these show whether hard-to-read images still score as dramatic.`);
-out.push(table(["Row", "Readable", "Your expected score", "Model score per run", "Scored 4+?"], hardToRead.map((row) => [
-  short(row), row.labels.readable, expectedScore(row), scoresOf(row),
+out.push(`\n## Readability: rows you marked partly or not readable\nThe rule takes a point off partly readable images and caps unreadable ones at 2.`);
+out.push(table(["Row", "Readable", "Model readable per run", "Your expected score", "Model score per run", "Scored 4+?"], hardToRead.map((row) => [
+  short(row), row.labels.readable, judgedById.get(row.id)!.map((j) => j.judgment?.lighting.readable ?? "–").join(" / "), expectedScore(row), scoresOf(row),
   judgedById.get(row.id)!.some((j) => (j.judgment?.lightingScore ?? 0) >= DRAMATIC_SCORE) ? "**yes**" : "no"
 ])));
 
@@ -234,7 +249,8 @@ const csvCell = (value: unknown) => {
 const csvHeader = [
   "id", "source", "title", "test_group", "test_query", "run", "elapsed_ms",
   "label_sources", "model_sources", "label_quality", "model_quality", "label_direction", "model_direction",
-  "label_shadow", "model_shadow", "label_type", "model_type", "expected_score", "model_score",
+  "label_shadow", "model_shadow", "label_type", "model_type", "label_contrast", "model_contrast", "model_readable",
+  "expected_score", "model_score",
   "rule_dramatic", "verdict_dramatic", "verdict_confidence", "verdict_by", "model_dramatic", "match", "label_readable", "label_categories", "model_categories", "category_jaccard"
 ];
 const csvRows = rows.flatMap((row) => judgedById.get(row.id)!.map((judged) => {
@@ -243,7 +259,8 @@ const csvRows = rows.flatMap((row) => judgedById.get(row.id)!.map((judged) => {
   return [
     row.id, row.source, row.title, row.test_group, row.test_query, judged.run, judged.elapsed_ms,
     l.sources, j?.lighting.sources, l.quality, j?.lighting.quality, l.direction, j?.lighting.direction,
-    l.shadow, j?.lighting.shadow, l.type, j?.lighting.type, expectedScore(row), j?.lightingScore,
+    l.shadow, j?.lighting.shadow, l.type, j?.lighting.type, l.contrast, j?.lighting.contrast, j?.lighting.readable,
+    expectedScore(row), j?.lightingScore,
     isDramatic(expectedScore(row)), l.dramatic, l.dramatic_confidence, l.dramatic_by, j ? isDramatic(j.lightingScore) : "", j?.match, l.readable,
     l.categories, j?.categories, j ? jaccard(l.categories, j.categories).toFixed(2) : ""
   ].map(csvCell).join(",");

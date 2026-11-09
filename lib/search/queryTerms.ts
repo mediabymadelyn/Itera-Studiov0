@@ -68,16 +68,17 @@ export type LightingIntent = {
   photoTerms: string;
   aicTerm: string;
   metDepartmentIds: number[];
-  // A Met search for the light itself rather than the subject, for people
-  // and faces. Catalogs describe the light source, not the effect: La
-  // Tour's "The Penitent Magdalen" (a face lit by one candle) is tagged
-  // "Candles" and never says portrait or face, so the subject search misses it.
-  metLightSearch?: { queries: string[]; departmentId: number };
+  // Extra photo searches, one per lighting pattern, each added to the
+  // subject ("face side lit"). Unsplash's "low key" alone returned almost
+  // only black-and-white studio portraits. The first is swapped for
+  // nonPeoplePattern when the subject isn't a person.
+  photoPatterns?: string[];
+  nonPeoplePattern?: string;
   rankTerms: string[];
   rankArtists: string[];
 };
 
-const MET_EUROPEAN_PAINTINGS = 11;
+export const MET_EUROPEAN_PAINTINGS = 11;
 const MET_PHOTOGRAPHS = 19;
 
 const DRAMATIC_LIGHTING_PHRASES = [
@@ -91,10 +92,13 @@ const LIGHT_RAY_PHRASES = ["sun rays", "sunrays", "light rays", "god rays", "sun
 
 const DRAMATIC_LIGHTING: LightingIntent = {
   kind: "dramatic",
-  photoTerms: "dramatic low key",
+  photoTerms: "dramatic lighting",
   aicTerm: "candlelight",
-  metDepartmentIds: [MET_EUROPEAN_PAINTINGS, MET_PHOTOGRAPHS],
-  metLightSearch: { queries: ["candlelight"], departmentId: MET_EUROPEAN_PAINTINGS },
+  // None: the pre-scored museum library (lib/search/museumLibrary.ts)
+  // supplies dramatic museum works without any Met requests at search time.
+  metDepartmentIds: [],
+  photoPatterns: ["Rembrandt lighting", "side lit", "chiaroscuro", "colorful dramatic light"],
+  nonPeoplePattern: "single light source",
   rankTerms: [
     "candle", "candlelight", "candlelit", "night", "nocturne",
     "lamp", "lamplight", "torch", "torchlight", "firelight", "moonlight",
@@ -240,7 +244,7 @@ export function adultWords(): string[] {
 const PERSON_WORDS = new Set([
   "person", "people", "man", "men", "woman", "women", "girl", "girls", "boy",
   "boys", "child", "children", "kid", "kids", "teen", "teenager", "baby",
-  "dancer", "dancers", "athlete", "athletes", "musician", "musicians",
+  "dancer", "dancers", "ballerina", "ballerinas", "athlete", "athletes", "musician", "musicians",
   "model", "figure", "figures", "portrait", "portraits", "face", "faces",
   "hand", "hands", "student", "students", "worker", "workers", "family",
   "couple", "crowd", "elderly", "grandmother", "grandfather", "skater",
@@ -281,7 +285,13 @@ export function isBodyPartSubject(subjectWords: string[]): boolean {
 }
 
 export function hasStatedGender(tokens: string[]): boolean {
-  return tokens.some((token) => FEMALE_WORDS.includes(token) || MALE_WORDS.includes(token));
+  return statedGender(tokens) !== null;
+}
+
+export function statedGender(tokens: string[]): "female" | "male" | null {
+  if (tokens.some((token) => FEMALE_WORDS.includes(token))) return "female";
+  if (tokens.some((token) => MALE_WORDS.includes(token))) return "male";
+  return null;
 }
 
 const FACE_WORDS = new Set(["face", "faces"]);
@@ -356,9 +366,60 @@ export function isPeopleQuery(tokens: string[]): boolean {
   return tokens.some((token) => PERSON_WORDS.has(token));
 }
 
-export function hasStatedBackground(query: string): boolean {
+/** The background the user named ("black", "south asian"), longest match first. */
+export function statedBackground(query: string): string | null {
   const normalized = ` ${query.toLowerCase()} `;
-  return STATED_BACKGROUND_WORDS.some((word) => normalized.includes(` ${word} `));
+  return (
+    [...STATED_BACKGROUND_WORDS]
+      .sort((a, b) => b.length - a.length)
+      .find((word) => normalized.includes(` ${word} `)) ?? null
+  );
+}
+
+// Other ways photographers caption the same background, tried as one more
+// search ("African American dancer" found as many full matches as "Black
+// dancer in motion" for "black dancer mid motion").
+const BACKGROUND_SEARCH_SYNONYMS: Record<string, string> = { black: "African American" };
+
+const titleCase = (text: string) => text.replace(/\b\w/g, (letter) => letter.toUpperCase());
+
+// "dancer" -> "dancing", "swimmer" -> "swimming": photos of people doing
+// something are captioned by the activity ("Black woman dancing").
+function activityOf(subject: string): string {
+  return subject.endsWith("er") && subject.length - 2 >= 4 ? `${subject.slice(0, -2)}ing` : subject;
+}
+
+/**
+ * Variant photo searches for a people search that names a background
+ * ("black dancer mid motion"). The plain search returned 5 photos, mostly
+ * of people in black clothes: Unsplash captions rarely state ethnicity, so
+ * "black" matched the clothing. Person phrasing finds what the user asked
+ * for ("Black woman dancing", "Black man dancing"), plus a synonym.
+ */
+export function statedBackgroundVariants(
+  background: string,
+  subject: string,
+  count: number,
+  gender: "female" | "male" | null = null
+): string[] {
+  const descriptor = titleCase(background);
+  const activity = activityOf(subject);
+  const synonym = BACKGROUND_SEARCH_SYNONYMS[background];
+  // A stated gender ("ballerina", "man") keeps only that person phrasing.
+  const people = gender === "female" ? ["woman"] : gender === "male" ? ["man"] : ["woman", "man"];
+  return [
+    ...people.map((person) => `${descriptor} ${person} ${activity}`),
+    ...(synonym ? [`${synonym} ${subject}`] : [])
+  ].slice(0, count);
+}
+
+/** Puts the named background in front of the rest, the way people write it. */
+export function withBackgroundFirst(query: string, background: string): string {
+  const rest = query
+    .split(" ")
+    .filter((word) => !background.split(" ").includes(word.toLowerCase()))
+    .join(" ");
+  return `${titleCase(background)} ${rest}`.trim();
 }
 
 function stableHash(value: string): number {
@@ -427,7 +488,7 @@ export function settingMatchWords(setting: string): string[] {
 // is the Met's term for reverse glass paintings, which are flat; metalpoint
 // is a drawing technique.)
 const OBJECT_CLASSIFICATION_PATTERN =
-  /sculpt|statu|ornament|ceramic|porcelain|pottery|terracott|metal(?!point)|bronzes|jewel|glass(?!-paint)|vessel|vase|furniture|arms|armor|helmet|sword|dagger|coin|medal|ivor|mask|enamel|gold and silver/i;
+  /sculpt|statu|ornament|ceramic|porcelain|pottery|terracott|metal(?!point)|bronzes|jewel|glass(?!-paint)|vessel|vase|furniture|arms|armor|helmet|sword|dagger|coin|medal|ivor|mask|enamel|gold and silver|textile|velvet|tapestr|embroider|lace/i;
 
 // Typing any of these means objects are what the user wants, so the cap
 // doesn't apply ("coffee cup" should still return the Met's porcelain cups).
@@ -442,8 +503,33 @@ const OBJECT_QUERY_WORDS = new Set([
   "artifacts", "glass", "bronze", "marble"
 ]);
 
-export function queryAllowsObjects(tokens: string[]): boolean {
-  return tokens.some((token) => OBJECT_QUERY_WORDS.has(token));
+// Words that ask for a sculpture or 3D work itself, not just name a thing.
+const SCULPTURE_QUERY_WORDS = new Set([
+  "statue", "statues", "sculpture", "sculptures", "figurine", "figurines",
+  "bust", "busts", "carving", "carvings", "relief", "ceramic", "ceramics",
+  "pottery", "porcelain", "object", "objects", "3d", "artifact", "artifacts",
+  "bronze", "marble"
+]);
+
+/**
+ * Whether 3D objects are wanted. For body-part subjects an object word
+ * usually names what's held ("hands holding coffee cup"), not a request for
+ * porcelain -- that search was filling museum slots with cups and marble
+ * hands instead of paintings of people drinking coffee -- so there only a
+ * sculpture or material word counts.
+ */
+// Only these phrases ask for black-and-white images; "Black" alone usually
+// describes a person ("Black woman"), so it never counts.
+const MONOCHROME_PHRASES = ["black and white", "black & white", "b&w", "monochrome", "grayscale", "greyscale", "noir"];
+
+export function wantsMonochrome(query: string): boolean {
+  const normalized = query.toLowerCase();
+  return MONOCHROME_PHRASES.some((phrase) => normalized.includes(phrase));
+}
+
+export function queryAllowsObjects(tokens: string[], bodyPartSubject = false): boolean {
+  const words = bodyPartSubject ? SCULPTURE_QUERY_WORDS : OBJECT_QUERY_WORDS;
+  return tokens.some((token) => words.has(token));
 }
 
 export function isObjectResult(result: ArtworkResult): boolean {

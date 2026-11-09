@@ -3,7 +3,7 @@
     "id": "M01",
     "source": "Met",
     "object_id": "436839",
-    "checked_at": "2026-11-06T19:24:04.567Z",
+    "checked_at": "2026-11-09T21:17:21.852Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -14,6 +14,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP-27910-001.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-27910-001.jpg",
     "credit_line": "Gift of Mr. and Mrs. Charles Wrightsman, 1978",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -21,7 +22,7 @@
     "id": "M02",
     "source": "Met",
     "object_id": "436838",
-    "checked_at": "2026-11-06T19:24:07.067Z",
+    "checked_at": "2026-11-09T21:17:21.854Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -32,6 +33,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP-14286-015.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-14286-015.jpg",
     "credit_line": "Rogers Fund, 1960",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -39,7 +41,7 @@
     "id": "M03",
     "source": "Met",
     "object_id": "437986",
-    "checked_at": "2026-11-06T19:24:08.528Z",
+    "checked_at": "2026-11-09T21:17:21.854Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -50,6 +52,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP-12413-001.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-12413-001.jpg",
     "credit_line": "Gift of Herman and Lila Shickman, and Purchase, Lila Acheson Wallace Gift, 1997",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -57,7 +60,7 @@
     "id": "M04",
     "source": "Met",
     "object_id": "435844",
-    "checked_at": "2026-11-06T19:24:09.959Z",
+    "checked_at": "2026-11-09T21:17:21.854Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -68,6 +71,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP-687-001.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-687-001.jpg",
     "credit_line": "Rogers Fund, 1952",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -75,7 +79,7 @@
     "id": "M05",
     "source": "Met",
     "object_id": "437394",
-    "checked_at": "2026-11-06T19:24:11.631Z",
+    "checked_at": "2026-11-09T21:17:21.854Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -86,6 +90,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP-30758-001.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-30758-001.jpg",
     "credit_line": "Purchase, special contributions and funds given or bequeathed by friends of the Museum, 1961",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -93,7 +98,7 @@
     "id": "M06",
     "source": "Met",
     "object_id": "391694",
-    "checked_at": "2026-11-06T19:24:13.316Z",
+    "checked_at": "2026-11-09T21:17:21.854Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -104,6 +109,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/dp/original/DP820342.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/dp/web-large/DP820342.jpg",
     "credit_line": "Bequest of Harry G. Friedman, 1965",
+    "classification": "Prints",
     "eval_allowed": true,
     "reasons": []
   },
@@ -111,7 +117,7 @@
     "id": "M07",
     "source": "Met",
     "object_id": "437881",
-    "checked_at": "2026-11-06T19:24:14.568Z",
+    "checked_at": "2026-11-09T21:17:21.855Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -122,6 +128,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP353257.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP353257.jpg",
     "credit_line": "Marquand Collection, Gift of Henry G. Marquand, 1889",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -129,7 +136,7 @@
     "id": "M08",
     "source": "Met",
     "object_id": "437878",
-    "checked_at": "2026-11-06T19:24:16.041Z",
+    "checked_at": "2026-11-09T21:17:21.855Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -140,6 +147,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP355525.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP355525.jpg",
     "credit_line": "Bequest of Benjamin Altman, 1913",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -147,7 +155,7 @@
     "id": "M09",
     "source": "Met",
     "object_id": "437869",
-    "checked_at": "2026-11-06T19:24:17.512Z",
+    "checked_at": "2026-11-09T21:17:21.855Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -158,6 +166,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP-14286-001.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-14286-001.jpg",
     "credit_line": "Purchase, Fletcher and Rogers Funds, and Bequest of Miss Adelaide Milton de Groot (1876-1967), by exchange, supplemented by gifts from friends of the Museum, 1971",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -165,7 +174,7 @@
     "id": "M10",
     "source": "Met",
     "object_id": "436105",
-    "checked_at": "2026-11-06T19:24:19.055Z",
+    "checked_at": "2026-11-09T21:17:21.855Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -176,6 +185,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP-13139-001.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-13139-001.jpg",
     "credit_line": "Catharine Lorillard Wolfe Collection, Wolfe Fund, 1931",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -183,7 +193,7 @@
     "id": "M11",
     "source": "Met",
     "object_id": "12127",
-    "checked_at": "2026-11-06T19:24:20.738Z",
+    "checked_at": "2026-11-09T21:17:21.856Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -194,6 +204,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ad/original/DP-29006-001.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ad/web-large/DP-29006-001.jpg",
     "credit_line": "Arthur Hoppock Hearn Fund, 1916",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -201,7 +212,7 @@
     "id": "M12",
     "source": "Met",
     "object_id": "437654",
-    "checked_at": "2026-11-06T19:24:21.972Z",
+    "checked_at": "2026-11-09T21:17:21.856Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -212,6 +223,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP375450_cropped.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP375450_cropped.jpg",
     "credit_line": "Bequest of Stephen C. Clark, 1960",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -219,7 +231,7 @@
     "id": "M13",
     "source": "Met",
     "object_id": "45434",
-    "checked_at": "2026-11-06T19:24:23.625Z",
+    "checked_at": "2026-11-09T21:17:21.856Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -230,6 +242,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/as/original/DP130155.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/as/web-large/DP130155.jpg",
     "credit_line": "H. O. Havemeyer Collection, Bequest of Mrs. H. O. Havemeyer, 1929",
+    "classification": "Prints",
     "eval_allowed": true,
     "reasons": []
   },
@@ -237,7 +250,7 @@
     "id": "M14",
     "source": "Met",
     "object_id": "435809",
-    "checked_at": "2026-11-06T19:24:24.900Z",
+    "checked_at": "2026-11-09T21:17:21.856Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -248,6 +261,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP119115.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP119115.jpg",
     "credit_line": "Rogers Fund, 1919",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -255,7 +269,7 @@
     "id": "M15",
     "source": "Met",
     "object_id": "282064",
-    "checked_at": "2026-11-06T19:24:26.284Z",
+    "checked_at": "2026-11-09T21:17:21.856Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -266,6 +280,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ph/original/DT210878.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ph/web-large/DT210878.jpg",
     "credit_line": "The Rubel Collection, Gift of William Rubel, 2013",
+    "classification": "Photographs",
     "eval_allowed": true,
     "reasons": []
   },
@@ -273,7 +288,7 @@
     "id": "M16",
     "source": "Met",
     "object_id": "267426",
-    "checked_at": "2026-11-06T19:24:27.414Z",
+    "checked_at": "2026-11-09T21:17:21.856Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -284,6 +299,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ph/original/DT1121.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ph/web-large/DT1121.jpg",
     "credit_line": "Purchase, Joseph Pulitzer Bequest, 1996",
+    "classification": "Photographs",
     "eval_allowed": true,
     "reasons": []
   },
@@ -291,7 +307,7 @@
     "id": "M17",
     "source": "Met",
     "object_id": "451264",
-    "checked_at": "2026-11-06T19:24:28.641Z",
+    "checked_at": "2026-11-09T21:17:21.856Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -302,6 +318,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/is/original/DP240813.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/is/web-large/DP240813.jpg",
     "credit_line": "Purchase, Rogers Fund and The Kevorkian Foundation Gift, 1955",
+    "classification": "Codices",
     "eval_allowed": true,
     "reasons": []
   },
@@ -309,7 +326,7 @@
     "id": "M18",
     "source": "Met",
     "object_id": "448277",
-    "checked_at": "2026-11-06T19:24:29.837Z",
+    "checked_at": "2026-11-09T21:17:21.857Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -320,6 +337,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/is/original/sf1929-160-19a.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/is/web-large/sf1929-160-19a.jpg",
     "credit_line": "H. O. Havemeyer Collection, Gift of Horace Havemeyer, 1929",
+    "classification": "Codices",
     "eval_allowed": true,
     "reasons": []
   },
@@ -327,7 +345,7 @@
     "id": "M19",
     "source": "Met",
     "object_id": "437745",
-    "checked_at": "2026-11-06T19:24:30.955Z",
+    "checked_at": "2026-11-09T21:17:21.857Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -338,6 +356,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DT1446.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DT1446.jpg",
     "credit_line": "Gift of Edward W. Carter, 1959",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -345,7 +364,7 @@
     "id": "M20",
     "source": "Met",
     "object_id": "436535",
-    "checked_at": "2026-11-06T19:24:32.252Z",
+    "checked_at": "2026-11-09T21:17:21.857Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -356,6 +375,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP-42549-001.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP-42549-001.jpg",
     "credit_line": "Purchase, The Annenberg Foundation Gift, 1993",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -363,7 +383,7 @@
     "id": "M21",
     "source": "Met",
     "object_id": "437326",
-    "checked_at": "2026-11-06T19:24:33.537Z",
+    "checked_at": "2026-11-09T21:17:21.857Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -374,6 +394,7 @@
     "image_url": "https://images.metmuseum.org/CRDImages/ep/original/DP148490.jpg",
     "thumbnail_url": "https://images.metmuseum.org/CRDImages/ep/web-large/DP148490.jpg",
     "credit_line": "Fletcher Fund, 1924",
+    "classification": "Paintings",
     "eval_allowed": true,
     "reasons": []
   },
@@ -381,7 +402,7 @@
     "id": "A01",
     "source": "AIC",
     "object_id": "27992",
-    "checked_at": "2026-11-06T19:24:34.962Z",
+    "checked_at": "2026-11-09T21:17:21.857Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -392,6 +413,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/A%20Sunday%20on%20La%20Grande%20Jatte%2C%20Georges%20Seurat%2C%201884.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/A%20Sunday%20on%20La%20Grande%20Jatte%2C%20Georges%20Seurat%2C%201884.jpg?width=400",
     "credit_line": "Georges Seurat. A Sunday on La Grande Jatte — 1884, 1884–86, border added 1888–89. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -399,7 +421,7 @@
     "id": "A02",
     "source": "AIC",
     "object_id": "20684",
-    "checked_at": "2026-11-06T19:24:35.942Z",
+    "checked_at": "2026-11-09T21:17:22.767Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -410,6 +432,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Gustave%20Caillebotte%20-%20Paris%20Street%2C%20Rainy%20Day%20-%201964.336%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Gustave%20Caillebotte%20-%20Paris%20Street%2C%20Rainy%20Day%20-%201964.336%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
     "credit_line": "Gustave Caillebotte. Paris Street; Rainy Day, 1877. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -417,7 +440,7 @@
     "id": "A03",
     "source": "AIC",
     "object_id": "59847",
-    "checked_at": "2026-11-06T19:24:36.628Z",
+    "checked_at": "2026-11-09T21:17:23.359Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -428,6 +451,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/ManfrediMarsCupid.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/ManfrediMarsCupid.jpg?width=400",
     "credit_line": "Bartolomeo Manfredi. Cupid Chastised, 1613. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -435,7 +459,7 @@
     "id": "A04",
     "source": "AIC",
     "object_id": "87643",
-    "checked_at": "2026-11-06T19:24:37.289Z",
+    "checked_at": "2026-11-09T21:17:23.942Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -446,6 +470,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Henry%20Ossawa%20Tanner%20-%20The%20Two%20Disciples%20at%20the%20Tomb%20-%201906.300%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Henry%20Ossawa%20Tanner%20-%20The%20Two%20Disciples%20at%20the%20Tomb%20-%201906.300%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
     "credit_line": "Henry Ossawa Tanner. The Two Disciples at the Tomb, c. 1906. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -453,7 +478,7 @@
     "id": "A05",
     "source": "AIC",
     "object_id": "61128",
-    "checked_at": "2026-11-06T19:24:37.877Z",
+    "checked_at": "2026-11-09T21:17:24.639Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -464,6 +489,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Henri%20de%20Toulouse-Lautrec%20-%20At%20the%20Moulin%20Rouge%20-%201928.610%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Henri%20de%20Toulouse-Lautrec%20-%20At%20the%20Moulin%20Rouge%20-%201928.610%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
     "credit_line": "Henri de Toulouse-Lautrec. At the Moulin Rouge, 1892–95. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -471,7 +497,7 @@
     "id": "A06",
     "source": "AIC",
     "object_id": "94841",
-    "checked_at": "2026-11-06T19:24:38.547Z",
+    "checked_at": "2026-11-09T21:17:25.217Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -482,6 +508,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Jules%20Breton%2C%20le%20chant%20de%20l%27alouette.1884.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Jules%20Breton%2C%20le%20chant%20de%20l%27alouette.1884.jpg?width=400",
     "credit_line": "Jules Breton. The Song of the Lark, 1884. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -489,7 +516,7 @@
     "id": "A07",
     "source": "AIC",
     "object_id": "95998",
-    "checked_at": "2026-11-06T19:24:39.202Z",
+    "checked_at": "2026-11-09T21:17:25.962Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -500,6 +527,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Rembrandt%20Harmensz.%20van%20Rijn%20-%20Old%20Man%20with%20a%20Gold%20Chain%20-%20Google%20Art%20Project.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Rembrandt%20Harmensz.%20van%20Rijn%20-%20Old%20Man%20with%20a%20Gold%20Chain%20-%20Google%20Art%20Project.jpg?width=400",
     "credit_line": "Rembrandt van Rijn. Old Man with a Gold Chain, 1631. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -507,7 +535,7 @@
     "id": "A08",
     "source": "AIC",
     "object_id": "111442",
-    "checked_at": "2026-11-06T19:24:39.828Z",
+    "checked_at": "2026-11-09T21:17:26.573Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -518,6 +546,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Mary%20Cassatt%20-%20The%20Child%27s%20Bath%20-%20Google%20Art%20Project.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Mary%20Cassatt%20-%20The%20Child%27s%20Bath%20-%20Google%20Art%20Project.jpg?width=400",
     "credit_line": "Mary Cassatt. The Child's Bath, 1893. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -525,7 +554,7 @@
     "id": "A09",
     "source": "AIC",
     "object_id": "193664",
-    "checked_at": "2026-11-06T19:24:40.544Z",
+    "checked_at": "2026-11-09T21:17:27.149Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -536,6 +565,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/John%20Philip%20Simpson%20-%20The%20Captive%20Slave%20-%202008.188%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/John%20Philip%20Simpson%20-%20The%20Captive%20Slave%20-%202008.188%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
     "credit_line": "John Philip Simpson. The Captive Slave (Ira Aldridge), 1827. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -543,7 +573,7 @@
     "id": "A10",
     "source": "AIC",
     "object_id": "64818",
-    "checked_at": "2026-11-06T19:24:41.213Z",
+    "checked_at": "2026-11-09T21:17:27.779Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -554,6 +584,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Claude%20Monet%20-%20Stacks%20of%20Wheat%20%28End%20of%20Summer%29%20-%201985.1103%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Claude%20Monet%20-%20Stacks%20of%20Wheat%20%28End%20of%20Summer%29%20-%201985.1103%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
     "credit_line": "Claude Monet. Stacks of Wheat (End of Summer), 1890–91. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -561,7 +592,7 @@
     "id": "A11",
     "source": "AIC",
     "object_id": "28560",
-    "checked_at": "2026-11-06T19:24:41.806Z",
+    "checked_at": "2026-11-09T21:17:28.348Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -572,6 +603,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Vincent%20van%20Gogh%20-%20The%20Bedroom%20-%20Google%20Art%20Project.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Vincent%20van%20Gogh%20-%20The%20Bedroom%20-%20Google%20Art%20Project.jpg?width=400",
     "credit_line": "Vincent van Gogh. The Bedroom, 1889. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -579,7 +611,7 @@
     "id": "A12",
     "source": "AIC",
     "object_id": "87479",
-    "checked_at": "2026-11-06T19:24:42.416Z",
+    "checked_at": "2026-11-09T21:17:28.983Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -590,6 +622,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Domenikos%20Theotok%C3%B3poulos%2C%20called%20El%20Greco%20-%20The%20Assumption%20of%20the%20Virgin%20-%20Google%20Art%20Project.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Domenikos%20Theotok%C3%B3poulos%2C%20called%20El%20Greco%20-%20The%20Assumption%20of%20the%20Virgin%20-%20Google%20Art%20Project.jpg?width=400",
     "credit_line": "Domenico Theotokópoulos, called El Greco. The Assumption of the Virgin, 1577–79. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -597,7 +630,7 @@
     "id": "A13",
     "source": "AIC",
     "object_id": "16499",
-    "checked_at": "2026-11-06T19:24:43.059Z",
+    "checked_at": "2026-11-09T21:17:29.571Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -608,6 +641,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/%C3%89douard%20Manet%20-%20Jesus%20Mocked%20by%20the%20Soldiers%20-%20Google%20Art%20Project.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/%C3%89douard%20Manet%20-%20Jesus%20Mocked%20by%20the%20Soldiers%20-%20Google%20Art%20Project.jpg?width=400",
     "credit_line": "Édouard Manet. Jesus Mocked by the Soldiers, 1865. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -615,7 +649,7 @@
     "id": "A14",
     "source": "AIC",
     "object_id": "80084",
-    "checked_at": "2026-11-06T19:24:43.715Z",
+    "checked_at": "2026-11-09T21:17:30.155Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -626,6 +660,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Francisco%20de%20Zurbar%C3%A1n%20-%20The%20Crucifixion%20-%201954.15%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Francisco%20de%20Zurbar%C3%A1n%20-%20The%20Crucifixion%20-%201954.15%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
     "credit_line": "Francisco de Zurbarán. The Crucifixion, 1627. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -633,7 +668,7 @@
     "id": "A15",
     "source": "AIC",
     "object_id": "25865",
-    "checked_at": "2026-11-06T19:24:44.324Z",
+    "checked_at": "2026-11-09T21:17:30.735Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -644,6 +679,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Winslow%20Homer%20-%20The%20Herring%20Net%20-%20Google%20Art%20Project.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Winslow%20Homer%20-%20The%20Herring%20Net%20-%20Google%20Art%20Project.jpg?width=400",
     "credit_line": "Winslow Homer. The Herring Net, 1885. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -651,7 +687,7 @@
     "id": "A16",
     "source": "AIC",
     "object_id": "56905",
-    "checked_at": "2026-11-06T19:24:44.910Z",
+    "checked_at": "2026-11-09T21:17:31.306Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -662,6 +698,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/James%20McNeill%20Whistler%20-%20Nocturne%2C%20Blue%20and%20Gold%E2%80%94Southampton%20Water%20-%201900.52%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/James%20McNeill%20Whistler%20-%20Nocturne%2C%20Blue%20and%20Gold%E2%80%94Southampton%20Water%20-%201900.52%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
     "credit_line": "James McNeill Whistler. Nocturne: Blue and Gold—Southampton Water, 1872. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -669,7 +706,7 @@
     "id": "A17",
     "source": "AIC",
     "object_id": "14655",
-    "checked_at": "2026-11-06T19:24:45.538Z",
+    "checked_at": "2026-11-09T21:17:31.991Z",
     "checks": {
       "exists": true,
       "public_domain": true,
@@ -680,6 +717,7 @@
     "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Pierre-Auguste%20Renoir%20-%20Two%20Sisters%20%28On%20the%20Terrace%29%20-%201933.455%20-%20Art%20Institute%20of%20Chicago.jpg?width=843",
     "thumbnail_url": "http://commons.wikimedia.org/wiki/Special:FilePath/Pierre-Auguste%20Renoir%20-%20Two%20Sisters%20%28On%20the%20Terrace%29%20-%201933.455%20-%20Art%20Institute%20of%20Chicago.jpg?width=400",
     "credit_line": "Pierre-Auguste Renoir. Two Sisters (On the Terrace), 1881. The Art Institute of Chicago.",
+    "classification": "Painting",
     "eval_allowed": true,
     "reasons": []
   },
@@ -687,7 +725,7 @@
     "id": "U01",
     "source": "Unsplash",
     "object_id": "rEAkkHM-yVE",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -698,6 +736,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -707,7 +746,7 @@
     "id": "U02",
     "source": "Unsplash",
     "object_id": "gElCDUNcsR8",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -718,6 +757,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -727,7 +767,7 @@
     "id": "U03",
     "source": "Unsplash",
     "object_id": "tHT8AZy0mx4",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -738,6 +778,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -747,7 +788,7 @@
     "id": "U04",
     "source": "Unsplash",
     "object_id": "i1GxvgGuKtE",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -758,6 +799,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -767,7 +809,7 @@
     "id": "U05",
     "source": "Unsplash",
     "object_id": "z1AH96vmJjI",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -778,6 +820,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -787,7 +830,7 @@
     "id": "U06",
     "source": "Unsplash",
     "object_id": "jqqJudZM8JI",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -798,6 +841,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -807,7 +851,7 @@
     "id": "U07",
     "source": "Unsplash",
     "object_id": "kQxE3QzIlmw",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -818,6 +862,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -827,7 +872,7 @@
     "id": "U08",
     "source": "Unsplash",
     "object_id": "f8TX4xery04",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -838,6 +883,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -847,7 +893,7 @@
     "id": "U09",
     "source": "Unsplash",
     "object_id": "Cqd5ZaOFmrU",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -858,6 +904,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -867,7 +914,7 @@
     "id": "U10",
     "source": "Unsplash",
     "object_id": "Zi6fXpitzcU",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -878,6 +925,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -887,7 +935,7 @@
     "id": "U11",
     "source": "Unsplash",
     "object_id": "Y1HFTtV5fq8",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -898,6 +946,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -907,7 +956,7 @@
     "id": "U12",
     "source": "Unsplash",
     "object_id": "1VPrxhPCDxs",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -918,6 +967,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -927,7 +977,7 @@
     "id": "U13",
     "source": "Unsplash",
     "object_id": "OCfrPOWr_0w",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -938,6 +988,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"
@@ -947,7 +998,7 @@
     "id": "U14",
     "source": "Unsplash",
     "object_id": "r9-5QZQkpQk",
-    "checked_at": "2026-11-06T19:24:46.938Z",
+    "checked_at": "2026-11-09T21:17:32.825Z",
     "checks": {
       "exists": false,
       "public_domain": null,
@@ -958,6 +1009,7 @@
     "image_url": null,
     "thumbnail_url": null,
     "credit_line": null,
+    "classification": null,
     "eval_allowed": false,
     "reasons": [
       "manifest: Unsplash ML/AI restriction: hold until Unsplash confirms or swap for Lite Dataset"

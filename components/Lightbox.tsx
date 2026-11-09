@@ -4,6 +4,16 @@ import { useEffect } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
 import { AttributionLink } from "@/components/ResultCard";
 import { reportUnsplashDownload } from "@/components/unsplashDownload";
+import {
+  CATEGORY_LABELS,
+  MatchReasonCategory,
+  colorSubtagsOf,
+  lightingSubtagsOf
+} from "@/lib/search/categories";
+
+// Lighting scores at or above this are dramatic (see isStronglyLit in
+// lib/search/imageAnalysis.ts).
+const DRAMATIC_LIGHTING_SCORE = 4;
 
 type LightboxProps = {
   result: ArtworkResult | null;
@@ -43,6 +53,21 @@ export default function Lightbox({ result, onClose }: LightboxProps) {
     return null;
   }
 
+  // What the vision check saw: the kind of light (and whether it's
+  // dramatic), measured color, then the reference categories.
+  const lightingTags = lightingSubtagsOf(result);
+  // The image's main colors, measured from its pixels, each as wide as
+  // its share of the image.
+  const palette = result.imageMetrics?.palette ?? [];
+  const whyTags = [
+    ...(lightingTags.length > 0 ? [`Lighting: ${lightingTags.join(" · ")}`] : []),
+    ...((result.lightingScore ?? 0) >= DRAMATIC_LIGHTING_SCORE ? ["Dramatic light"] : []),
+    ...colorSubtagsOf(result),
+    ...(result.matchReasons ?? []).map(
+      (reason) => CATEGORY_LABELS[reason as MatchReasonCategory] ?? reason
+    )
+  ];
+
   return (
     <div
       className="lightbox-backdrop"
@@ -80,16 +105,28 @@ export default function Lightbox({ result, onClose }: LightboxProps) {
               </>
             )}
           </div>
-          {result.lightingType && (
-            <div className="lightbox-lighting">Lighting: {result.lightingType}</div>
-          )}
-          {result.matchReasons && result.matchReasons.length > 0 && (
-            <div className="lightbox-reasons" aria-label="Reference categories">
-              {result.matchReasons.map((reason) => (
-                <span key={reason} className="lightbox-reason">
-                  {reason}
-                </span>
-              ))}
+          {(whyTags.length > 0 || palette.length > 0) && (
+            <div className="lightbox-why">
+              <span className="lightbox-why-heading">Why this result</span>
+              <div className="tag-row">
+                {whyTags.map((tag) => (
+                  <span key={tag} className="info-tag">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              {palette.length > 0 && (
+                <div className="swatches" aria-label="Main colors">
+                  {palette.map((swatch) => (
+                    <span
+                      key={swatch.color}
+                      className="swatch"
+                      style={{ background: swatch.color, flexGrow: swatch.share }}
+                      title={`${swatch.color} (${Math.round(swatch.share * 100)}%)`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
           <a

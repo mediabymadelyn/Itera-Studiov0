@@ -7,6 +7,18 @@ export type VisualTags = {
   confidence: number | null;
 };
 
+// How the vision judge described the light on the subject (see
+// LightingProfile in lib/search/visionJudge.ts).
+export type LightingParts = {
+  sources: 1 | 2 | 3;
+  quality: "hard" | "soft";
+  direction: "front" | "side" | "back" | "top" | "below" | "ambient";
+  shadow: 0 | 1 | 2 | 3;
+  type: string;
+  contrast: "low" | "medium" | "high";
+  readable: "yes" | "partly" | "no";
+};
+
 export type ArtworkResult = {
   id: string;
   title: string;
@@ -64,6 +76,18 @@ export type ArtworkResult = {
   // The kind of light on the subject ("side / split", "soft window", ...),
   // from the vision model's lighting breakdown (see visionJudge.ts).
   lightingType?: string;
+  // The parts behind the score; the Lighting sub-tags come from these.
+  lighting?: LightingParts;
+  // The palette as the vision judge saw it; the Color sub-tags come from
+  // this (see ColorJudgment in lib/search/visionJudge.ts).
+  color?: {
+    temperature: "warm" | "cool" | "neutral" | "mixed";
+    saturation: "vivid" | "muted" | "black and white";
+  };
+  // The lighting score and type come from the pre-scored museum library
+  // (median of three judgments; see lib/search/museumLibrary.ts), so a fresh
+  // vision check keeps them and only decides the match.
+  lightingFromLibrary?: boolean;
   // How well the image matches the whole request, judged by the vision
   // model from the image itself (see lib/search/visionJudge.ts): 2 = all
   // of it, 1 = right subject but missing part. Absent when not judged.
@@ -81,13 +105,11 @@ export type ArtworkResult = {
     brightShare: number;
     drama: number;
     sharpness: number;
+    colorfulness: number;
+    palette: { color: string; share: number }[];
   };
-  // True on the single best result that meets every part of the request
-  // (see chooseTopPick in searchAll.ts). Only ever set on the LLM rerank
-  // path, same as matchReasons, and absent when nothing qualifies.
-  isTopPick?: boolean;
-  // Not part of the main results: picked only to give an otherwise-empty
-  // category something to show (see benchEmptyCategories in
-  // llmQueryLayer.ts). The UI shows these only under that category's filter.
-  benchOnly?: boolean;
+  // Which part of the page it belongs to (see arrangeSections in
+  // searchAll.ts): "best" = Best matches, "more" = More results, below the
+  // divider. Every result is shown; filters only narrow the page down.
+  section?: "best" | "more";
 };

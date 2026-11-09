@@ -6,14 +6,13 @@ import { reportUnsplashDownload } from "@/components/unsplashDownload";
 
 type ResultCardProps = {
   result: ArtworkResult;
-  // The category filter currently selected, if any. Labels stay off the
-  // main grid (a stack of 2-3 badges per card read as clutter) and only the
-  // selected category is shown, on the cards it applies to.
-  activeReason?: string;
+  // The selected category or sub-tag, if any. Labels stay off the grid (a
+  // stack of 2-3 badges per card read as clutter); only the selected one is
+  // shown, on the cards it applies to (showsActiveTag).
+  activeTag?: string;
+  showsActiveTag?: boolean;
   onExpand: (result: ArtworkResult) => void;
   onUnavailable: (resultId: string) => void;
-  // The top pick, when it leads the grid: shown two columns wide.
-  featured?: boolean;
 };
 
 // Cards take their image's own shape (P2/P3 didn't want images cropped),
@@ -46,10 +45,10 @@ export function AttributionLink({ href, children }: { href?: string; children: s
 
 export default function ResultCard({
   result,
-  activeReason,
+  activeTag,
+  showsActiveTag,
   onExpand,
-  onUnavailable,
-  featured
+  onUnavailable
 }: ResultCardProps) {
   const [imgSrc, setImgSrc] = useState(result.imageUrl);
   const [hasError, setHasError] = useState(false);
@@ -83,7 +82,7 @@ export default function ResultCard({
   }
 
   return (
-    <article className={`result-card${featured ? " result-card-featured" : ""}`}>
+    <article className="result-card">
       <button
         type="button"
         className="result-image-button"
@@ -106,12 +105,7 @@ export default function ResultCard({
             onError={handleImageError}
           />
         </span>
-        {result.isTopPick && (
-          <span className="result-top-pick">Top Pick</span>
-        )}
-        {activeReason && result.matchReasons?.includes(activeReason) && (
-          <span className="result-match-reason">{activeReason}</span>
-        )}
+        {showsActiveTag && activeTag && <span className="card-tag">{activeTag}</span>}
         <span className="result-image-expand-hint">Click to expand</span>
       </button>
       {/* Compact credit block: every card still shows title, creator,
@@ -120,7 +114,7 @@ export default function ResultCard({
           Unsplash, in its "Photo by X on Unsplash" form (photographer
           profile + Unsplash, with referral parameters; see unsplash.ts). */}
       <div className="result-content">
-        <span className="result-badge">{typeLabel}</span>
+        <span className="info-tag">{typeLabel}</span>
         <span className="result-title-value" title={result.title}>
           {result.title}
         </span>

@@ -2,11 +2,18 @@
 
 import { FormEvent, useCallback, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
-import { MATCH_REASON_CATEGORIES } from "@/lib/search/categories";
+import {
+  CATEGORY_LABELS,
+  MATCH_REASON_CATEGORIES,
+  MatchReasonCategory,
+  SUBTAGS,
+  subtagsOf
+} from "@/lib/search/categories";
 import ResultCard from "@/components/ResultCard";
 import Lightbox from "@/components/Lightbox";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import MasonryGrid from "@/components/MasonryGrid";
+import { useSlidingHighlight } from "@/components/useSlidingHighlight";
 
 type SearchResponse = {
   results?: ArtworkResult[];
@@ -15,11 +22,19 @@ type SearchResponse = {
 
 type ResultTypeFilter = "all" | "museum" | "photography";
 
+// One segmented control instead of separate Source + Type dropdowns: the
+// two could be set to contradict each other (Unsplash + Museum), which read
+// as the filter being broken (P2, P5).
+const TYPE_OPTIONS: { value: ResultTypeFilter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "museum", label: "Museum art" },
+  { value: "photography", label: "Photography" }
+];
+
 // Long searches (LLM rewrite + several sources + relevance filtering) can
 // take a while, but a request that hangs forever looked like the app was
 // broken (P2). Past this, stop and say so instead of spinning.
 const SEARCH_TIMEOUT_MS = 45000;
-const LIGHTING_REASON = "Lighting";
 
 const SKELETON_CARD_COUNT = 12;
 // Mixed shapes, so the loading grid looks like the masonry grid it becomes.
@@ -31,6 +46,13 @@ function getResultType(result: ArtworkResult): ResultTypeFilter {
     : "museum";
 }
 
+// Within the Lighting filter, strongest lighting comes first: the vision
+// check's 0-5 score and the pixel drama measure (imageAnalysis.ts), each
+// weighted equally; unmeasured ones sort last.
+function lightingStrength(result: ArtworkResult): number {
+  return ((result.lightingScore ?? 0) / 5 + (result.imageMetrics?.drama ?? 0)) / 2;
+}
+
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<ArtworkResult[]>([]);
@@ -39,56 +61,83 @@ export default function SearchBar() {
   const [error, setError] = useState<string | null>(null);
   const [expandedResult, setExpandedResult] = useState<ArtworkResult | null>(null);
   const [unavailableIds, setUnavailableIds] = useState<Set<string>>(new Set());
-  // "all" means no match-reason filter applied. Every category is always
-  // listed in a fixed order (testers wanted filters that don't move or
-  // vanish between searches); counts come from matchReasons already on this
-  // search's results (set by the LLM rerank layer's categorization step) --
-  // no extra API call, no extra latency. On the plain keyword path there
-  // are no labels, so every count is 0.
-  const [reasonFilter, setReasonFilter] = useState("all");
+  // null means no category filter. Every category is always listed in a
+  // fixed order (testers wanted filters that don't move or vanish between
+  // searches); counts come from labels already on this search's results.
+  const [categoryFilter, setCategoryFilter] = useState<MatchReasonCategory | null>(null);
+  // A sub-tag of the selected category ("Side / split" under Lighting).
+  const [subtagFilter, setSubtagFilter] = useState<string | null>(null);
 
   const handleUnavailable = useCallback((resultId: string) => {
     setUnavailableIds((prev) => (prev.has(resultId) ? prev : new Set(prev).add(resultId)));
   }, []);
 
-  const loadedResults = results.filter((result) => !unavailableIds.has(result.id));
-  // Bench results (see benchEmptyCategories in llmQueryLayer.ts) exist only
-  // so every category has something to show; they never appear on the main
-  // grid, only under their own category's filter, after the regular matches.
-  const availableResults = loadedResults.filter((result) => !result.benchOnly);
-  const typeMatches = (result: ArtworkResult) =>
-    typeFilter === "all" || getResultType(result) === typeFilter;
-  const typeMatchedResults = availableResults.filter(typeMatches);
-  const typeMatchedBench = loadedResults.filter(
-    (result) => result.benchOnly && typeMatches(result)
+  // Every result is on the page (see arrangeSections in searchAll.ts);
+  // filters only narrow it down.
+  const availableResults = results.filter((result) => !unavailableIds.has(result.id));
+  const typeMatched = availableResults.filter(
+    (result) => typeFilter === "all" || getResultType(result) === typeFilter
   );
-  const reasonCounts = new Map<string, number>(
+  const categoryCounts = new Map(
     MATCH_REASON_CATEGORIES.map((category) => [
       category,
-      [...typeMatchedResults, ...typeMatchedBench].filter((result) =>
-        (result.matchReasons ?? []).includes(category)
-      ).length
+      typeMatched.filter((result) => (result.matchReasons ?? []).includes(category)).length
     ])
   );
-  const hasAnyLabels = Array.from(reasonCounts.values()).some((count) => count > 0);
-  const hasReason = (result: ArtworkResult) =>
-    (result.matchReasons ?? []).includes(reasonFilter);
-  // Within the Lighting filter, strongest lighting comes first: the vision
-  // check's 0-5 score (llmQueryLayer.ts) and the pixel drama measure
-  // (imageAnalysis.ts), each weighted equally; unmeasured ones sort last.
-  const lightingStrength = (result: ArtworkResult) =>
-    ((result.lightingScore ?? 0) / 5 + (result.imageMetrics?.drama ?? 0)) / 2;
-  const byLighting = (results: ArtworkResult[]) =>
-    reasonFilter === LIGHTING_REASON
-      ? [...results].sort((a, b) => lightingStrength(b) - lightingStrength(a))
-      : results;
-  const filteredResults =
-    reasonFilter === "all"
-      ? typeMatchedResults
-      : [
-          ...byLighting(typeMatchedResults.filter(hasReason)),
-          ...byLighting(typeMatchedBench.filter(hasReason))
-        ];
+  const subtags = categoryFilter ? SUBTAGS[categoryFilter] ?? [] : [];
+  const subtagCount = (tag: string) =>
+    typeMatched.filter((result) => categoryFilter && subtagsOf(result, categoryFilter).includes(tag)).length;
+
+  const filtered = typeMatched.filter((result) => {
+    if (!categoryFilter) return true;
+    // A sub-tag looks at the image itself, so it covers every result, not
+    // only the ones labeled with its category.
+    if (subtagFilter) return subtagsOf(result, categoryFilter).includes(subtagFilter);
+    return (result.matchReasons ?? []).includes(categoryFilter);
+  });
+  const ordered =
+    categoryFilter === "Lighting"
+      ? [...filtered].sort((a, b) => lightingStrength(b) - lightingStrength(a))
+      : filtered;
+  const bestMatches = ordered.filter((result) => result.section !== "more");
+  const moreResults = ordered.filter((result) => result.section === "more");
+  const activeTag = subtagFilter ?? (categoryFilter ? CATEGORY_LABELS[categoryFilter] : undefined);
+
+  const toolbarShown = !loading && results.length > 0;
+  const countsKey = Array.from(categoryCounts.values()).join(",");
+  const typeHighlight = useSlidingHighlight(typeFilter, [toolbarShown]);
+  const categoryHighlight = useSlidingHighlight(categoryFilter, [toolbarShown, countsKey]);
+  const subtagHighlight = useSlidingHighlight(subtagFilter, [toolbarShown, categoryFilter, typeFilter, countsKey]);
+  const isFiltered = typeFilter !== "all" || categoryFilter !== null;
+
+  function selectCategory(category: MatchReasonCategory) {
+    setCategoryFilter((current) => (current === category ? null : category));
+    setSubtagFilter(null);
+  }
+
+  function resetFilters() {
+    setTypeFilter("all");
+    setCategoryFilter(null);
+    setSubtagFilter(null);
+  }
+
+  function renderCards(list: ArtworkResult[]) {
+    return list.map((result) => (
+      <ResultCard
+        key={result.id}
+        result={result}
+        activeTag={activeTag}
+        showsActiveTag={
+          categoryFilter !== null &&
+          (subtagFilter
+            ? subtagsOf(result, categoryFilter).includes(subtagFilter)
+            : (result.matchReasons ?? []).includes(categoryFilter))
+        }
+        onExpand={setExpandedResult}
+        onUnavailable={handleUnavailable}
+      />
+    ));
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -119,8 +168,7 @@ export default function SearchBar() {
       }
 
       setResults(data.results ?? []);
-      setTypeFilter("all");
-      setReasonFilter("all");
+      resetFilters();
       setUnavailableIds(new Set());
     } catch (err) {
       const message =
@@ -171,68 +219,83 @@ export default function SearchBar() {
         </div>
       </form>
 
-      {!loading && results.length > 0 && (
-        <div className="reason-filter-row">
-          <span className="reason-filter-label">Filter by:</span>
-          {MATCH_REASON_CATEGORIES.map((reason) => {
-            const count = reasonCounts.get(reason) ?? 0;
-            const active = reasonFilter === reason;
-
-            return (
+      {toolbarShown && (
+        <div className="toolbar" role="toolbar" aria-label="Filter results">
+          <div className="segmented" role="group" aria-label="Show" ref={typeHighlight.groupRef}>
+            <span className="chip-highlight" style={typeHighlight.highlightStyle} aria-hidden="true" />
+            {TYPE_OPTIONS.map((option) => (
               <button
-                key={reason}
+                key={option.value}
+                data-key={option.value}
                 type="button"
-                className={active ? "reason-pill reason-pill-active" : "reason-pill"}
-                onClick={() => setReasonFilter((current) => (current === reason ? "all" : reason))}
-                aria-pressed={active}
-                disabled={count === 0 && !active}
+                className={typeFilter === option.value ? "segmented-option is-active" : "segmented-option"}
+                onClick={() => setTypeFilter(option.value)}
+                aria-pressed={typeFilter === option.value}
               >
-                {reason}
-                <span className="reason-pill-count">{count}</span>
+                {option.label}
               </button>
-            );
-          })}
-          {!hasAnyLabels && (
-            <span className="reason-filter-empty">No categories for this search</span>
-          )}
+            ))}
+          </div>
+
+          <div className="chip-row" ref={categoryHighlight.groupRef}>
+            <span className="chip-highlight" style={categoryHighlight.highlightStyle} aria-hidden="true" />
+            {MATCH_REASON_CATEGORIES.map((category) => {
+              const count = categoryCounts.get(category) ?? 0;
+              const active = categoryFilter === category;
+              return (
+                <button
+                  key={category}
+                  data-key={category}
+                  type="button"
+                  className={["chip", active && "is-active", count === 0 && "is-empty"].filter(Boolean).join(" ")}
+                  onClick={() => selectCategory(category)}
+                  aria-pressed={active}
+                  disabled={count === 0 && !active}
+                >
+                  {CATEGORY_LABELS[category]}
+                  <span className="chip-count">{count}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="toolbar-end">
+            <span className="toolbar-count">
+              {ordered.length} of {availableResults.length}
+            </span>
+            <button type="button" className="text-button" onClick={resetFilters} disabled={!isFiltered}>
+              Reset
+            </button>
+          </div>
         </div>
       )}
 
-      {!loading && results.length > 0 && (
-        <div className="filters-row">
-          {/* One control instead of separate Source + Type dropdowns: the two
-              could be set to contradict each other (Unsplash + Museum), which
-              read as the filter being broken (P2, P5). */}
-          <label className="filter-control">
-            <span className="filter-label">Show</span>
-            <select
-              className="filter-select"
-              value={typeFilter}
-              onChange={(event) =>
-                setTypeFilter(event.target.value as ResultTypeFilter)
-              }
-            >
-              <option value="all">All results</option>
-              <option value="museum">Museum art</option>
-              <option value="photography">Photography (Unsplash)</option>
-            </select>
-          </label>
-
-          <button
-            className="filter-reset"
-            type="button"
-            onClick={() => {
-              setTypeFilter("all");
-              setReasonFilter("all");
-            }}
-            disabled={typeFilter === "all" && reasonFilter === "all"}
-          >
-            Reset
-          </button>
-
-          <span className="filters-count">
-            Showing {filteredResults.length} of {availableResults.length}
-          </span>
+      {!loading && subtags.length > 0 && categoryFilter && (
+        <div
+          className="subchip-row"
+          role="group"
+          aria-label={`${CATEGORY_LABELS[categoryFilter]} types`}
+          ref={subtagHighlight.groupRef}
+        >
+          <span className="chip-highlight" style={subtagHighlight.highlightStyle} aria-hidden="true" />
+          {subtags.map((tag) => {
+            const count = subtagCount(tag);
+            const active = subtagFilter === tag;
+            return (
+              <button
+                key={tag}
+                data-key={tag}
+                type="button"
+                className={["chip", "chip-small", active && "is-active", count === 0 && "is-empty"].filter(Boolean).join(" ")}
+                onClick={() => setSubtagFilter((current) => (current === tag ? null : tag))}
+                aria-pressed={active}
+                disabled={count === 0 && !active}
+              >
+                {tag}
+                <span className="chip-count">{count}</span>
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -240,37 +303,48 @@ export default function SearchBar() {
       {!error && !loading && results.length > 0 && availableResults.length === 0 && (
         <p className="state-text">No images could be loaded for this search.</p>
       )}
-      {!error &&
-        !loading &&
-        availableResults.length > 0 &&
-        filteredResults.length === 0 && (
-          <p className="state-text">No results match the selected filters.</p>
-        )}
+      {!error && !loading && availableResults.length > 0 && ordered.length === 0 && (
+        <p className="state-text">No results match the selected filters.</p>
+      )}
       {loading && <LoadingIndicator />}
 
-      <MasonryGrid busy={loading}>
-        {loading
-          ? Array.from({ length: SKELETON_CARD_COUNT }, (_, index) => (
-              <div key={index} className="result-card result-card-skeleton" aria-hidden="true">
-                <div
-                  className="skeleton-image"
-                  style={{ aspectRatio: SKELETON_ASPECT_RATIOS[index % SKELETON_ASPECT_RATIOS.length] }}
-                />
-                <div className="skeleton-line" />
-                <div className="skeleton-line skeleton-line-short" />
-              </div>
-            ))
-          : filteredResults.map((result, index) => (
-              <ResultCard
-                key={result.id}
-                result={result}
-                activeReason={reasonFilter === "all" ? undefined : reasonFilter}
-                onExpand={setExpandedResult}
-                onUnavailable={handleUnavailable}
-                featured={index === 0 && result.isTopPick}
+      {loading && (
+        <MasonryGrid busy>
+          {Array.from({ length: SKELETON_CARD_COUNT }, (_, index) => (
+            <div key={index} className="result-card result-card-skeleton" aria-hidden="true">
+              <div
+                className="skeleton-image"
+                style={{ aspectRatio: SKELETON_ASPECT_RATIOS[index % SKELETON_ASPECT_RATIOS.length] }}
               />
-            ))}
-      </MasonryGrid>
+              <div className="skeleton-line" />
+              <div className="skeleton-line skeleton-line-short" />
+            </div>
+          ))}
+        </MasonryGrid>
+      )}
+
+      {!loading && bestMatches.length > 0 && (
+        <>
+          {moreResults.length > 0 && (
+            <h2 className="section-heading">
+              Best matches <span className="section-count">{bestMatches.length}</span>
+            </h2>
+          )}
+          <MasonryGrid>{renderCards(bestMatches)}</MasonryGrid>
+        </>
+      )}
+
+      {!loading && moreResults.length > 0 && (
+        <>
+          <div className="section-divider" role="separator">
+            <span>
+              More results <span className="section-count">{moreResults.length}</span>
+              <span className="section-note">partial matches, or weaker on part of your search</span>
+            </span>
+          </div>
+          <MasonryGrid>{renderCards(moreResults)}</MasonryGrid>
+        </>
+      )}
 
       <Lightbox result={expandedResult} onClose={() => setExpandedResult(null)} />
     </section>

@@ -61,6 +61,11 @@ function judge(result: ArtworkResult, plan: QueryPlan, subjectWords: string[]): 
 
   if (hasAnyWord(words, subjectWords)) return "verified";
 
+  // Body-part searches: museum catalogs name the scene ("Young Peasant
+  // Having Her Coffee"), not the hands, so naming what the hands hold or do
+  // counts too. The vision check then confirms the hands from the image.
+  if (plan.companionWords.length > 0 && hasAnyWord(words, plan.companionWords)) return "verified";
+
   const stem = agentNounStem(plan);
   if (stem && Array.from(words).some((word) => word.startsWith(stem))) return "verified";
 
@@ -79,10 +84,10 @@ function judge(result: ArtworkResult, plan: QueryPlan, subjectWords: string[]): 
     return "sparse";
   }
 
-  // Found by searching for the light ("candlelight") on a people or face
-  // search: the catalog names the light source, not the figure, so the
-  // text can't confirm the subject. Kept like sparse results; the vision
-  // check confirms the subject from the image.
+  // From the pre-scored museum library (museumLibrary.ts), which already
+  // matched the subject from the work's depictions; catalog titles often
+  // name only the light ("Candlelight"). Kept like sparse results; the
+  // vision check confirms the subject from the image.
   if (result.retrievedVia === "lighting") return "sparse";
 
   return "unverified";

@@ -1,12 +1,13 @@
 import sharp from "sharp";
 import { ArtworkResult } from "@/lib/types/artwork";
+import { MONOCHROME_COLORFULNESS } from "@/lib/search/categories";
 
 // Pixel-level checks on result thumbnails. Text metadata can't say whether
 // a portrait is actually dramatically lit (testers rejected every evenly lit
 // "dramatic lighting" pick, 6/6) or whether a photo is blurred (P2), so these
 // look at the image itself: no model, no API key, deterministic. Each
-// thumbnail is shrunk to a small grayscale grid before measuring, which
-// keeps a full candidate pool to well under a second of CPU.
+// thumbnail is shrunk to a small grid before measuring, which keeps a full
+// candidate pool to well under a second of CPU.
 
 export type ImageMetrics = {
   // Standard deviation of luminance, 0-1. Flat, evenly lit images sit
@@ -24,7 +25,24 @@ export type ImageMetrics = {
   // contrast, so a mostly-black low-key photo isn't mistaken for a blurred
   // one. Sharp images measure ~0.6+, motion-blurred ones ~0.2.
   sharpness: number;
+  // How colorful the image is (Hasler & Suesstrunk 2003; 0 = grey, ~45+ =
+  // "quite colorful").
+  colorfulness: number;
+  // Main colors, largest first, with their share of the image (0-1): shown
+  // as swatches. (Warm/cool comes from the vision judge: measured from
+  // pixels it matched the eval labels no better than calling everything
+  // warm, since varnish and museum photography cast paintings warm.)
+  palette: { color: string; share: number }[];
 };
+
+const PALETTE_SIZE = 5;
+const PALETTE_ITERATIONS = 8;
+
+// The black-and-white line is shared with the Color filter's sub-tags.
+
+export function isMonochrome(result: ArtworkResult): boolean {
+  return result.imageMetrics !== undefined && result.imageMetrics.colorfulness < MONOCHROME_COLORFULNESS;
+}
 
 // Below this, a photo reads as blurred (calibrated on Unsplash results:
 // long-exposure/time-lapse dancers ~0.17-0.2, sharp photos 0.6-1.1).
@@ -94,14 +112,36 @@ function measure(pixels: Buffer, width: number, height: number): ImageMetrics {
   let sum = 0;
   let dark = 0;
   let bright = 0;
+  // Opponent color channels for colorfulness: red-green and yellow-blue.
+  let rgSum = 0;
+  let rgSquares = 0;
+  let ybSum = 0;
+  let ybSquares = 0;
 
   for (let i = 0; i < count; i++) {
-    const value = pixels[i] / 255;
+    const r = pixels[i * 3];
+    const g = pixels[i * 3 + 1];
+    const b = pixels[i * 3 + 2];
+    const value = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
     luminance[i] = value;
     sum += value;
     if (value < DARK_LEVEL) dark++;
     if (value > BRIGHT_LEVEL) bright++;
+
+    const rg = r - g;
+    const yb = 0.5 * (r + g) - b;
+    rgSum += rg;
+    rgSquares += rg * rg;
+    ybSum += yb;
+    ybSquares += yb * yb;
   }
+
+  const palette = paletteOf(pixels, count);
+  const rgMean = rgSum / count;
+  const ybMean = ybSum / count;
+  const rgSpread = Math.max(0, rgSquares / count - rgMean ** 2);
+  const ybSpread = Math.max(0, ybSquares / count - ybMean ** 2);
+  const colorfulness = Math.sqrt(rgSpread + ybSpread) + 0.3 * Math.sqrt(rgMean ** 2 + ybMean ** 2);
 
   const mean = sum / count;
   let variance = 0;
@@ -142,8 +182,56 @@ function measure(pixels: Buffer, width: number, height: number): ImageMetrics {
     darkShare,
     brightShare: bright / count,
     drama,
-    sharpness
+    sharpness,
+    colorfulness,
+    palette
   };
+}
+
+function hex(r: number, g: number, b: number): string {
+  return `#${[r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("")}`;
+}
+
+/**
+ * The main colors, by k-means over the small analysis grid (deterministic:
+ * starts from evenly spaced pixels by brightness).
+ */
+function paletteOf(pixels: Buffer, count: number): ImageMetrics["palette"] {
+  const points: [number, number, number][] = [];
+  for (let i = 0; i < count; i++) points.push([pixels[i * 3], pixels[i * 3 + 1], pixels[i * 3 + 2]]);
+
+  const byBrightness = [...points].sort((a, b) => a[0] + a[1] + a[2] - (b[0] + b[1] + b[2]));
+  let centers = Array.from({ length: PALETTE_SIZE }, (_, k) =>
+    [...byBrightness[Math.floor(((k + 0.5) / PALETTE_SIZE) * (byBrightness.length - 1))]] as [number, number, number]
+  );
+  let assignment = new Array<number>(points.length).fill(0);
+  for (let iteration = 0; iteration < PALETTE_ITERATIONS; iteration++) {
+    assignment = points.map((point) => {
+      let best = 0;
+      let bestDistance = Infinity;
+      centers.forEach((center, k) => {
+        const distance = (point[0] - center[0]) ** 2 + (point[1] - center[1]) ** 2 + (point[2] - center[2]) ** 2;
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          best = k;
+        }
+      });
+      return best;
+    });
+    centers = centers.map((center, k) => {
+      const members = points.filter((_, i) => assignment[i] === k);
+      if (members.length === 0) return center;
+      return [0, 1, 2].map((c) => members.reduce((sum, m) => sum + m[c], 0) / members.length) as [number, number, number];
+    });
+  }
+
+  return centers
+    .map((center, k) => ({
+      color: hex(...center),
+      share: Number((assignment.filter((a) => a === k).length / points.length).toFixed(3))
+    }))
+    .filter((swatch) => swatch.share > 0)
+    .sort((a, b) => b.share - a.share);
 }
 
 async function analyzeUrl(url: string): Promise<ImageMetrics | null> {
@@ -155,7 +243,8 @@ async function analyzeUrl(url: string): Promise<ImageMetrics | null> {
     if (input) {
       const { data, info } = await sharp(input)
         .resize(ANALYSIS_SIZE, ANALYSIS_SIZE, { fit: "inside" })
-        .greyscale()
+        .removeAlpha()
+        .toColourspace("srgb")
         .raw()
         .toBuffer({ resolveWithObject: true });
       metrics = measure(data, info.width, info.height);

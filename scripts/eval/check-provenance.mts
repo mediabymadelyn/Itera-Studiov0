@@ -26,7 +26,7 @@ const AIC_DELAY_MS = 400;
 // the row is flagged: likely a wrong object ID.
 const TITLE_MATCH_MIN = 0.6;
 const AIC_FIELDS =
-  "id,title,artist_display,artist_title,date_display,image_id,is_public_domain,credit_line,main_reference_number";
+  "id,title,artist_display,artist_title,date_display,image_id,is_public_domain,credit_line,main_reference_number,artwork_type_title";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -85,6 +85,7 @@ function baseRow(row: ManifestRow): ProvenanceRow {
     image_url: null,
     thumbnail_url: null,
     credit_line: null,
+    classification: null,
     eval_allowed: false,
     reasons: []
   };
@@ -124,6 +125,7 @@ async function checkMet(row: ManifestRow): Promise<ProvenanceRow> {
   result.image_url = object.primaryImage || null;
   result.thumbnail_url = object.primaryImageSmall || object.primaryImage || null;
   result.credit_line = object.creditLine ?? null;
+  result.classification = object.classification || object.objectName || null;
   if (!result.checks.has_image) result.reasons.push("Met returns no primaryImage (usually still in copyright)");
   return result;
 }
@@ -149,6 +151,7 @@ async function checkAicRows(rows: ManifestRow[]): Promise<ProvenanceRow[]> {
     // The credit form AIC asks for: "Artist. Title, Date. The Art Institute of Chicago."
     const artist = item.artist_title || item.artist_display?.split("\n")[0] || "Unknown artist";
     result.credit_line = `${artist}. ${item.title}, ${item.date_display}. The Art Institute of Chicago.`;
+    result.classification = item.artwork_type_title ?? null;
     if (!item.image_id) result.reasons.push("AIC has no image_id");
     if (item.main_reference_number) references.set(row.id, item.main_reference_number);
     results.push(result);

@@ -16,22 +16,17 @@ import {
 } from "@/lib/search/queryTerms";
 import { isMuseumResult, limitPerArtist, selectWithSourceDiversity } from "@/lib/search/selectDiverseResults";
 import { applySubjectRequirement, capObjectResults } from "@/lib/search/subjectFilter";
-import {
-  applyDramaticLightSignal,
-  fetchCuratedLightingResults,
-  lookupDramaticLightResults
-} from "@/lib/search/lightingCatalog";
+import { applyDramaticLightSignal, lookupDramaticLightResults } from "@/lib/search/lightingCatalog";
+import { libraryResultsFor } from "@/lib/search/museumLibrary";
 import {
   analyzeResultImages,
   applyImageMetrics,
-  isDramaticallyLit,
-  isFlatForLighting,
+  isMonochrome,
   isPixelBlurred,
   isStronglyLit
 } from "@/lib/search/imageAnalysis";
 import { searchUnsplashArtworks, unsplashCallsRemaining } from "@/lib/sources/unsplash";
 import { routeQueryToSources, SourceName } from "@/lib/search/routeQuery";
-import { MATCH_REASON_CATEGORIES, MatchReasonCategory } from "@/lib/search/categories";
 import { ArtworkResult } from "@/lib/types/artwork";
 
 // AIC results depend on Wikidata (see wikidataAicImages.ts), an external
@@ -54,15 +49,15 @@ const LLM_RERANK_CANDIDATE_POOL_SIZE = 28;
 // candidates still reach the LLM even when photos dominate the scores --
 // otherwise the reserved slots in selectWithSourceDiversity would have
 // nothing approved to fill them with.
-const POOL_EXTRA_MUSEUM = 4;
+// Museum works rank low on keywords (their titles rarely repeat the
+// search's words), so more of them get a vision check: at 4, Pissarro's
+// "Young Peasant Having Her Coffee" (a full match for "hands holding coffee
+// cup") only made the pool on some runs.
+const POOL_EXTRA_MUSEUM = 8;
 const POOL_EXTRA_DIVERSITY = 4;
 
 // Secondary Met searches fetch fewer objects: each one is its own request.
 const MET_SECONDARY_OBJECT_LIMIT = 4;
-// The light-source search ("candlelight" in European Paintings) is small
-// -- five works -- and the Met lists the strongest one, La Tour's "The
-// Penitent Magdalen", last, so it gets a wider limit.
-const MET_LIGHT_SOURCE_OBJECT_LIMIT = 8;
 
 // Compound requests ("hedgehog doing a backflip") rarely have results
 // showing both parts. Rather than letting either half vanish, the final set
@@ -73,15 +68,15 @@ const MIN_RESULTS_PER_QUERY_PART = 3;
 // next-best candidates (see selectWithLlmRerank).
 const MIN_RESULTS = 12;
 
-// Lighting searches: results without strong lighting (see isStronglyLit)
-// move off the main grid into the category filters. Demoting only flat
-// ones (2/5 or less) left the 3/5 ones -- glowing face paint on black, sun
-// rays, soft side light -- filling the page. (Promoting lit bench picks
-// into their place was tried: pixels alone promoted woven bags titled "Bag
-// Face" for "dramatic lighting on face".) The grid never shrinks below
-// this, so a search with few lit candidates keeps its best-lit others at
-// the end instead of going sparse.
-const MIN_LIGHTING_MAIN_RESULTS = 8;
+// The page is one list in two sections (see arrangeSections): "Best
+// matches" first, then "More results" below a divider.
+const BEST_MATCHES_MAX = 12;
+// Museum works that qualify for Best matches keep at least this many of its
+// places (spread through it, not bunched at the end): cross-referencing art
+// against photos is what testers valued most.
+const BEST_MIN_MUSEUM = 3;
+// Every this-many places, one reserved museum work (places 2, 5, 8).
+const BEST_MUSEUM_SPACING = 3;
 
 function withTimeout<T>(
   promise: Promise<T>,
@@ -166,10 +161,10 @@ function buildSourceSearches(
         label: `met (secondary${secondary.departmentId ? `, department ${secondary.departmentId}` : ""})`,
         promise: firstNonEmpty(secondary.queries, (q) =>
           searchMetArtworks(q, limit, {
-            objectLimit: secondary.forLighting ? MET_LIGHT_SOURCE_OBJECT_LIMIT : MET_SECONDARY_OBJECT_LIMIT,
+            objectLimit: MET_SECONDARY_OBJECT_LIMIT,
             departmentId: secondary.departmentId
           })
-        ).then((results) => tagRetrieval(results, secondary.forLighting ? "lighting" : "secondary"))
+        ).then((results) => tagRetrieval(results, "secondary"))
       });
     }
 
@@ -217,6 +212,21 @@ function buildSourceSearches(
     });
   }
 
+  // Lighting-pattern searches come next, but leave room for the diversity
+  // variants and gender balancing below.
+  const diversityReserve =
+    Math.min(plan.photoBackgroundQueries.length, MAX_BACKGROUND_SEARCHES) + (plan.balanceGender ? 1 : 0);
+  for (const patternQuery of plan.photoLightingQueries) {
+    if (budget <= diversityReserve) break;
+    budget--;
+    searches.push({
+      label: `unsplash (lighting: ${patternQuery})`,
+      promise: searchUnsplashArtworks(patternQuery, limit).then((results) =>
+        tagRetrieval(results, "primary")
+      )
+    });
+  }
+
   // One slot is held back for gender balancing when it could apply; the
   // rest go to named-background variants, all run in parallel.
   const backgroundCount = Math.max(0, budget - (plan.balanceGender && budget > 1 ? 1 : 0));
@@ -224,8 +234,11 @@ function buildSourceSearches(
     budget--;
     searches.push({
       label: `unsplash (diversity: ${variant})`,
+      // When the user named the background these searches are the request
+      // itself ("Black woman dancing" for "black dancer"), so they compete as
+      // main results instead of for the few diversity places.
       promise: searchUnsplashArtworks(variant, limit).then((results) =>
-        tagRetrieval(results, "diversity")
+        tagRetrieval(results, plan.statedBackground ? "primary" : "diversity")
       )
     });
   }
@@ -254,7 +267,11 @@ function buildSourceSearches(
 // one. Defaults to 3; spends less as the hourly quota runs low (the demo
 // tier allows only 50 calls/hour), so variants never starve the primary
 // search for the next user.
-const DEFAULT_UNSPLASH_EXTRA_SEARCHES = 3;
+// With the production Unsplash key (1000 requests an hour) a lighting
+// search can afford 4 pattern searches + 2 diversity variants + gender
+// balancing: 8 calls in all, ~125 searches an hour.
+const DEFAULT_UNSPLASH_EXTRA_SEARCHES = 7;
+const MAX_BACKGROUND_SEARCHES = 2;
 
 function unsplashExtraSearchBudget(): number {
   const configured = Number(process.env.UNSPLASH_MAX_EXTRA_SEARCHES);
@@ -272,10 +289,10 @@ async function fetchCandidates(plan: QueryPlan, limit: number): Promise<ArtworkR
     buildSourceSearches(source, plan, limit)
   );
 
-  // Museum works known for dramatic light (see lightingCatalog.ts) -- the
-  // museums' own search can't find them by lighting.
+  // Museum works known for dramatic light, pre-scored (see
+  // museumLibrary.ts) -- the museums' own search can't find them by lighting.
   if (plan.lighting?.kind === "dramatic") {
-    searches.push({ label: "curated lighting list", promise: fetchCuratedLightingResults(plan) });
+    searches.push({ label: "museum library", promise: Promise.resolve(libraryResultsFor(plan)) });
   }
 
   const settledResults = await Promise.allSettled(searches.map((search) => search.promise));
@@ -364,36 +381,74 @@ function matchesWholeRequest(result: ArtworkResult, plan: QueryPlan): boolean {
 }
 
 /**
- * The top pick has to be a result that meets every part of the request --
- * action and setting when given, strong lighting for lighting queries (by
- * the vision check or the pixel drama measure; testers rejected every
- * evenly lit top pick for "dramatic lighting", 6/6, and an artist known for
- * dramatic light doesn't make every one of their works lit), not blurred
- * (by caption or pixels) and not a 3D object unless those were asked for. When nothing
- * qualifies there is no top pick: a confident-looking badge on a weak
- * match did more harm in testing than no badge at all.
+ * Best matches need: the vision check's full match (2/2: every part of the
+ * request, from the image itself -- captions get it wrong both ways),
+ * strong lighting on lighting searches (testers rejected every evenly lit
+ * pick for "dramatic lighting", 6/6), and not a 3D object or blurred unless
+ * asked for. Unjudged results (the model timed out) never qualify.
  */
-// When the vision model judged a result, its read of the image decides
-// "the whole request" -- captions get it wrong both ways ("woman running"
-// passed for "girl walking in city"; Tanoura dancers were captioned
-// "spinning wheels"). Unjudged results fall back to the caption words.
-function meetsWholeRequest(result: ArtworkResult, plan: QueryPlan): boolean {
-  if (result.visionMatch !== undefined) return result.visionMatch === 2;
-  return matchesWholeRequest(result, plan);
+function qualifiesForBest(result: ArtworkResult, plan: QueryPlan): boolean {
+  return (
+    result.visionMatch === 2 &&
+    (!plan.lighting || isStronglyLit(result)) &&
+    (plan.allowsObjects || !isObjectResult(result)) &&
+    (plan.allowsBlur || (!looksBlurry(result) && !isPixelBlurred(result)))
+  );
 }
 
-function chooseTopPick(results: ArtworkResult[], plan: QueryPlan): ArtworkResult[] {
-  const pick = results.find(
-    (result) =>
-      meetsWholeRequest(result, plan) &&
-      (plan.allowsObjects || !isObjectResult(result)) &&
-      (plan.allowsBlur || (!looksBlurry(result) && !isPixelBlurred(result))) &&
-      (!plan.lighting || isStronglyLit(result))
-  );
+/**
+ * Splits the ranked results into Best matches and More results, keeping one
+ * page (nothing hides behind a filter any more). Best matches: up to
+ * BEST_MATCHES_MAX qualifying results, at least BEST_MIN_MUSEUM of them
+ * museum works when that many qualify, and at most half black-and-white
+ * unless the search asked for it ("dramatic lighting on face" was all
+ * black-and-white studio portraits). Never filled with weak results: a
+ * short Best section is better than a padded one. Without the vision check
+ * nothing says which results match the whole request, so all are "best".
+ */
+function arrangeSections(results: ArtworkResult[], plan: QueryPlan): ArtworkResult[] {
+  if (!results.some((result) => result.visionMatch !== undefined)) {
+    return results.map((result) => ({ ...result, section: "best" as const }));
+  }
 
-  if (!pick) return results;
+  const qualifying = results.filter((result) => qualifiesForBest(result, plan));
+  const monochromeCap = plan.wantsMonochrome ? BEST_MATCHES_MAX : Math.floor(BEST_MATCHES_MAX / 2);
+  const best: ArtworkResult[] = [];
+  let monochrome = 0;
+  const take = (result: ArtworkResult): boolean => {
+    if (best.length >= BEST_MATCHES_MAX || best.includes(result)) return false;
+    if (isMonochrome(result)) {
+      if (monochrome >= monochromeCap) return false;
+      monochrome++;
+    }
+    best.push(result);
+    return true;
+  };
 
-  return [{ ...pick, isTopPick: true }, ...results.filter((result) => result.id !== pick.id)];
+  const reserved: ArtworkResult[] = [];
+  for (const result of qualifying) {
+    if (reserved.length >= BEST_MIN_MUSEUM) break;
+    if (isMuseumResult(result) && take(result)) reserved.push(result);
+  }
+  for (const result of qualifying) take(result);
+
+  // Ranked order, except each reserved museum work moves up to its spread
+  // place (2, 5, 8) if it ranked lower than that.
+  const rank = new Map(results.map((result, index) => [result.id, index]));
+  const ordered = best
+    .filter((result) => !reserved.includes(result))
+    .sort((a, b) => rank.get(a.id)! - rank.get(b.id)!);
+  reserved.forEach((result, k) => {
+    const natural = ordered.findIndex((other) => rank.get(other.id)! > rank.get(result.id)!);
+    const target = 1 + k * BEST_MUSEUM_SPACING;
+    ordered.splice(Math.min(natural === -1 ? ordered.length : natural, target, ordered.length), 0, result);
+  });
+
+  const bestIds = new Set(ordered.map((result) => result.id));
+  return [
+    ...ordered.map((result) => ({ ...result, section: "best" as const })),
+    ...results.filter((result) => !bestIds.has(result.id)).map((result) => ({ ...result, section: "more" as const }))
+  ];
 }
 
 // Sculpture and other 3D objects stay when relevant (a marble hand can be a
@@ -403,117 +458,6 @@ function chooseTopPick(results: ArtworkResult[], plan: QueryPlan): ArtworkResult
 function objectsLast(results: ArtworkResult[], plan: QueryPlan): ArtworkResult[] {
   if (plan.allowsObjects) return results;
   return [...results.filter((result) => !isObjectResult(result)), ...results.filter(isObjectResult)];
-}
-
-function demoteFlatLighting(
-  main: ArtworkResult[],
-  bench: ArtworkResult[],
-  plan: QueryPlan
-): { main: ArtworkResult[]; bench: ArtworkResult[] } {
-  if (!plan.lighting) return { main, bench };
-
-  const kept = main.filter(isStronglyLit);
-  if (kept.length === main.length) return { main, bench };
-
-  // Best-lit first, flat ones last; ties keep their ranked order.
-  const weaker = main
-    .filter((result) => !isStronglyLit(result))
-    .map((result, index) => ({ result, index }))
-    .sort(
-      (a, b) =>
-        Number(isFlatForLighting(a.result)) - Number(isFlatForLighting(b.result)) ||
-        (b.result.lightingScore ?? 0) - (a.result.lightingScore ?? 0) ||
-        a.index - b.index
-    )
-    .map(({ result }) => result);
-  const weakerKept = Math.max(0, MIN_LIGHTING_MAIN_RESULTS - kept.length);
-
-  return {
-    main: [...kept, ...weaker.slice(0, weakerKept)],
-    bench: [...bench, ...weaker.slice(weakerKept).map((result) => ({ ...result, benchOnly: true }))]
-  };
-}
-
-// When a category is still empty after labeling and the bench step (e.g.
-// "side profile dramatic lighting" had nothing for Environment or Color
-// Palette -- the matching photos were all studio shots on black), one
-// targeted photo search per empty category finds real material for it.
-// Results are subject-checked like any other, labeled with that category,
-// and shown only under its filter. Historical/Cultural Reference has no
-// photo equivalent, so it relies on the museum results and bench step.
-const CATEGORY_SEARCH_MODIFIERS: Partial<Record<MatchReasonCategory, string>> = {
-  "Environment/Setting": "outdoors",
-  "Color Palette": "colorful",
-  Composition: "minimal",
-  "Texture/Material": "texture close up",
-  "Expression/Emotion": "expressive",
-  "Pose/Anatomy": "pose",
-  "Style/Technique": "film photography",
-  Lighting: "dramatic lighting"
-};
-const MAX_CATEGORY_SEARCHES = 3;
-const RESULTS_PER_FILLED_CATEGORY = 2;
-
-async function fillEmptyCategories(
-  results: ArtworkResult[],
-  plan: QueryPlan,
-  limit: number
-): Promise<ArtworkResult[]> {
-  const covered = new Set(results.flatMap((result) => result.matchReasons ?? []));
-  const shownIds = new Set(results.map((result) => result.id));
-  const budget = Math.min(MAX_CATEGORY_SEARCHES, unsplashExtraSearchBudget());
-
-  const targets = MATCH_REASON_CATEGORIES.filter(
-    (category) =>
-      !covered.has(category) &&
-      CATEGORY_SEARCH_MODIFIERS[category] &&
-      // A stated setting already is the environment the user asked for.
-      !(category === "Environment/Setting" && plan.settingWords.length > 0)
-  ).slice(0, budget);
-
-  const filled = await Promise.all(
-    targets.map(async (category) => {
-      try {
-        const found = await searchUnsplashArtworks(
-          `${plan.photoQuery} ${CATEGORY_SEARCH_MODIFIERS[category]}`,
-          limit
-        );
-        let candidates = applySubjectRequirement(
-          rankAndSelectResults(tagRetrieval(found, "secondary"), plan, found.length),
-          plan,
-          { strict: true }
-        ).filter((result) => !shownIds.has(result.id));
-
-        // A Lighting fill has to actually look dramatically lit.
-        if (category === "Lighting") {
-          const metrics = await analyzeResultImages(candidates);
-          candidates = applyImageMetrics(candidates, metrics, {
-            lighting: true,
-            allowsBlur: plan.allowsBlur
-          }).filter(isDramaticallyLit);
-        }
-        candidates = candidates.filter((result) => isUsableExtra(result, plan));
-
-        return candidates.slice(0, RESULTS_PER_FILLED_CATEGORY).map((result) => ({
-          ...result,
-          matchReasons: [category],
-          benchOnly: true
-        }));
-      } catch (error) {
-        console.warn(`[search] category fill for ${category} failed:`, error);
-        return [];
-      }
-    })
-  );
-
-  const seen = new Set<string>();
-  return filled.flat().filter((result) => !seen.has(result.id) && seen.add(result.id));
-}
-
-// Extras (bench and category fills) are judged on less evidence than the
-// main page, so blurred ones are dropped outright rather than ranked lower.
-function isUsableExtra(result: ArtworkResult, plan: QueryPlan): boolean {
-  return plan.allowsBlur || (!looksBlurry(result) && !isPixelBlurred(result));
 }
 
 function buildRerankPool(candidates: ArtworkResult[]): ArtworkResult[] {
@@ -596,45 +540,26 @@ export async function searchAllArtworks(
     : null;
   const llmResults = rerank?.results ?? null;
 
-  // Bench results (see benchEmptyCategories) ride along outside the main
-  // set, so coverage and the top pick only ever consider the real page.
-  const mainResults = llmResults?.filter((result) => !result.benchOnly) ?? null;
+  // The rerank adds a few approved extras after its selection, so coverage
+  // may use the whole list rather than trimming back to the limit.
+  const selected =
+    llmResults ?? selectWithSourceDiversity(await withImageScores(deduped), limit, selection);
   const covered = ensureCompoundCoverage(
-    mainResults ?? selectWithSourceDiversity(await withImageScores(deduped), limit, selection),
+    selected,
     deduped.filter((result) => !rerank?.rejectedIds.has(result.id)),
     plan,
-    limit
+    Math.max(limit, selected.length)
   );
-  const coveredIds = new Set(covered.map((result) => result.id));
-  const benchCandidates = (llmResults ?? []).filter(
-    (result) => result.benchOnly && !coveredIds.has(result.id)
-  );
-  // Bench picks come from the pool, which the pixel checks already measured.
-  const { main, bench } = demoteFlatLighting(
-    covered,
-    applyImageMetrics(benchCandidates, await metricsPromise, {
-      lighting: false,
-      allowsBlur: plan.allowsBlur
-    }).filter((result) => isUsableExtra(result, plan)),
-    plan
-  );
-  // Categories only exist on the LLM path, so only it can have empty ones.
-  const categoryFill = llmResults ? await fillEmptyCategories([...main, ...bench], plan, limit) : [];
-  // The per-artist cap runs once more over everything shown: coverage,
-  // bench and category fills add results after selection. Main results
-  // come first, so they keep their places.
-  const finalResults = limitPerArtist([
-    ...(llmResults ? chooseTopPick(objectsLast(main, plan), plan) : objectsLast(main, plan)),
-    ...bench,
-    ...categoryFill
-  ]);
+  // The per-artist cap runs once more over everything shown (coverage adds
+  // results after selection); earlier results keep their places.
+  const finalResults = limitPerArtist(objectsLast(covered, plan));
 
   const selectedAt = Date.now();
 
   // Experimental, opt-in (ENABLE_VISUAL_SEARCH): re-orders this final set
   // using lighting/mood/composition tags. See lib/search/visualTagBoost.ts
   // and docs/blip-caption-eval.md.
-  const boosted = await applyVisualTagBoost(finalResults, query);
+  const boosted = arrangeSections(await applyVisualTagBoost(finalResults, query), plan);
 
   // Opt-in per-stage timing, for deciding where speed work is worth it.
   if (process.env.SEARCH_TIMING_LOG === "true") {

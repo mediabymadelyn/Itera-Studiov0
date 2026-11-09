@@ -47,9 +47,10 @@ const THINKING_LEVEL = "low";
 const MAX_CATEGORIES = 3;
 
 const JUDGMENT_CACHE_MAX_SIZE = 2000;
-// Part of the cache key, so judgments made under an earlier prompt aren't
-// reused. Bump when buildPrompt changes.
-const PROMPT_VERSION = 5;
+// Part of the cache key, so judgments made under an earlier prompt or
+// scoring rule aren't reused. Bump when buildPrompt or lightingScoreFor
+// changes.
+const PROMPT_VERSION = 10;
 
 // What kind of light falls on the subject. Shown to users in the expanded
 // view; "even" and "patterned" light also cap the dramatic score.
@@ -78,38 +79,73 @@ export type LightingProfile = {
   // a third, 3 half or more.
   shadow: 0 | 1 | 2 | 3;
   type: LightingType;
+  // How sharply the lit part of the subject separates from darkness on or
+  // right around it. "high" = light falling off quickly into near-black: an
+  // isolated light. A dark background behind an evenly lit subject is not.
+  contrast: "low" | "medium" | "high";
+  // Can a viewer still make out the subject's form and features?
+  readable: "yes" | "partly" | "no";
 };
 
 const DIRECTIONS: LightingProfile["direction"][] = ["front", "side", "back", "top", "below", "ambient"];
+const CONTRASTS: LightingProfile["contrast"][] = ["low", "medium", "high"];
+const READABILITY: LightingProfile["readable"][] = ["yes", "partly", "no"];
 // Types that can't be dramatic however the other parts read: light spread
-// evenly over the subject, or broken into stripes and dapples.
+// evenly over the subject, broken into stripes and dapples, or (the user's
+// call) a silhouette, which shows no light falling on the form at all.
 const FLAT_TYPES: LightingType[] = ["even / flat", "high-key"];
-const PATTERNED_TYPES: LightingType[] = ["dappled / patterned"];
+const CAPPED_TYPES: LightingType[] = ["dappled / patterned", "silhouette"];
 const FLAT_TYPE_MAX_SCORE = 1;
-const PATTERNED_TYPE_MAX_SCORE = 3;
-
-// Below this much of the subject in deep shadow (half or more), light
-// isn't dramatic however hard or isolated it is. Set from the user's own
-// verdicts on "dramatic lighting on face": every image they called
-// dramatic had half or more of the face in shadow, and the two hard,
-// side-lit ones they rejected (sun rays on a face, a museum portrait) had
-// about a third.
-const DRAMATIC_MIN_SHADOW = 3;
 const NOT_DRAMATIC_MAX_SCORE = 3;
+const UNREADABLE_MAX_SCORE = 2;
+const DRAMATIC_SCORE = 4;
+
+// How much of the subject must be in deep shadow (0-3) for the light to
+// count as dramatic: half or more, or a third when the light is isolated
+// (high contrast). Set against the eval set's yes/no verdicts
+// (data/eval/): hard single-source light leaving a third of the figure in
+// shadow against darkness (Manfredi's "Cupid Chastised", Zurbaran's
+// "Crucifixion") is dramatic; the same third under open light (sun rays on
+// a face, a softly lit museum portrait) is not.
+const DRAMATIC_MIN_SHADOW = 3;
+const ISOLATED_MIN_SHADOW = 2;
 
 /**
  * The 0-5 lighting score, from the parts the model described: shadow on
- * the subject (0-3), +1 for a single isolated source, +1 for hard light.
- * Dramatic (4+, see imageAnalysis.ts) needs half or more of the subject in
- * deep shadow plus a single source or hard light; 5 needs both. Soft
- * window light on a face scores about 2; candlelight leaving half a face
- * dark scores 4-5.
+ * the subject (0-3), +1 for a single isolated source, +1 for hard light,
+ * then these limits, checked against the eval set (50/52 of its verdicts):
+ * - Dramatic (4+) needs half the subject in shadow, or a third when the
+ *   light is isolated (high contrast).
+ * - Even / high-key light: at most 1. Dappled light and silhouettes: at
+ *   most 3. Backlight that isn't a rim light: at most 3 (the shadow is just
+ *   the subject's unlit front, as in a hazy backlit seascape).
+ * - Partly readable: one point off; unreadable: at most 2. A dramatic image
+ *   no one can make out is no use as a reference.
+ * - Colored light with high contrast counts as dramatic (4) even with
+ *   little shadow: it's dramatic through color (red/blue split light, a
+ *   green face lit from below).
+ * - Paintings and prints (`painted`) get the hard-light point when the light
+ *   is isolated: paint rarely shows crisp shadow edges, so the model calls
+ *   most chiaroscuro "soft". On the eval set this caught La Tour's
+ *   Magdalen and Rembrandt's Aristotle (missed dramatic paintings 8 -> 2),
+ *   at the cost of passing a few softly lit ones (wrongly dramatic 10 -> 16;
+ *   overall agreement unchanged at 84%).
  */
-export function lightingScoreFor(profile: LightingProfile): number {
-  let score = profile.shadow + (profile.sources === 1 ? 1 : 0) + (profile.quality === "hard" ? 1 : 0);
-  if (profile.shadow < DRAMATIC_MIN_SHADOW) score = Math.min(score, NOT_DRAMATIC_MAX_SCORE);
-  if (FLAT_TYPES.includes(profile.type)) score = Math.min(score, FLAT_TYPE_MAX_SCORE);
-  if (PATTERNED_TYPES.includes(profile.type)) score = Math.min(score, PATTERNED_TYPE_MAX_SCORE);
+export function lightingScoreFor(profile: LightingProfile, options: { painted?: boolean } = {}): number {
+  const { shadow, contrast, type, readable } = profile;
+  const hard = profile.quality === "hard" || (options.painted === true && contrast === "high");
+  let score = shadow + (profile.sources === 1 ? 1 : 0) + (hard ? 1 : 0);
+
+  const enoughShadow = shadow >= DRAMATIC_MIN_SHADOW || (shadow >= ISOLATED_MIN_SHADOW && contrast === "high");
+  if (!enoughShadow) score = Math.min(score, NOT_DRAMATIC_MAX_SCORE);
+  if (FLAT_TYPES.includes(type)) score = Math.min(score, FLAT_TYPE_MAX_SCORE);
+  if (CAPPED_TYPES.includes(type)) score = Math.min(score, NOT_DRAMATIC_MAX_SCORE);
+  if (profile.direction === "back" && type !== "rim / back") score = Math.min(score, NOT_DRAMATIC_MAX_SCORE);
+
+  if (readable === "partly") score -= 1;
+  if (readable === "no") score = Math.min(score, UNREADABLE_MAX_SCORE);
+  else if (type === "colored / neon" && contrast === "high" && shadow >= 1) score = Math.max(score, DRAMATIC_SCORE);
+
   return Math.max(0, Math.min(5, score));
 }
 const judgmentCache = new Map<string, VisionJudgment>();
@@ -125,7 +161,20 @@ export type VisionJudgment = {
   // ArtworkResult.lightingScore.
   lightingScore: number;
   categories: MatchReasonCategory[];
+  // The palette, as the model sees it. Pixel measures couldn't do this: on
+  // the eval set's paintings a hue-based warm/cool rule got 20/35 against
+  // the labels, barely above calling everything warm (19/35), because
+  // varnish and museum photography cast nearly every painting warm. Absent
+  // if the model left it out.
+  color?: ColorJudgment;
 };
+
+export type ColorJudgment = {
+  temperature: "warm" | "cool" | "neutral" | "mixed";
+  saturation: "vivid" | "muted" | "black and white";
+};
+const TEMPERATURES: ColorJudgment["temperature"][] = ["warm", "cool", "neutral", "mixed"];
+const SATURATIONS: ColorJudgment["saturation"][] = ["vivid", "muted", "black and white"];
 
 function apiKey(): string {
   return process.env.GEMINI_API_KEY?.trim() || "";
@@ -146,7 +195,9 @@ function buildPrompt(result: ArtworkResult, query: string): string {
     `to what the image shows; judge everything from the image itself.\n` +
     `Reply with ONLY JSON:\n` +
     `{"match": 0|1|2, "light": {"sources": 1|2|3, "quality": "hard"|"soft", "direction": ` +
-    `${DIRECTIONS.map((d) => `"${d}"`).join("|")}, "shadow": 0|1|2|3, "type": "..."}, ` +
+    `${DIRECTIONS.map((d) => `"${d}"`).join("|")}, "shadow": 0|1|2|3, "type": "...", ` +
+    `"contrast": "low"|"medium"|"high", "readable": "yes"|"partly"|"no"}, ` +
+    `"color": {"temperature": "warm"|"cool"|"neutral"|"mixed", "saturation": "vivid"|"muted"|"black and white"}, ` +
     `"categories": [...]}\n` +
     `- match: how well this image serves as a reference for the search. 2 = right subject and ` +
     `everything else the search asks for (action, setting, lighting, pose). 1 = right subject ` +
@@ -172,6 +223,24 @@ function buildPrompt(result: ArtworkResult, query: string): string {
     `lit; 1 = a little (under the chin, eye sockets); 2 = about a third; 3 = half or more.\n` +
     `  - type: the one best fit from ${JSON.stringify(LIGHTING_TYPES)}. Glowing or ` +
     `reflective paint, makeup or jewelry is not a light source.\n` +
+    `  - contrast: how sharply the lit part of the subject separates from darkness on the ` +
+    `subject or right next to it. "high" = the light falls off quickly into near-black, as ` +
+    `if only the subject were lit; "medium" = clear light and shadow but open, lit ` +
+    `surroundings; "low" = little difference. An evenly lit subject in front of a black ` +
+    `background is "low" or "medium", not "high".\n` +
+    `  - readable: can a viewer still make out the subject's form and features? "partly" ` +
+    `if they're hard to make out (very dark, tiny, or lost in shadow); "no" if they can't ` +
+    `be made out at all.\n` +
+    `- color: the image's own palette as painted or photographed. A uniform yellow varnish, aged ` +
+    `paper or an old photo's tint does not make an image warm.\n` +
+    `  - temperature: the temperature that covers most of the image. "warm" = saturated reds, ` +
+    `oranges or golden light dominate; "cool" = blues, greens or grey-blue light dominate; ` +
+    `"neutral" = mostly greys, browns, blacks and dull earth tones, even if slightly warm; ` +
+    `"mixed" only when ` +
+    `large warm and large cool areas share the image about equally. Small accents of the other ` +
+    `temperature (a blue sash, a patch of sky) don't make it mixed.\n` +
+    `  - saturation: "vivid" = strong, saturated color; "muted" = soft, greyed or earthy color; ` +
+    `"black and white" = monochrome, including sepia and toned prints.\n` +
     `- categories: 1-${MAX_CATEGORIES} of ${JSON.stringify(MATCH_REASON_CATEGORIES)} that this ` +
     `image is most useful for as a reference.`
   );
@@ -186,21 +255,38 @@ function parseLighting(raw: unknown): LightingProfile | null {
   const quality = light.quality;
   const direction = DIRECTIONS.find((value) => value === light.direction);
   const type = LIGHTING_TYPES.find((value) => value === light.type);
+  const contrast = CONTRASTS.find((value) => value === light.contrast);
+  const readable = READABILITY.find((value) => value === light.readable);
   if (![1, 2, 3].includes(sources) || ![0, 1, 2, 3].includes(shadow)) return null;
-  if ((quality !== "hard" && quality !== "soft") || !direction || !type) return null;
+  if ((quality !== "hard" && quality !== "soft") || !direction || !type || !contrast || !readable) return null;
 
   return {
     sources: sources as LightingProfile["sources"],
     quality,
     direction,
     shadow: shadow as LightingProfile["shadow"],
-    type
+    type,
+    contrast,
+    readable
   };
 }
 
-function parseJudgment(raw: string): VisionJudgment | null {
+/** Museum works other than photographs: scored with the painting rule. */
+export function isPaintedResult(result: Pick<ArtworkResult, "source" | "classification">): boolean {
+  return !result.source.toLowerCase().includes("unsplash") && !/photograph/i.test(result.classification ?? "");
+}
+
+function parseColor(raw: unknown): ColorJudgment | undefined {
+  if (!raw || typeof raw !== "object") return undefined;
+  const color = raw as Record<string, unknown>;
+  const temperature = TEMPERATURES.find((value) => value === color.temperature);
+  const saturation = SATURATIONS.find((value) => value === color.saturation);
+  return temperature && saturation ? { temperature, saturation } : undefined;
+}
+
+function parseJudgment(raw: string, painted: boolean): VisionJudgment | null {
   try {
-    const parsed = JSON.parse(raw) as { match?: unknown; light?: unknown; categories?: unknown };
+    const parsed = JSON.parse(raw) as { match?: unknown; light?: unknown; color?: unknown; categories?: unknown };
     const match = Number(parsed.match);
     const lighting = parseLighting(parsed.light);
     if (![0, 1, 2].includes(match) || !lighting) return null;
@@ -212,8 +298,9 @@ function parseJudgment(raw: string): VisionJudgment | null {
     return {
       match: match as VisionJudgment["match"],
       lighting,
-      lightingScore: lightingScoreFor(lighting),
-      categories: Array.from(new Set(categories)).slice(0, MAX_CATEGORIES)
+      lightingScore: lightingScoreFor(lighting, { painted }),
+      categories: Array.from(new Set(categories)).slice(0, MAX_CATEGORIES),
+      color: parseColor(parsed.color)
     };
   } catch {
     return null;
@@ -257,7 +344,7 @@ async function judgeOne(result: ArtworkResult, query: string): Promise<VisionJud
       candidates?: { content?: { parts?: { text?: string }[] } }[];
     };
     const text = data.candidates?.[0]?.content?.parts?.map((part) => part.text ?? "").join("") ?? "";
-    return parseJudgment(text);
+    return parseJudgment(text, isPaintedResult(result));
   } catch {
     return null;
   }

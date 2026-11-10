@@ -210,7 +210,9 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
 
           {(whyTags.length > 0 || palette.length > 0) && (
             <div className="lightbox-why">
-              <span className="lightbox-why-heading">Why this result</span>
+              <span className="lightbox-why-heading">
+                Why this result <span className="lightbox-why-note">· AI-tagged</span>
+              </span>
               <div className="tag-row">
                 {whyTags.map((tag) => (
                   <span key={tag} className="info-tag">

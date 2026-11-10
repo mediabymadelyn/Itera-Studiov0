@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Gloock, JetBrains_Mono } from "next/font/google";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
-// Two monospace fonts, nothing else: JetBrains Mono for the "Itera Studio"
-// wordmark, headings and controls (filter chips, tags), Geist Mono for
-// everything you read (search bar, cards, captions). Geist Mono isn't in
+// Gloock, a high-contrast serif, for the "Itera Studio" wordmark (hero and
+// navbar) and the About page's headings. Two monospace fonts for the rest:
+// JetBrains Mono for headings and controls (filter chips, tags), Geist Mono
+// for everything you read (search bar, cards, captions). Geist Mono isn't in
 // next/font/google in this Next.js version, so it comes from Vercel's own
 // "geist" package (the canonical source) instead.
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600", "800"],
   variable: "--font-jetbrains-mono"
+});
+
+const gloock = Gloock({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-gloock"
 });
 
 export const metadata: Metadata = {
@@ -27,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jetbrainsMono.variable} ${GeistMono.variable}`}
+      className={`${gloock.variable} ${jetbrainsMono.variable} ${GeistMono.variable}`}
     >
       <body>{children}</body>
     </html>

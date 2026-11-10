@@ -69,6 +69,7 @@
   --chip-active-bg: #9353c6;
   --chip-active-border: rgba(214, 180, 250, 0.7);
 
+  --font-display: var(--font-gloock), Georgia, "Times New Roman", serif;
   --font-heading: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
   --font-secondary: var(--font-geist-mono), "Geist Mono", monospace;
   --font-body: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
@@ -165,8 +166,8 @@ main {
 }
 
 .navbar-logo {
-  font-family: var(--font-heading);
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-weight: 400;
   font-size: 1.15rem;
   white-space: nowrap;
   text-decoration: none;
@@ -294,9 +295,10 @@ main {
   color: transparent;
 }
 
+/* The "Itera Studio" wordmark, in Gloock (one weight, 400). */
 .hero-title {
-  font-family: var(--font-heading);
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-weight: 400;
   font-size: clamp(2.4rem, 6vw, 4.2rem);
   margin: 0;
   line-height: 1.05;
@@ -1251,186 +1253,89 @@ main {
   text-transform: uppercase;
 }
 
-/* How it works */
+.lightbox-why-note {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* About page */
 
 .about-page {
   position: relative;
   z-index: 1;
+  width: 100%;
   max-width: 720px;
   margin: 0 auto;
-  padding: 2rem 1rem 4rem;
+  padding: 2.5rem 1rem 1rem;
   display: grid;
-  gap: 2.5rem;
-  justify-items: center;
-}
-
-.how-steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 2rem;
-  width: 100%;
-}
-
-.how-step {
-  display: grid;
-  grid-template-columns: 82px 1fr;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.how-step-badge {
-  display: grid;
-  justify-items: center;
-  gap: 0.35rem;
-}
-
-.how-step-icon {
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  color: #e3c6f5;
-  border: 1px solid rgba(225, 195, 245, 0.35);
-  background: rgba(120, 30, 168, 0.22);
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-.how-step-icon svg {
-  width: 40px;
-  height: 40px;
-}
-
-.how-step-label {
-  font-family: var(--font-secondary);
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-}
-
-.how-step:not(:last-child) .how-step-badge::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 0.4rem);
-  height: calc(2rem - 0.8rem);
-  width: 1px;
-  transform: translateX(-50%);
-  background: var(--color-text-muted);
-}
-
-.how-step-badge {
-  position: relative;
-}
-
-.about-page-title {
-  color: #e1ccf1;
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  white-space: nowrap;
+  gap: 3rem;
 }
 
 .about-header {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.6rem;
   justify-items: center;
   text-align: center;
+}
+
+.about-page-title {
+  color: #e1ccf1;
+  font-size: clamp(1.9rem, 5vw, 3rem);
 }
 
 .about-subtitle {
   font-family: var(--font-secondary);
   font-size: 1rem;
   color: var(--color-text-secondary);
-  margin: 1rem 0 0;
+  margin: 0;
 }
 
-.about-values {
-  display: grid;
-  gap: 2rem;
-  width: 100%;
+.about-text,
+.about-lead,
+.about-list li,
+.about-mission p {
+  font-family: var(--font-body);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
 }
 
-.about-section-head {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
+.about-text {
+  font-size: 0.92rem;
 }
 
-.about-section-text {
-  padding-left: calc(44px + 0.9rem);
-}
-
-.about-section-featured .about-section-text {
-  padding-left: calc(52px + 0.9rem);
-}
-
-.about-section-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  color: #e3c6f5;
-  border: 1px solid rgba(225, 195, 245, 0.35);
-  background: rgba(120, 30, 168, 0.22);
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-.about-section-icon svg {
-  width: 22px;
-  height: 22px;
-}
-
-.about-section-featured .about-section-icon {
-  width: 52px;
-  height: 52px;
-}
-
-.about-section-featured .about-section-icon svg {
-  width: 26px;
-  height: 26px;
-}
-
-.about-section-featured .about-section-title {
-  font-size: 1.5rem;
-  margin-bottom: 0.6rem;
-}
-
-.about-section-featured .about-section-text {
-  font-size: 1.15rem;
-}
-
-.about-section-title {
-  font-family: var(--font-heading);
-  font-weight: 800;
+.about-lead,
+.about-list li {
   font-size: 0.95rem;
-  margin: 0 0 0.5rem;
+}
+
+.about-mission {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.4rem 1.6rem;
+  border-radius: var(--radius-surface);
+  border: 1px solid rgba(225, 195, 245, 0.3);
+  background: rgba(120, 30, 168, 0.18);
+}
+
+.about-mission p {
+  font-size: 1.02rem;
   color: var(--color-text-primary);
 }
 
-.about-section-text {
-  font-family: var(--font-body);
-  font-size: 0.98rem;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin: -1.1rem 0 0;
+.about-block {
+  display: grid;
+  gap: 1.25rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-surface-border);
 }
 
-.about-section-featured .about-section-text {
-  margin-top: -0.6rem;
-}
-
-.about-how .about-section-text {
-  padding-left: 0;
+.about-block-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
   margin: 0;
+  color: #e1ccf1;
 }
 
 .about-inline-link {
@@ -1444,58 +1349,125 @@ main {
   text-decoration-color: #e1ccf1;
 }
 
-.about-how {
-  width: 100%;
+/* Steps: an icon on the left, joined to the next step by a thin line. */
+.how-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  gap: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-surface-border);
+  gap: 1.5rem;
 }
 
-.about-how-title {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: clamp(1.6rem, 3.2vw, 2.1rem);
-  margin: 0;
-  color: #e1ccf1;
+.how-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.how-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  top: calc(48px + 0.4rem);
+  bottom: calc(-1.5rem + 0.4rem);
+  width: 1px;
+  background: var(--color-surface-border);
+}
+
+.how-step-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #e3c6f5;
+  border: 1px solid rgba(225, 195, 245, 0.35);
+  background: rgba(120, 30, 168, 0.22);
+}
+
+.how-step-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.how-step-number {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--font-secondary);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 
 .how-step-title {
   font-family: var(--font-heading);
-  font-weight: 400;
+  font-weight: 600;
   font-size: 1rem;
-  margin: 0 0 0.25rem;
+  margin: 0.15rem 0 0.35rem;
   color: var(--color-text-primary);
 }
 
-.how-callout-title {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 1rem;
-  margin: 0 0 0.5rem;
-  color: var(--color-text-primary);
-  text-align: center;
+/* Tools: the search page's sliding chips; the picked one's line below. */
+.about-tools {
+  display: grid;
+  gap: 0.9rem;
 }
 
-.how-step-text {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
+/* One line; on narrow screens it scrolls sideways like the search
+   page's filter row. */
+.about-tool-chips {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding: 2px;
+  scrollbar-width: none;
+}
+
+.about-tool-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.about-tool-chips > .chip {
+  flex-shrink: 0;
+}
+
+@media (max-width: 720px) {
+  .about-tool-chips {
+    justify-content: flex-start;
+  }
+}
+
+.about-tool-text {
+  min-height: 3.2em;
   margin: 0;
-  line-height: 1.5;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
 }
 
-.how-callout {
-  width: 100%;
-  padding: 1.25rem 1.5rem;
-  border-radius: 16px;
-  border: 1px solid rgba(225, 195, 245, 0.35);
-  background: rgba(120, 30, 168, 0.22);
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 6px 16px rgba(0, 0, 0, 0.4);
+.about-tool-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-right: 0.6rem;
+}
+
+.about-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.about-list li::marker {
+  color: var(--color-text-muted);
 }
 
 /* --- Search page extras ---------------------------------------------- */
@@ -1604,9 +1576,13 @@ main {
 .about-sources {
   display: grid;
   gap: 1rem;
-  margin: 1rem 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.about-sources .about-text {
+  margin-top: 0.2rem;
 }
 
 /* Keyboard focus, visible everywhere it can land. */

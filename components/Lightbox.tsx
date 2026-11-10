@@ -4,6 +4,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
 import { AttributionLink } from "@/components/ResultCard";
 import { reportUnsplashDownload } from "@/components/unsplashDownload";
+import CopyableSwatch, { formatHex, useCopy } from "@/components/CopyableSwatch";
 import {
   CATEGORY_LABELS,
   MatchReasonCategory,
@@ -59,6 +60,7 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
   const [grid, setGrid] = useState(false);
   const [zoomed, setZoomed] = useState(false);
   const [copied, setCopied] = useState(false);
+  const colorsCopy = useCopy();
 
   // Zoom and "Copied" are about one image; the tools stay on while stepping
   // through results, which is how they're used for comparing.
@@ -208,7 +210,7 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
             ))}
           </div>
 
-          {(whyTags.length > 0 || palette.length > 0) && (
+          {whyTags.length > 0 && (
             <div className="lightbox-why">
               <span className="lightbox-why-heading">
                 Why this result <span className="lightbox-why-note">· AI-tagged</span>
@@ -220,18 +222,33 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
                   </span>
                 ))}
               </div>
-              {palette.length > 0 && (
-                <div className="swatches" aria-label="Main colors">
-                  {palette.map((swatch) => (
-                    <span
-                      key={swatch.color}
-                      className="swatch"
-                      style={{ background: swatch.color, flexGrow: swatch.share }}
-                      title={`${swatch.color} (${Math.round(swatch.share * 100)}%)`}
-                    />
-                  ))}
-                </div>
-              )}
+            </div>
+          )}
+
+          {/* Measured from the image's pixels, not by the AI. */}
+          {palette.length > 0 && (
+            <div className="lightbox-why">
+              <span className="lightbox-why-heading">
+                Main colors{" "}
+                <button
+                  type="button"
+                  className="text-button colors-copy-all"
+                  onClick={() => colorsCopy.copy(palette.map((swatch) => formatHex(swatch.color)).join(", "), "all")}
+                >
+                  {colorsCopy.copied ? "Copied" : "Copy all"}
+                </button>
+              </span>
+              <div className="swatches" role="group" aria-label="Main colors">
+                {palette.map((swatch) => (
+                  <CopyableSwatch
+                    key={swatch.color}
+                    color={swatch.color}
+                    className="swatch"
+                    style={{ flexGrow: swatch.share }}
+                    detail={`${Math.round(swatch.share * 100)}%`}
+                  />
+                ))}
+              </div>
             </div>
           )}
 

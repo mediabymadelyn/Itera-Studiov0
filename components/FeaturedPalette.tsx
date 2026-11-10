@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import data from "@/lib/data/featured-palettes.json";
 import { setFeaturedPalette } from "@/components/featuredPaletteStore";
+import CopyableSwatch from "@/components/CopyableSwatch";
 
 type FeaturedWork = {
   id: string;
@@ -37,10 +38,10 @@ export default function FeaturedPalette() {
 
   return (
     <figure className={work ? "featured-palette is-ready" : "featured-palette"}>
-      <div className="palette-chips" aria-hidden="true">
-        {(work?.colors ?? ["", "", "", "", ""]).map((color, index) => (
-          <span key={index} className="palette-chip" style={color ? { background: color } : undefined} title={color} />
-        ))}
+      <div className="palette-chips" role="group" aria-label="Palette colors">
+        {work
+          ? work.colors.map((color, index) => <CopyableSwatch key={index} color={color} className="palette-chip" />)
+          : [0, 1, 2, 3, 4].map((index) => <span key={index} className="palette-chip" aria-hidden="true" />)}
       </div>
       <figcaption className="palette-caption">
         {work ? (

@@ -1231,19 +1231,80 @@ main {
   margin: 0.4rem 0 0.6rem;
 }
 
+/* The strip isn't clipped (overflow hidden would cut off the hover
+   note), so its end swatches carry the rounded corners. */
 .swatches {
   display: flex;
   width: min(100%, 260px);
-  height: 14px;
+  height: 20px;
   margin: 0.1rem auto 0;
-  overflow: hidden;
   border: 1px solid var(--chip-border);
   border-radius: var(--radius-tag);
 }
 
 .swatch {
   flex-basis: 0;
-  min-width: 6px;
+  min-width: 8px;
+}
+
+.swatch:first-child {
+  border-radius: var(--radius-tag) 0 0 var(--radius-tag);
+}
+
+.swatch:last-child {
+  border-radius: 0 var(--radius-tag) var(--radius-tag) 0;
+}
+
+.colors-copy-all {
+  margin-left: 0.4rem;
+  font-size: 0.68rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* A color you can copy (components/CopyableSwatch): a small note with the
+   hex code above it on hover or keyboard focus, "Copied" after a click. */
+.copy-swatch {
+  position: relative;
+  padding: 0;
+  border: 0;
+  cursor: copy;
+}
+
+.copy-swatch::after {
+  content: attr(data-note);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  z-index: 5;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--chip-border);
+  border-radius: var(--radius-tag);
+  background: rgba(14, 14, 14, 0.95);
+  color: var(--color-text-primary);
+  font-family: var(--font-heading);
+  font-size: 0.66rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 3px);
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
+}
+
+.copy-swatch:hover::after,
+.copy-swatch:focus-visible::after,
+.copy-swatch.is-copied::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.copy-swatch:hover,
+.copy-swatch:focus-visible {
+  z-index: 4;
+  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 1px;
 }
 
 .lightbox-why-heading {

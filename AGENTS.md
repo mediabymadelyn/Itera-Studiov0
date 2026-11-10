@@ -1,105 +1,122 @@
 # AGENTS.md
 
 ## Project overview
-This repository is for Itera Studio, an AI-assisted search tool for artists that returns real, credited references from trusted APIs.
+This repository is for Itera Studio ("Itera", never "ItEra"), an AI-assisted reference search for artists that returns real, credited artworks and photographs from trusted open sources.
 
-The product does NOT generate images.
-The product should help users discover real artwork and reference images with attribution.
+The product does NOT generate images, and it doesn't train any model.
+AI is used for two things only: understanding the search, and describing candidate images so the best ones come first.
+Attribution and source transparency come first everywhere.
 
 ## Tech stack
-- Next.js
-- TypeScript
-- App Router
-- Minimal clean UI
+- Next.js 14, App Router, TypeScript
+- `sharp` for measuring image pixels (palette, contrast) on the server
+- Hugging Face router (Meta Llama) for reading the search and suggesting museum catalog terms
+- Google Gemini (paid tier) for the vision check
+- Optional Upstash Redis for the lasting judgment cache
+- Fonts: Gloock for the wordmark and About headings, JetBrains Mono for headings and controls, Geist Mono for body text. No Inter.
 
-## Build priorities
-1. Build a working v0 quickly
-2. Keep the architecture modular
-3. Prefer simple deterministic logic before adding LLM features
-4. Preserve attribution and source transparency everywhere
+## Status
+- v0 is complete and has been through one round of user testing.
+- Saving, parts 1 and 2, is built: save, notes, collections (stored internally as `boards`), filters and colors, credits, reference sheet, backup / restore. Parts 3 (compare, timed study mode) and 4 (detail crops, share links) wait for review.
+- After saving: new sources, one at a time (see "Adding sources").
 
-## Current v0 scope
-Only implement these sources first:
-- Metropolitan Museum of Art API
-- Art Institute of Chicago API
-- Unsplash API
+## Sources (current)
+- Metropolitan Museum of Art API: public-domain (CC0) works only. Requests go through a queue of at most 4 at a time (`lib/sources/met.ts`), because the Met blocks bursts.
+- Art Institute of Chicago API: public-domain (CC0) works. Images are shown from their Wikimedia Commons copies (`lib/sources/wikidataAicImages.ts`).
+- Unsplash API: photos under the Unsplash License. Images are hotlinked from Unsplash, every photo credits the photographer with UTM links, and opening an original fires the download-tracking endpoint (`app/api/unsplash/download`, `components/unsplashDownload.ts`). Keep all three.
+- Pre-scored museum library (`lib/data/museum-library.json`): Met and AIC works already judged for their lighting, used for lighting searches without extra Met requests. Rebuild with `npm run build:museum-library`.
+- Copyrighted museum works (most contemporary art) are never shown.
 
-Do not add more APIs until v0 works.
+## Adding sources
+Only after saving ships. One source per change, and rerun the eval after each.
+Order: Cleveland Museum of Art (no key, CC0), then Smithsonian Open Access (diversity), then Rijksmuseum (lighting).
+Before adding any source, confirm: a license for each item, terms that allow an AI to look at the images, and whether images may be hotlinked.
 
 ## Required result schema
-Every source adapter must normalize into one shared result type with these fields:
-- id
-- title
-- artist
-- source
-- imageUrl
-- thumbnailUrl
-- licenseType
-- originalLink
-- sourceLink
-- score
+Every source adapter normalizes into `ArtworkResult` (`lib/types/artwork.ts`). Required in practice:
+- id, title, artist, source, imageUrl, thumbnailUrl, licenseType, originalLink, sourceLink, score
+Adapters also fill credit fields where available (artistLink, objectDate, medium, downloadLocation for Unsplash). Pipeline fields (matchReasons, lighting, lightingScore, color, imageMetrics, section, retrievedVia) are added after fetching, never by adapters.
 
 ## Rules
-- Use TypeScript only
+- TypeScript only
 - Keep source adapters separate from UI
-- Never pass raw API response objects directly into UI components
-- Normalize every source response into one shared schema
-- Filter out unusable results
+- Never pass raw API response objects to UI components
+- Normalize every source response into the shared schema
+- Filter out unusable results (no image, not public domain, malformed)
+- Prefer simple deterministic logic; AI only where rules fail, and always with a fallback when the model is slow or missing
+- Never add a gender, age or ethnicity the search doesn't name, except in the labeled diversity searches
+- Never store or log search text; cache keys are hashes
+- Never commit or print API keys; `.env.local` stays gitignored
 - Prefer maintainable code over clever code
-- Do not build features outside the requested milestone
+- Don't build features outside the requested milestone
 - Keep diffs scoped and small
+- Don't deploy to Vercel during user testing unless asked
 
 ## Validation rules
 Before finishing a task:
-- ensure the app builds
-- ensure types are valid
-- ensure search results display with attribution
-- ensure no source adapter returns malformed data
+- `npx tsc --noEmit` and `npm run build` pass
+- `npm run check:parsing` passes after any change to `queryTerms.ts` or `queryPlan.ts`
+- search results display with attribution on every card
+- no source adapter returns malformed data
+- after changes to the vision prompt (`PROMPT_VERSION` in `visionJudge.ts`) or ranking, rerun the eval
 
 ## Folder expectations
-- app/ for frontend routes
-- app/api/search for the main search endpoint
-- lib/types for shared types
-- lib/sources for API adapters
-- lib/search for routing, expansion, and ranking
-- components for UI parts
+- `app/` frontend routes (`/` search, `/about`)
+- `app/api/search` the main search endpoint; `app/api/unsplash/download` Unsplash download tracking; `app/api/image` single-image downloads (only from the hosts in `lib/sources/imageHosts.ts`)
+- `lib/types` shared types
+- `lib/sources` API adapters
+- `lib/search` query reading, routing, expansion, vision check, ranking and sections
+- `lib/data` built data files (museum library, featured palettes); generated by scripts, not edited by hand
+- `components` UI parts
+- `scripts` build and check scripts; `scripts/eval` the evaluation
+- `data/eval` the eval manifest, runs and reports
 
-## Product behavior
-The search experience should:
-- accept a user prompt
-- decide which sources to search
-- fetch results
-- normalize results
-- filter bad results
-- rank results
-- return credited results to the frontend
+## Search pipeline
+1. Read the search (`queryPlan.ts`, `queryTerms.ts`): subject, action, setting, lighting, stated background and appearance phrases (kept together, e.g. "red hair"). Llama rewrites the search; rules handle it when the model is off.
+2. Route and expand (`routeQuery.ts`, `searchAll.ts`): museum catalog terms (hand-tested synonyms first, else `museumTerm.ts`), Unsplash lighting-pattern searches, stated-background variants, a few labeled diversity searches, and the museum library for lighting searches.
+3. Fetch all sources in parallel, normalize, filter, dedupe.
+4. Vision check (`visionJudge.ts`): Gemini rates match (0/1/2), lighting parts, color temperature and saturation, and up to 3 categories. `lightingScoreFor` turns lighting parts into a score. Judgments are cached in memory, then Redis, then disk, for 30 days.
+5. Select and arrange (`selectDiverseResults.ts`, `arrangeSections` in `searchAll.ts`): at most 2 works per artist; Best matches holds up to 12 full matches (4+ lighting score on lighting searches), with 3 museum works reserved and one work per artist; black-and-white capped at half; the rest go under More results.
 
 ## Routing hints
-Use simple keyword-based routing for v0:
+Keyword-based first:
 - portrait, oil painting, classical art -> museum APIs first
 - photography, street photo, modern fashion -> Unsplash first
-- otherwise search all v0 sources and rank results
+- otherwise search all sources and rank results
 
-## UI requirements
-The UI should include:
-- a search bar
-- a submit button
-- loading state
-- result cards
-- visible attribution on every card
+## UI
+- Home: "Itera Studio" wordmark, subhead, a featured artwork palette (a different public-domain work each visit; chips copy their hex code), search bar, 4 example searches. The hero collapses after the first search; the search block sticks on scroll.
+- Toolbar: All / Art / Photo, category chips with counts, sub-tags for lighting and color. Chips use the sliding highlight (`useSlidingHighlight.ts`) colored from the featured palette.
+- Results: masonry grid, "Best matches" then "More results", loading stages and skeleton cards.
+- Cards: museum works as wall labels (title, artist and date, collection); photos as "Photo by X on Unsplash". Every card shows image, title, artist or creator, source, license and an original link.
+- Lightbox: Values, Mirror, Grid, click-to-zoom, previous and next, Copy credit, "Why this result · AI-tagged", and Main colors (measured from pixels; each swatch copies its hex, plus Copy all). Hide info (F) folds the details away and centers the image, keeping one credit line. Download image saves the file (and sends Unsplash's download event).
+- About page: mission, How it works, Tools for artists, Your data, Limitations, Sources (`/about#sources`). Keep it accurate when the pipeline changes.
+- Saved (`/saved`, `components/SavedBoards.tsx`), centered like About: collection chips, then the selected collection's name with Rename and Delete collection (confirmed on the page), then one line (collection colors, Copy credits, Filter, Download ▾). Cards inside a collection show Remove (from that collection) instead of the bookmark. The shared filter toolbar (`components/ResultFilters.tsx`) is folded away until opened. Download: reference sheet (`/saved/sheet`: 2 per page, 1 per page or contact sheet; printed or saved as PDF), credits list (.txt), backup file (.json) and restore. Lightbox: Save, Add to collection ▾ (a panel with thumbnails), Add note, and the image's collections as chips with ×. Undo and errors show in a toast (`components/Toaster.tsx`).
+- Footer on every page.
 
-Every result card should show:
-- image
-- title
-- artist or creator if available
-- source
-- license if available
-- original link
+## Saving
+- Saves live in the browser only (`lib/saved/savedStore.ts`, localStorage). No accounts, nothing sent to a server.
+- Store a trimmed, normalized result (credit, links, license, tags, main colors), never image files; images stay hotlinked.
+- Everything read back from storage or an imported file is cleaned: https links to the three sources' own sites only (http is upgraded), #rrggbb colors only, known fields only.
+- No uploading people's own images for now: no credit to show, and it would need new consent for the AI.
+- Saving an Unsplash photo sends its download event, like opening the original.
+
+## Scripts
+- `npm run check:parsing` query-reading cases
+- `npm run eval:validate`, `eval:provenance`, `eval:run`, `eval:report` the evaluation (`data/eval/itera_eval_manifest.json`). Unsplash rows stay `eval_allowed: false` (ML/AI restriction) until Unsplash confirms otherwise.
+- `npm run build:museum-library` rebuilds the pre-scored library (Gemini calls)
+- `npm run build:palettes` rebuilds the featured palettes (no AI calls)
+
+## Environment variables (names only)
+- `UNSPLASH_ACCESS_KEY`, `GEMINI_API_KEY`, `HUGGINGFACE_API_KEY`
+- Optional: `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` (or `KV_REST_API_URL` / `KV_REST_API_TOKEN`), `JUDGMENT_DISK_CACHE`, `JUDGMENT_CACHE_DIR`, `VISION_MODEL`, `FAST_LLM_MODEL`, `ENABLE_LLM_QUERY_LAYER`, `UNSPLASH_MAX_EXTRA_SEARCHES`, `SEARCH_TIMING_LOG`
 
 ## What not to do yet
-- no authentication
-- no database
+- no accounts or authentication
+- no user database (the only lasting store is the judgment cache: hashed keys, no search text, 30-day expiry)
 - no background jobs
 - no custom training
+- no image generation, ever
 - no advanced LLM orchestration
-- no extra APIs beyond the first three
+- no new sources until saving is reviewed
+- no syncing saves across devices (that would need accounts)

@@ -105,6 +105,10 @@ export default function AboutPage() {
           <ul className="about-list">
             <li>There are no accounts, and your search history isn&apos;t saved.</li>
             <li>
+              Images you save, your collections and notes stay in this browser and are never sent
+              anywhere. Download a backup file from the Saved page to keep them safe.
+            </li>
+            <li>
               Your search text goes to the three sources, and to an AI model (Meta&apos;s Llama, run
               through Hugging Face) that helps read it.
             </li>

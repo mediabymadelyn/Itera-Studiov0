@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Gloock, JetBrains_Mono } from "next/font/google";
 import { GeistMono } from "geist/font/mono";
+import Toaster from "@/components/Toaster";
 import "./globals.css";
 
 // Gloock, a high-contrast serif, for the "Itera Studio" wordmark (hero and
@@ -36,7 +37,10 @@ export default function RootLayout({
       lang="en"
       className={`${gloock.variable} ${jetbrainsMono.variable} ${GeistMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

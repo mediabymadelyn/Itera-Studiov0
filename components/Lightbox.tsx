@@ -5,6 +5,8 @@ import { ArtworkResult } from "@/lib/types/artwork";
 import { AttributionLink } from "@/components/ResultCard";
 import { reportUnsplashDownload } from "@/components/unsplashDownload";
 import CopyableSwatch, { formatHex, useCopy } from "@/components/CopyableSwatch";
+import { SavePanel } from "@/components/SaveControls";
+import { showToast } from "@/components/Toaster";
 import {
   CATEGORY_LABELS,
   MatchReasonCategory,
@@ -36,6 +38,20 @@ function getExpandedImageUrl(result: ArtworkResult): string {
   return result.imageUrl;
 }
 
+/**
+ * "Download image": the file comes through app/api/image, which only
+ * fetches from the sources' image hosts. AIC's Commons copies are shown at
+ * 843px wide; the download asks Commons for a larger one.
+ */
+function downloadHref(result: ArtworkResult): string {
+  const image = getExpandedImageUrl(result).replace(
+    /^(https?:\/\/commons\.wikimedia\.org\/.*[?&]width=)\d+/,
+    (_, start: string) => `${start}2400`
+  );
+  const name = [result.artist, result.title].filter(Boolean).join(" - ");
+  return `/api/image?url=${encodeURIComponent(image)}&name=${encodeURIComponent(name)}`;
+}
+
 function isPhotoResult(result: ArtworkResult): boolean {
   return result.source.toLowerCase().includes("unsplash");
 }
@@ -59,6 +75,10 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
   const [mirrored, setMirrored] = useState(false);
   const [grid, setGrid] = useState(false);
   const [zoomed, setZoomed] = useState(false);
+  // Focus: the details panel folds away and the image takes the whole
+  // view; one credit line stays under it. Stays on while stepping through
+  // results, like the tools. F toggles it.
+  const [focus, setFocus] = useState(false);
   const [copied, setCopied] = useState(false);
   const colorsCopy = useCopy();
 
@@ -78,7 +98,12 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
     reportUnsplashDownload(result);
 
     function handleKeyDown(event: KeyboardEvent) {
+      // Typing a note or a board name: arrows move the cursor, Escape
+      // leaves the field, and neither closes or steps the view.
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("input, textarea")) return;
       if (event.key === "Escape") onClose();
+      if (event.key === "f" || event.key === "F") setFocus((on) => !on);
       if (event.key === "ArrowLeft" && onPrevious) onPrevious();
       if (event.key === "ArrowRight" && onNext) onNext();
     }
@@ -138,6 +163,31 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
     { label: "Grid", on: grid, toggle: () => setGrid((on) => !on) }
   ];
 
+  const toolRow = (
+          <div className="lightbox-tools" role="group" aria-label="View tools">
+            {tools.map((tool) => (
+              <button
+                key={tool.label}
+                type="button"
+                className={tool.on ? "chip chip-small is-on" : "chip chip-small"}
+                onClick={tool.toggle}
+                aria-pressed={tool.on}
+              >
+                {tool.label}
+              </button>
+            ))}
+            <button
+              type="button"
+              className="text-button lightbox-focus-toggle"
+              onClick={() => setFocus((on) => !on)}
+              aria-pressed={focus}
+              title="Shortcut: F"
+            >
+              {focus ? "Show info" : "Hide info"}
+            </button>
+          </div>
+  );
+
   return (
     <div
       className="lightbox-backdrop"
@@ -146,7 +196,10 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
       aria-modal="true"
       aria-label={result.title}
     >
-      <div className="lightbox-content" onClick={(event) => event.stopPropagation()}>
+      <div
+        className={focus ? "lightbox-content is-focus" : "lightbox-content"}
+        onClick={(event) => event.stopPropagation()}
+      >
         <button
           type="button"
           className="lightbox-close"
@@ -178,6 +231,24 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
           )}
         </div>
 
+        {focus && (
+          <div className="lightbox-focus-bar">
+            <span className="lightbox-focus-credit">
+              {isPhotoResult(result) ? (
+                <>
+                  {result.title} · Photo by {result.artist} on Unsplash
+                </>
+              ) : (
+                <>
+                  <em>{result.title}</em>, {result.artist} · {result.source}
+                </>
+              )}
+            </span>
+            {toolRow}
+          </div>
+        )}
+
+        {!focus && (
         <div className="lightbox-info">
           <div className={isPhotoResult(result) ? "lightbox-title" : "lightbox-title is-artwork"}>{result.title}</div>
           <div className="lightbox-meta">
@@ -196,19 +267,7 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
             {result.licenseType && <span className="lightbox-license"> · {result.licenseType}</span>}
           </div>
 
-          <div className="lightbox-tools" role="group" aria-label="View tools">
-            {tools.map((tool) => (
-              <button
-                key={tool.label}
-                type="button"
-                className={tool.on ? "chip chip-small is-on" : "chip chip-small"}
-                onClick={tool.toggle}
-                aria-pressed={tool.on}
-              >
-                {tool.label}
-              </button>
-            ))}
-          </div>
+          {toolRow}
 
           {whyTags.length > 0 && (
             <div className="lightbox-why">
@@ -252,10 +311,28 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
             </div>
           )}
 
+          <SavePanel result={result} />
+
           <div className="lightbox-actions">
             <button type="button" className="text-button" onClick={copyCredit}>
               {copied ? "Copied" : "Copy credit"}
             </button>
+            <a
+              className="text-button"
+              href={downloadHref(result)}
+              download
+              onClick={() => {
+                // Downloading a photo is using it: Unsplash is told, as
+                // its guidelines require.
+                reportUnsplashDownload(result);
+                showToast("Downloading. Remember to credit it.", {
+                  label: "Copy credit",
+                  run: () => void navigator.clipboard.writeText(creditLine(result)).catch(() => undefined)
+                });
+              }}
+            >
+              Download image
+            </a>
             <a
               className="result-link"
               href={result.originalLink}
@@ -267,6 +344,7 @@ export default function Lightbox({ result, onClose, onPrevious, onNext }: Lightb
             </a>
           </div>
         </div>
+        )}
       </div>
     </div>
   );

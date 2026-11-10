@@ -96,7 +96,9 @@ export async function fetchAicCommonsImages(
       const image = binding.image?.value;
 
       if (invNumber && image && !imagesByReference.has(invNumber)) {
-        imagesByReference.set(invNumber, image);
+        // Wikidata gives Commons links as http://; Commons serves https,
+        // and saved images only keep https links (savedStore.ts).
+        imagesByReference.set(invNumber, image.replace(/^http:\/\//, "https://"));
       }
     }
 

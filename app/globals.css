@@ -869,6 +869,7 @@ main {
 }
 
 .result-card {
+  position: relative;
   background: var(--color-surface);
   border: 1px solid var(--color-surface-border);
   border-radius: var(--radius-surface);
@@ -980,7 +981,8 @@ main {
 
 .result-image-expand-hint {
   position: absolute;
-  right: 0.5rem;
+  /* Left of the save bookmark. */
+  right: 2.6rem;
   top: 0.5rem;
   font-family: var(--font-heading);
   font-size: 0.68rem;
@@ -1496,6 +1498,8 @@ main {
 
 .about-tool-chips > .chip {
   flex-shrink: 0;
+  /* Nine tools on one line at full width. */
+  padding: 0 0.5rem;
 }
 
 @media (max-width: 720px) {
@@ -1724,3 +1728,903 @@ main {
   color: var(--color-text-secondary);
 }
 
+
+/* --- Saving (lib/saved/savedStore.ts) ---------------------------------- */
+
+/* The bookmark in a card's corner: shown on hover, always once saved. */
+.card-save {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-tag);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.result-card:hover .card-save,
+.card-save:focus-visible,
+.card-save.is-saved {
+  opacity: 1;
+}
+
+.card-save:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.card-save.is-saved {
+  color: #e1ccf1;
+}
+
+.card-save:focus-visible {
+  outline: 2px solid var(--chip-active-border);
+  outline-offset: 2px;
+}
+
+/* Touch screens have no hover: keep it visible. */
+@media (hover: none) {
+  .card-save {
+    opacity: 1;
+  }
+}
+
+.result-note {
+  display: block;
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--color-surface-border);
+  color: var(--color-text-secondary);
+  font-size: 0.74rem;
+  font-style: italic;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+/* In the expanded view: Save, Add to board, Add note on one line. */
+.save-panel {
+  display: grid;
+  gap: 0.5rem;
+  width: min(100%, 360px);
+}
+
+.save-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 0.9rem;
+}
+
+@media (min-width: 900px) {
+  .save-row {
+    justify-content: flex-start;
+  }
+}
+
+.save-toggle {
+  gap: 0.35rem;
+}
+
+/* A small panel under its button (components/Menu.tsx). */
+.menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.menu-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  z-index: 30;
+  padding: 0.4rem;
+  border: 1px solid var(--chip-border);
+  border-radius: var(--radius-control);
+  background: #161618;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+  font-family: var(--font-body);
+  text-align: left;
+}
+
+.menu-panel.is-start {
+  left: 0;
+}
+
+.menu-panel.is-end {
+  right: 0;
+}
+
+.menu-panel.is-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.menu-list {
+  display: grid;
+  min-width: 15rem;
+}
+
+.menu-list button {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.45rem 0.55rem;
+  border: 0;
+  border-radius: var(--radius-tag);
+  background: none;
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-list button span {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+}
+
+.menu-list button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.menu-list button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.menu-list hr {
+  width: 100%;
+  margin: 0.3rem 0;
+  border: 0;
+  border-top: 1px solid var(--color-surface-border);
+}
+
+/* One note at a time in the corner (components/Toaster.tsx). */
+.toaster {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  z-index: 60;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  max-width: min(90vw, 460px);
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--chip-border);
+  border-radius: var(--radius-control);
+  background: #161618;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  pointer-events: auto;
+  animation: toast-in 0.18s ease;
+}
+
+.toast em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toast > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.save-new-board,
+.saved-board-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.save-input,
+.save-note {
+  border: 1px solid var(--chip-border);
+  border-radius: var(--radius-control);
+  background: var(--chip-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+}
+
+.save-input {
+  height: calc(var(--chip-height) - 4px);
+  width: 10rem;
+  padding: 0 0.5rem;
+}
+
+.save-note {
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  line-height: 1.45;
+  resize: vertical;
+}
+
+.save-input:focus,
+.save-note:focus {
+  outline: none;
+  border-color: var(--chip-active-border);
+}
+
+.navbar-count {
+  margin-left: 0.35rem;
+  padding: 0 0.35rem;
+  border-radius: var(--radius-tag);
+  background: rgba(147, 83, 198, 0.35);
+  color: var(--color-text-primary);
+  font-size: 0.7rem;
+}
+
+/* The Saved page: centered like About; the grid stays full width. */
+.saved {
+  padding-top: 2rem;
+}
+
+.saved-header {
+  display: grid;
+  gap: 0.4rem;
+  justify-items: center;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.saved-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  color: #e1ccf1;
+}
+
+.saved-subtitle {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+}
+
+.saved-boards-bar {
+  display: flex;
+  justify-content: center;
+}
+
+.saved-boards {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 2px;
+}
+
+.saved-new-board,
+.saved-board-more {
+  border-style: dashed;
+  color: var(--color-text-secondary);
+}
+
+.saved-board-more {
+  border-style: solid;
+  min-width: 2.2rem;
+  justify-content: center;
+}
+
+.saved-board-line {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem 1.2rem;
+  margin: 1rem 0 0.5rem;
+  font-family: var(--font-body);
+}
+
+.saved-swatches {
+  width: min(100%, 220px);
+  height: 16px;
+  margin: 0;
+}
+
+.saved .toolbar {
+  margin-top: 0.75rem;
+}
+
+.saved .results-grid {
+  margin-top: 1.25rem;
+}
+
+.saved-empty {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+/* The reference sheet (/saved/sheet): paper, not screen. */
+.sheet {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  padding: 1.5rem clamp(1rem, 5vw, 3rem) 3rem;
+  background: #fbfaf7;
+  color: #1c1b1a;
+  font-family: var(--font-body);
+}
+
+.sheet-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  margin-bottom: 2rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-control);
+  background: #1c1b1a;
+  color: #fff;
+}
+
+.sheet-hint {
+  color: #bdbab3;
+  font-size: 0.74rem;
+}
+
+.sheet-header {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.sheet-brand {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: #6b4a87;
+}
+
+.sheet-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2.2rem;
+}
+
+.sheet-meta {
+  margin: 0;
+  color: #6f6c66;
+  font-size: 0.8rem;
+}
+
+.sheet-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  font-size: 0.68rem;
+  color: #4b4945;
+}
+
+.sheet-color {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: center;
+}
+
+.sheet-color-chip {
+  width: 3rem;
+  height: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.sheet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem 1.25rem;
+}
+
+@media screen and (max-width: 720px) {
+  .sheet-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.sheet-item {
+  margin: 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* The image always fits inside its box (object-fit), so it can never
+   spill over its credit or past the page -- print engines ignore
+   max-height percentages on images in grid cells. */
+.sheet-image {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  background: #efede8;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.sheet-image img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sheet-item figcaption {
+  display: grid;
+  gap: 0.1rem;
+  margin-top: 0.45rem;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: #4b4945;
+}
+
+.sheet-item-title {
+  font-style: italic;
+  font-size: 0.74rem;
+  color: #1c1b1a;
+}
+
+.sheet-link {
+  overflow-wrap: anywhere;
+  color: #6f6c66;
+}
+
+.sheet-note {
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid #c9b3dc;
+  color: #1c1b1a;
+}
+
+.sheet-empty {
+  color: #6f6c66;
+}
+
+.sheet-footer {
+  margin-top: 2.5rem;
+  color: #8a8780;
+  font-size: 0.68rem;
+}
+
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  body::before,
+  body::after,
+  .sheet-toolbar,
+  .toaster {
+    display: none !important;
+  }
+
+  .sheet {
+    min-height: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  .sheet-image {
+    height: 180px;
+  }
+}
+
+/* --- Collections ------------------------------------------------------- */
+
+/* Inside a collection a card's corner says Remove (from this collection). */
+.card-remove {
+  width: auto;
+  gap: 0.25rem;
+  padding: 0 0.55rem;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.card-remove span {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.in-collection .result-image-expand-hint {
+  display: none;
+}
+
+/* The "Add to collection" panel in the expanded view. */
+.collection-picker {
+  display: grid;
+  gap: 0.2rem;
+  width: min(80vw, 300px);
+}
+
+.collection-picker-heading {
+  padding: 0.2rem 0.4rem 0.3rem;
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.collection-picker-empty {
+  margin: 0;
+  padding: 0.3rem 0.4rem 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+}
+
+.collection-row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.35rem 0.4rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: none;
+  color: var(--color-text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.collection-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.collection-row.is-in {
+  border-color: rgba(225, 195, 245, 0.25);
+  background: rgba(147, 83, 198, 0.16);
+}
+
+.collection-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-tag);
+  background: #2a2a30 center / cover no-repeat;
+}
+
+.collection-row-text {
+  display: grid;
+  min-width: 0;
+}
+
+.collection-row-name {
+  overflow: hidden;
+  font-size: 0.82rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.collection-row-count {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+}
+
+.collection-row-state {
+  color: var(--color-text-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+}
+
+.collection-row.is-in .collection-row-state {
+  color: #e1ccf1;
+}
+
+.collection-picker-new {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+  padding: 0.5rem 0.4rem 0.2rem;
+  border-top: 1px solid var(--color-surface-border);
+}
+
+.collection-picker-new .save-input {
+  flex: 1;
+  width: auto;
+}
+
+/* The image's collections, each with an × to take it out. */
+.save-collections {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+@media (min-width: 900px) {
+  .save-collections {
+    justify-content: flex-start;
+  }
+}
+
+.collection-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  height: 1.6rem;
+  padding: 0 0.2rem 0 0.55rem;
+  border: 1px solid var(--chip-border);
+  border-radius: var(--radius-tag);
+  background: var(--chip-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+}
+
+.collection-chip button {
+  display: grid;
+  place-items: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.collection-chip button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* The selected collection on the Saved page. */
+.collection-header {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  margin-top: 1.5rem;
+  text-align: center;
+  font-family: var(--font-body);
+}
+
+.collection-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+}
+
+.collection-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.collection-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.9rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid rgba(232, 120, 120, 0.4);
+  border-radius: var(--radius-control);
+  background: rgba(160, 40, 40, 0.14);
+  color: var(--color-text-primary);
+  font-size: 0.8rem;
+}
+
+.chip.collection-delete {
+  border-color: rgba(232, 120, 120, 0.6);
+  background: rgba(176, 48, 48, 0.55);
+}
+
+.collection-rename {
+  width: 14rem;
+}
+
+/* Reference sheet layouts. */
+.sheet-layouts {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius-control);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sheet-layout {
+  padding: 0.25rem 0.6rem;
+  border: 0;
+  border-radius: var(--radius-tag);
+  background: none;
+  color: #d8d5cf;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.sheet-layout.is-active {
+  background: #fbfaf7;
+  color: #1c1b1a;
+}
+
+/* 2 per page: a large image with its credit and note beside it. Sizes in
+   mm so the screen matches the printed page. */
+.sheet-grid.is-two {
+  grid-template-columns: 1fr;
+  gap: 8mm;
+}
+
+.sheet-grid.is-two .sheet-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: 6mm;
+  align-items: start;
+}
+
+.sheet-grid.is-two .sheet-image {
+  height: 105mm;
+}
+
+.sheet-grid.is-two figcaption {
+  margin-top: 0;
+  font-size: 0.78rem;
+}
+
+.sheet-grid.is-two .sheet-item-title {
+  font-size: 0.95rem;
+}
+
+/* 1 per page: the image as large as the page allows, credit under it. */
+.sheet-grid.is-one {
+  grid-template-columns: 1fr;
+  gap: 10mm;
+}
+
+.sheet-grid.is-one .sheet-item {
+  break-after: page;
+  page-break-after: always;
+}
+
+.sheet-grid.is-one .sheet-item:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+.sheet-grid.is-one .sheet-image {
+  height: 175mm;
+}
+
+.sheet-grid.is-one figcaption {
+  font-size: 0.82rem;
+}
+
+.sheet-grid.is-one .sheet-item-title {
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 720px) {
+  .sheet-grid.is-two .sheet-item {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* On paper the grids become plain rows of blocks: browsers only break
+   pages cleanly between blocks, not inside a CSS grid. */
+@media print {
+  .sheet-grid {
+    display: block;
+    font-size: 0;
+  }
+
+  .sheet-grid .sheet-item {
+    font-size: 1rem;
+  }
+
+  .sheet-grid.is-contact .sheet-item {
+    display: inline-block;
+    width: 31.5%;
+    margin: 0 2.75% 6mm 0;
+    vertical-align: top;
+  }
+
+  .sheet-grid.is-contact .sheet-item:nth-child(3n) {
+    margin-right: 0;
+  }
+
+  .sheet-grid.is-two .sheet-item,
+  .sheet-grid.is-one .sheet-item {
+    margin-bottom: 8mm;
+  }
+
+  .sheet-grid.is-contact .sheet-image {
+    height: 52mm;
+  }
+
+  .sheet-grid.is-two .sheet-image {
+    height: 105mm;
+  }
+
+  .sheet-grid.is-one .sheet-image {
+    height: 175mm;
+  }
+}
+
+/* Focus in the expanded view: the image alone, centered, one credit line
+   and the tools under it. */
+.lightbox-content.is-focus {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 0.75rem;
+}
+
+.lightbox-content.is-focus .lightbox-stage {
+  width: 100%;
+}
+
+.lightbox-content.is-focus .lightbox-image {
+  max-height: 80vh;
+}
+
+.lightbox-content.is-focus .lightbox-frame {
+  max-height: 80vh;
+}
+
+.lightbox-content.is-focus .lightbox-frame.is-zoomed {
+  height: 80vh;
+}
+
+.lightbox-focus-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+}
+
+.lightbox-focus-credit {
+  max-width: min(90vw, 520px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lightbox-focus-toggle {
+  margin-left: 0.5rem;
+  font-size: 0.74rem;
+}

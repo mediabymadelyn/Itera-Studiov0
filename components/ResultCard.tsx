@@ -4,6 +4,8 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
 import { reportUnsplashDownload } from "@/components/unsplashDownload";
 import { lightingSubtagsOf } from "@/lib/search/categories";
+import { CardSaveButton } from "@/components/SaveControls";
+import type { Board } from "@/lib/saved/savedStore";
 
 // Lighting tags shown over the image on hover; the full set is in the
 // expanded view.
@@ -18,6 +20,10 @@ type ResultCardProps = {
   showsActiveTag?: boolean;
   onExpand: (result: ArtworkResult) => void;
   onUnavailable: (resultId: string) => void;
+  // On the Saved page: the save's note, and the collection being viewed
+  // (its cards offer "Remove" from it instead of the bookmark).
+  note?: string;
+  collection?: Board;
 };
 
 // Cards take their image's own shape (P2/P3 didn't want images cropped),
@@ -51,7 +57,9 @@ export default function ResultCard({
   activeTag,
   showsActiveTag,
   onExpand,
-  onUnavailable
+  onUnavailable,
+  note,
+  collection
 }: ResultCardProps) {
   const [imgSrc, setImgSrc] = useState(result.imageUrl);
   const [hasError, setHasError] = useState(false);
@@ -87,7 +95,9 @@ export default function ResultCard({
   const palette = result.imageMetrics?.palette ?? [];
 
   return (
-    <article className={isPhoto ? "result-card" : "result-card is-museum"}>
+    <article
+      className={["result-card", !isPhoto && "is-museum", collection && "in-collection"].filter(Boolean).join(" ")}
+    >
       <button
         type="button"
         className="result-image-button"
@@ -136,6 +146,8 @@ export default function ResultCard({
           </span>
         )}
       </button>
+      {/* Outside the image button: a button can't hold another button. */}
+      <CardSaveButton result={result} collection={collection} />
       {/* Every card shows title, creator, source, license and the original
           link. Creator and source link out wherever the source provides a
           page for them -- required for Unsplash, in its "Photo by X on
@@ -155,6 +167,7 @@ export default function ResultCard({
             {result.licenseType && <span className="result-license">{result.licenseType}</span>}
             <ViewOriginal result={result} />
           </span>
+          {note && <span className="result-note">{note}</span>}
         </div>
       ) : (
         <div className="result-content wall-label">
@@ -172,6 +185,7 @@ export default function ResultCard({
             </span>
             <ViewOriginal result={result} />
           </span>
+          {note && <span className="result-note">{note}</span>}
         </div>
       )}
     </article>

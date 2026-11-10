@@ -2,35 +2,17 @@
 
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
-import {
-  CATEGORY_LABELS,
-  MATCH_REASON_CATEGORIES,
-  MatchReasonCategory,
-  SUBTAGS,
-  subtagsOf
-} from "@/lib/search/categories";
 import ResultCard from "@/components/ResultCard";
 import Lightbox from "@/components/Lightbox";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import MasonryGrid from "@/components/MasonryGrid";
 import FeaturedPalette from "@/components/FeaturedPalette";
-import { useSlidingHighlight } from "@/components/useSlidingHighlight";
+import { FilterToolbar, useResultFilters } from "@/components/ResultFilters";
 
 type SearchResponse = {
   results?: ArtworkResult[];
   error?: string;
 };
-
-type ResultTypeFilter = "all" | "museum" | "photography";
-
-// One segmented control instead of separate Source + Type dropdowns: the
-// two could be set to contradict each other (Unsplash + Museum), which read
-// as the filter being broken (P2, P5).
-const TYPE_OPTIONS: { value: ResultTypeFilter; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "museum", label: "Art" },
-  { value: "photography", label: "Photo" }
-];
 
 // Shown under the search bar before the first search: common things
 // artists come looking for, one click away.
@@ -45,23 +27,9 @@ const SKELETON_CARD_COUNT = 12;
 // Mixed shapes, so the loading grid looks like the masonry grid it becomes.
 const SKELETON_ASPECT_RATIOS = ["3 / 4", "4 / 3", "1", "2 / 3", "3 / 2", "4 / 5"];
 
-function getResultType(result: ArtworkResult): ResultTypeFilter {
-  return result.source.toLowerCase().includes("unsplash")
-    ? "photography"
-    : "museum";
-}
-
-// Within the Lighting filter, strongest lighting comes first: the vision
-// check's 0-5 score and the pixel drama measure (imageAnalysis.ts), each
-// weighted equally; unmeasured ones sort last.
-function lightingStrength(result: ArtworkResult): number {
-  return ((result.lightingScore ?? 0) / 5 + (result.imageMetrics?.drama ?? 0)) / 2;
-}
-
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<ArtworkResult[]>([]);
-  const [typeFilter, setTypeFilter] = useState<ResultTypeFilter>("all");
   const [loading, setLoading] = useState(false);
   // After the first search the hero folds away, so results start near the
   // top of the page.
@@ -82,12 +50,6 @@ export default function SearchBar() {
   const [error, setError] = useState<string | null>(null);
   const [expandedResult, setExpandedResult] = useState<ArtworkResult | null>(null);
   const [unavailableIds, setUnavailableIds] = useState<Set<string>>(new Set());
-  // null means no category filter. Every category is always listed in a
-  // fixed order (testers wanted filters that don't move or vanish between
-  // searches); counts come from labels already on this search's results.
-  const [categoryFilter, setCategoryFilter] = useState<MatchReasonCategory | null>(null);
-  // A sub-tag of the selected category ("Side / split" under Lighting).
-  const [subtagFilter, setSubtagFilter] = useState<string | null>(null);
 
   const handleUnavailable = useCallback((resultId: string) => {
     setUnavailableIds((prev) => (prev.has(resultId) ? prev : new Set(prev).add(resultId)));
@@ -96,45 +58,11 @@ export default function SearchBar() {
   // Every result is on the page (see arrangeSections in searchAll.ts);
   // filters only narrow it down.
   const availableResults = results.filter((result) => !unavailableIds.has(result.id));
-  const typeMatched = availableResults.filter(
-    (result) => typeFilter === "all" || getResultType(result) === typeFilter
-  );
-  const categoryCounts = new Map(
-    MATCH_REASON_CATEGORIES.map((category) => [
-      category,
-      typeMatched.filter((result) => (result.matchReasons ?? []).includes(category)).length
-    ])
-  );
-  const subtags = categoryFilter ? SUBTAGS[categoryFilter] ?? [] : [];
-  const subtagCount = (tag: string) =>
-    typeMatched.filter((result) => categoryFilter && subtagsOf(result, categoryFilter).includes(tag)).length;
-
-  const filtered = typeMatched.filter((result) => {
-    if (!categoryFilter) return true;
-    // A sub-tag looks at the image itself, so it covers every result, not
-    // only the ones labeled with its category.
-    if (subtagFilter) return subtagsOf(result, categoryFilter).includes(subtagFilter);
-    return (result.matchReasons ?? []).includes(categoryFilter);
-  });
-  const ordered =
-    categoryFilter === "Lighting"
-      ? [...filtered].sort((a, b) => lightingStrength(b) - lightingStrength(a))
-      : filtered;
+  const filters = useResultFilters(availableResults);
+  const { ordered, isFiltered } = filters;
   const bestMatches = ordered.filter((result) => result.section !== "more");
   const moreResults = ordered.filter((result) => result.section === "more");
-  const activeTag = subtagFilter ?? (categoryFilter ? CATEGORY_LABELS[categoryFilter] : undefined);
-
   const toolbarShown = !loading && results.length > 0;
-  const countsKey = Array.from(categoryCounts.values()).join(",");
-  const typeHighlight = useSlidingHighlight(typeFilter, [toolbarShown]);
-  const categoryHighlight = useSlidingHighlight(categoryFilter, [toolbarShown, countsKey]);
-  const subtagHighlight = useSlidingHighlight(subtagFilter, [toolbarShown, categoryFilter, typeFilter, countsKey]);
-  const isFiltered = typeFilter !== "all" || categoryFilter !== null;
-
-  function selectCategory(category: MatchReasonCategory) {
-    setCategoryFilter((current) => (current === category ? null : category));
-    setSubtagFilter(null);
-  }
 
   // The expanded view steps through the page in its shown order (Best
   // matches, then More results), stopping at either end.
@@ -145,24 +73,13 @@ export default function SearchBar() {
     return expandedIndex === -1 || !next ? undefined : () => setExpandedResult(next);
   };
 
-  function resetFilters() {
-    setTypeFilter("all");
-    setCategoryFilter(null);
-    setSubtagFilter(null);
-  }
-
   function renderCards(list: ArtworkResult[]) {
     return list.map((result) => (
       <ResultCard
         key={result.id}
         result={result}
-        activeTag={activeTag}
-        showsActiveTag={
-          categoryFilter !== null &&
-          (subtagFilter
-            ? subtagsOf(result, categoryFilter).includes(subtagFilter)
-            : (result.matchReasons ?? []).includes(categoryFilter))
-        }
+        activeTag={filters.activeTag}
+        showsActiveTag={filters.showsActiveTag(result)}
         onExpand={setExpandedResult}
         onUnavailable={handleUnavailable}
       />
@@ -207,7 +124,7 @@ export default function SearchBar() {
       }
 
       setResults(data.results ?? []);
-      resetFilters();
+      filters.reset();
       setUnavailableIds(new Set());
     } catch (err) {
       const message =
@@ -279,105 +196,7 @@ export default function SearchBar() {
         </div>
       )}
 
-      {toolbarShown && (
-        <div className="toolbar" role="toolbar" aria-label="Filter results">
-          <div
-            className="segmented"
-            role="group"
-            aria-label="Show"
-            ref={typeHighlight.groupRef}
-            {...typeHighlight.groupHandlers}
-          >
-            <span
-              className={typeHighlight.previewing ? "chip-highlight is-previewing" : "chip-highlight"}
-              style={typeHighlight.highlightStyle}
-              aria-hidden="true"
-            />
-            {TYPE_OPTIONS.map((option) => (
-              <button
-                key={option.value}
-                data-key={option.value}
-                type="button"
-                className={typeFilter === option.value ? "segmented-option is-active" : "segmented-option"}
-                onClick={() => setTypeFilter(option.value)}
-                aria-pressed={typeFilter === option.value}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="chip-row" ref={categoryHighlight.groupRef} {...categoryHighlight.groupHandlers}>
-            <span
-              className={categoryHighlight.previewing ? "chip-highlight is-previewing" : "chip-highlight"}
-              style={categoryHighlight.highlightStyle}
-              aria-hidden="true"
-            />
-            {MATCH_REASON_CATEGORIES.map((category) => {
-              const count = categoryCounts.get(category) ?? 0;
-              const active = categoryFilter === category;
-              return (
-                <button
-                  key={category}
-                  data-key={category}
-                  type="button"
-                  className={["chip", active && "is-active", count === 0 && "is-empty"].filter(Boolean).join(" ")}
-                  onClick={() => selectCategory(category)}
-                  aria-pressed={active}
-                  disabled={count === 0 && !active}
-                >
-                  {CATEGORY_LABELS[category]}
-                  <span className="chip-count">{count}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Counts live in the section headings; Clear only appears once
-              there's a filter to clear, so the row fits on one line. */}
-          {isFiltered && (
-            <div className="toolbar-end">
-              <button type="button" className="text-button" onClick={resetFilters}>
-                Clear
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-
-      {!loading && subtags.length > 0 && categoryFilter && (
-        <div
-          className="subchip-row"
-          role="group"
-          aria-label={`${CATEGORY_LABELS[categoryFilter]} types`}
-          ref={subtagHighlight.groupRef}
-          {...subtagHighlight.groupHandlers}
-        >
-          <span
-            className={subtagHighlight.previewing ? "chip-highlight is-previewing" : "chip-highlight"}
-            style={subtagHighlight.highlightStyle}
-            aria-hidden="true"
-          />
-          {subtags.map((tag) => {
-            const count = subtagCount(tag);
-            const active = subtagFilter === tag;
-            return (
-              <button
-                key={tag}
-                data-key={tag}
-                type="button"
-                className={["chip", "chip-small", active && "is-active", count === 0 && "is-empty"].filter(Boolean).join(" ")}
-                onClick={() => setSubtagFilter((current) => (current === tag ? null : tag))}
-                aria-pressed={active}
-                disabled={count === 0 && !active}
-              >
-                {tag}
-                <span className="chip-count">{count}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
+      {toolbarShown && <FilterToolbar filters={filters} />}
 
       </div>
 

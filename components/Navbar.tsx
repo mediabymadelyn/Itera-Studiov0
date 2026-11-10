@@ -1,7 +1,8 @@
 import Link from "next/link";
+import SavedCount from "@/components/SavedCount";
 
 type NavbarProps = {
-  activePage?: "search" | "about";
+  activePage?: "search" | "saved" | "about";
 };
 
 export default function Navbar({ activePage = "search" }: NavbarProps) {
@@ -16,6 +17,13 @@ export default function Navbar({ activePage = "search" }: NavbarProps) {
           className={`navbar-link${activePage === "search" ? " navbar-link-active" : ""}`}
         >
           Search
+        </Link>
+        <Link
+          href="/saved"
+          className={`navbar-link${activePage === "saved" ? " navbar-link-active" : ""}`}
+        >
+          Saved
+          <SavedCount />
         </Link>
         <Link
           href="/about"

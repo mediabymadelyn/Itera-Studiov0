@@ -7,6 +7,7 @@ import { useSlidingHighlight } from "@/components/useSlidingHighlight";
 // the same sliding, color-changing chips as the search page's filters.
 // Pick one to read what it does.
 const TOOLS = [
+  { name: "Save", text: "Bookmark any result, sort saves into collections, add a note on why you kept it, and print a collection as a credited reference sheet." },
   { name: "Filters", text: "Narrow to art or photos, or to pose, lighting, color and more, with sub-tags like side light or warm color." },
   { name: "Why this result", text: "Open any image to see what the AI saw in it: the light, the colors and what it matched." },
   { name: "Values", text: "Shows the image in grayscale, to read its lights and darks." },

@@ -385,13 +385,16 @@ main {
     transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
     width 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
     height 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background-color 0.28s ease,
+    border-color 0.28s ease,
     opacity 0.2s ease;
 }
 
-/* Over a chip that isn't the selected one, a lighter purple: you're
+/* Over a chip that isn't the selected one, a rainbow shade by position
+   (set inline by useSlidingHighlight), a touch see-through: you're
    looking, not choosing. */
 .chip-highlight.is-previewing {
-  opacity: 0.55 !important;
+  opacity: 0.85 !important;
 }
 
 .segmented .chip-highlight {

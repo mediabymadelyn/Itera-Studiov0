@@ -3,7 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
-// Two monospace fonts, nothing else: JetBrains Mono for the "ItEra Studio"
+// Two monospace fonts, nothing else: JetBrains Mono for the "Itera Studio"
 // wordmark, headings and controls (filter chips, tags), Geist Mono for
 // everything you read (search bar, cards, captions). Geist Mono isn't in
 // next/font/google in this Next.js version, so it comes from Vercel's own
@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ItEra Studio",
+  title: "Itera Studio",
   description: "Find real references from real artists."
 };
 

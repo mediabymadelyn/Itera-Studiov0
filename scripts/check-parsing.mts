@@ -8,7 +8,7 @@
  */
 import { planQuery } from "../lib/search/queryPlan";
 
-type Case = { query: string; subject: string; background: string | null; monochrome?: boolean };
+type Case = { query: string; subject: string; background: string | null; monochrome?: boolean; appearance?: string[] };
 
 const CASES: Case[] = [
   // A background phrase is a description of the person, not the subject.
@@ -18,10 +18,16 @@ const CASES: Case[] = [
   { query: "south asian man cooking", subject: "man", background: "south asian" },
   { query: "native american woman portrait", subject: "woman portrait", background: "native american" },
   // Color words before things, not people, are colors.
-  { query: "woman in a black dress dancing", subject: "woman", background: null },
-  { query: "old man with white beard", subject: "man", background: null },
+  { query: "woman in a black dress dancing", subject: "woman", background: null, appearance: ["black dress"] },
+  { query: "old man with white beard", subject: "man", background: null, appearance: ["white beard"] },
   { query: "white horse running", subject: "horse", background: null },
   { query: "black and white portrait of a woman", subject: "portrait", background: null, monochrome: true },
+  // Appearance stays one phrase, attached to the person.
+  { query: "purple hair girl", subject: "girl", background: null, appearance: ["purple hair"] },
+  { query: "girl with long curly hair", subject: "girl", background: null, appearance: ["long curly hair"] },
+  { query: "woman in a red dress dancing", subject: "woman", background: null, appearance: ["red dress"] },
+  { query: "man with a beard reading", subject: "man", background: null, appearance: ["beard"] },
+  { query: "black woman with braids", subject: "woman", background: "black", appearance: ["braids"] },
   // Earlier misreads.
   { query: "hands holding coffee cup", subject: "hands", background: null },
   { query: "oil painting portrait", subject: "portrait", background: null },
@@ -36,7 +42,9 @@ for (const testCase of CASES) {
     plan.statedBackground !== testCase.background &&
       `background ${JSON.stringify(plan.statedBackground)} (expected ${JSON.stringify(testCase.background)})`,
     testCase.monochrome !== undefined && plan.wantsMonochrome !== testCase.monochrome &&
-      `black-and-white request ${plan.wantsMonochrome} (expected ${testCase.monochrome})`
+      `black-and-white request ${plan.wantsMonochrome} (expected ${testCase.monochrome})`,
+    testCase.appearance !== undefined && plan.appearance.join(", ") !== testCase.appearance.join(", ") &&
+      `appearance [${plan.appearance.join(", ")}] (expected [${testCase.appearance.join(", ")}])`
   ].filter(Boolean);
 
   if (problems.length > 0) failures++;

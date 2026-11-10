@@ -1,6 +1,7 @@
 "use client";
 
 import { CSSProperties, MouseEvent, useLayoutEffect, useRef, useState } from "react";
+import { featuredPalette } from "@/components/featuredPaletteStore";
 
 /**
  * One highlight per chip group that glides to whichever chip the pointer
@@ -13,30 +14,67 @@ import { CSSProperties, MouseEvent, useLayoutEffect, useRef, useState } from "re
  * re-measures when the group appears or its chips change width (counts
  * change with the Show filter).
  */
-// While sliding over chips that aren't selected, the highlight runs
-// through the rainbow by chip position (red at the first chip, violet at
-// the last), each landing a slightly different random shade. Settled on
-// the selected chip it's the brand purple again (from the stylesheet).
-const RAINBOW_SPAN = 300;
-const HUE_JITTER = 14;
-const SATURATION = 68;
-const LIGHTNESS = 52;
-// Yellows and greens read light, so they go darker to keep white text legible.
-const LIGHT_HUES: [number, number] = [40, 170];
-const LIGHT_HUE_DARKENING = 10;
+// While sliding over chips that aren't selected, the highlight takes a
+// color by chip position from this visit's featured artwork palette
+// (components/FeaturedPalette), each landing a slightly different random
+// mix; until a palette is picked, paint pigments (--paint-* in
+// globals.css). Settled on the selected chip it's the brand purple again.
+const PIGMENTS: [hue: number, saturation: number, lightness: number][] = [
+  [4, 72, 48], // cadmium red
+  [22, 82, 50], // cadmium orange
+  [40, 68, 42], // yellow ochre (darker, so white text stays legible)
+  [96, 40, 36], // sap green
+  [164, 55, 32], // viridian
+  [198, 68, 42], // cerulean
+  [228, 62, 52], // ultramarine
+  [272, 46, 46] // dioxazine violet
+];
+const MIX = { hue: 8, saturation: 6, lightness: 4 };
 
 type Jitter = { hue: number; saturation: number; lightness: number };
 
 function randomJitter(): Jitter {
   const spread = (range: number) => (Math.random() * 2 - 1) * range;
-  return { hue: spread(HUE_JITTER), saturation: spread(8), lightness: spread(5) };
+  return { hue: spread(MIX.hue), saturation: spread(MIX.saturation), lightness: spread(MIX.lightness) };
 }
 
-function rainbowColors(index: number, count: number, jitter: Jitter) {
-  const hue = ((count > 1 ? (index / (count - 1)) * RAINBOW_SPAN : 0) + jitter.hue + 360) % 360;
-  const darken = hue >= LIGHT_HUES[0] && hue <= LIGHT_HUES[1] ? LIGHT_HUE_DARKENING : 0;
-  const saturation = SATURATION + jitter.saturation;
-  const lightness = LIGHTNESS - darken + jitter.lightness;
+// Artwork palettes run from near-black umbers to ivory; their colors are
+// brought into this lightness range (and given at least this saturation)
+// so they read as color behind white text.
+const PALETTE_LIGHTNESS: [number, number] = [32, 50];
+const PALETTE_MIN_SATURATION = 28;
+
+function hexToHsl(hex: string): [number, number, number] {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const lightness = (max + min) / 2;
+  const delta = max - min;
+  if (delta === 0) return [0, 0, lightness * 100];
+  const saturation = delta / (1 - Math.abs(2 * lightness - 1));
+  const hue = max === r ? ((g - b) / delta) % 6 : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4;
+  return [(hue * 60 + 360) % 360, saturation * 100, lightness * 100];
+}
+
+function colorFor(index: number, count: number): [number, number, number] {
+  const palette = featuredPalette();
+  const source = palette && palette.length > 0 ? palette : null;
+  const position = (length: number) => (count > 1 ? Math.round((index / (count - 1)) * (length - 1)) : 0);
+  if (!source) return PIGMENTS[position(PIGMENTS.length)];
+
+  const [hue, saturation, lightness] = hexToHsl(source[position(source.length)]);
+  return [
+    hue,
+    Math.max(PALETTE_MIN_SATURATION, Math.min(70, saturation)),
+    Math.max(PALETTE_LIGHTNESS[0], Math.min(PALETTE_LIGHTNESS[1], lightness))
+  ];
+}
+
+function pigmentColors(index: number, count: number, jitter: Jitter) {
+  const pigment = colorFor(index, count);
+  const hue = (pigment[0] + jitter.hue + 360) % 360;
+  const saturation = pigment[1] + jitter.saturation;
+  const lightness = pigment[2] + jitter.lightness;
   return {
     backgroundColor: `hsl(${hue.toFixed(0)} ${saturation.toFixed(0)}% ${lightness.toFixed(0)}%)`,
     borderColor: `hsl(${hue.toFixed(0)} ${saturation.toFixed(0)}% ${(lightness + 16).toFixed(0)}%)`
@@ -75,7 +113,7 @@ export function useSlidingHighlight(activeKey: string | null, layoutDeps: unknow
         width: target.offsetWidth,
         height: target.offsetHeight,
         transform: `translate(${target.offsetLeft}px, ${target.offsetTop}px)`,
-        ...(previewing ? rainbowColors(chips.indexOf(target), chips.length, jitter.current) : {}),
+        ...(previewing ? pigmentColors(chips.indexOf(target), chips.length, jitter.current) : {}),
         // The first time it appears, it should fade in at the chip, not
         // slide in from the group's corner.
         ...(shown.current ? {} : { transition: "opacity 0.2s ease" })

@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import SearchBar from "@/components/SearchBar";
+import Footer from "@/components/Footer";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
             search so results start near the top. */}
         <SearchBar />
       </main>
+      <Footer />
     </>
   );
 }

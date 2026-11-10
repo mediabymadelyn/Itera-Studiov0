@@ -14,7 +14,8 @@
     "eval:run": "npx -y tsx@4.23.15 --env-file=.env.local scripts/eval/run-eval.mts",
     "eval:report": "npx -y tsx@4.23.15 scripts/eval/report.mts",
     "build:museum-library": "npx -y tsx@4.23.15 --env-file=.env.local scripts/build-museum-library.mts",
-    "check:parsing": "npx -y tsx@4.23.15 scripts/check-parsing.mts"
+    "check:parsing": "npx -y tsx@4.23.15 scripts/check-parsing.mts",
+    "build:palettes": "npx -y tsx@4.23.15 scripts/build-featured-palettes.mts"
   },
   "dependencies": {
     "geist": "^1.7.2",

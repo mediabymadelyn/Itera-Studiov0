@@ -405,6 +405,74 @@ export function statedBackground(query: string): string | null {
   return null;
 }
 
+// --- Appearance -----------------------------------------------------------
+// How the person looks ("purple hair", "long curly hair", "red dress", "with
+// freckles") is one detail, not separate words: "purple hair girl" was read
+// as the subject "hair girl" with "purple" left over, and searched for girls
+// in purple dresses. Each phrase is a run of describing words before a
+// hair, face or clothing noun, or that noun after "with" / "wearing".
+const HAIR_AND_FACE_NOUNS = [
+  "hair", "eyes", "beard", "mustache", "moustache", "freckles", "makeup", "lipstick",
+  "nails", "braids", "curls", "dreadlocks", "locs", "afro", "bun", "ponytail",
+  "tattoo", "tattoos", "piercings", "glasses", "sunglasses", "earrings"
+];
+const CLOTHING_NOUNS = [
+  "dress", "gown", "shirt", "jacket", "coat", "skirt", "pants", "jeans", "hat", "cap",
+  "scarf", "hood", "hoodie", "suit", "uniform", "boots", "sneakers", "veil", "kimono",
+  "sari", "turban", "headscarf", "sweater", "robe", "apron", "overalls"
+];
+const APPEARANCE_NOUNS = new Set([...HAIR_AND_FACE_NOUNS, ...CLOTHING_NOUNS]);
+const APPEARANCE_MODIFIERS = new Set([
+  "red", "orange", "yellow", "green", "blue", "purple", "violet", "pink", "black", "white",
+  "gray", "grey", "silver", "gold", "golden", "brown", "beige", "teal", "turquoise",
+  "lavender", "magenta", "maroon", "navy", "blonde", "blond", "brunette", "ginger",
+  "curly", "wavy", "straight", "long", "short", "braided", "shaved", "messy", "dyed",
+  "striped", "floral", "plaid", "leather", "silk", "denim", "lace", "wool", "bright",
+  "dark", "light", "pastel", "neon", "colorful", "colourful", "flowing", "torn"
+]);
+const APPEARANCE_LEAD_INS = new Set(["with", "wearing", "in"]);
+
+/**
+ * The appearance phrases in a search, in order ("girl with long curly
+ * hair" -> ["long curly hair"]). A bare noun only counts after "with" /
+ * "wearing" ("man with a beard"), so "hair" alone in "hair braiding" isn't
+ * one.
+ */
+export function appearancePhrases(query: string): string[] {
+  const tokens = tokenize(query);
+  const phrases: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    if (!APPEARANCE_NOUNS.has(tokens[i])) continue;
+    let start = i;
+    while (start > 0 && APPEARANCE_MODIFIERS.has(tokens[start - 1])) start--;
+    const leadIn = tokens.slice(0, start).filter((token) => token !== "a" && token !== "an").at(-1);
+    if (start < i || (leadIn && APPEARANCE_LEAD_INS.has(leadIn) && leadIn !== "in")) {
+      phrases.push(tokens.slice(start, i + 1).join(" "));
+    }
+  }
+  return phrases;
+}
+
+/** How the phrase reads after the person: "in a red dress", "with purple hair". */
+export function appearanceClause(phrase: string): string {
+  const noun = phrase.split(" ").at(-1) ?? "";
+  return CLOTHING_NOUNS.includes(noun) ? `in a ${phrase}` : `with ${phrase}`;
+}
+
+/**
+ * The text with a phrase taken out, plus the "with" / "wearing" / "in a"
+ * that introduced it, so what's left reads as the rest of the request.
+ */
+export function withoutPhrase(text: string, phrase: string): string {
+  const words = phrase.split(" ");
+  const tokens = tokenize(text);
+  let start = tokens.findIndex((_, i) => words.every((word, k) => tokens[i + k] === word));
+  if (start === -1) return text;
+  let cut = start;
+  while (cut > 0 && (tokens[cut - 1] === "a" || tokens[cut - 1] === "an" || APPEARANCE_LEAD_INS.has(tokens[cut - 1]))) cut--;
+  return [...tokens.slice(0, cut), ...tokens.slice(start + words.length)].join(" ");
+}
+
 /** The text with the background phrase taken out, for choosing the subject. */
 export function withoutBackground(text: string, background: string): string {
   const words = background.split(" ");

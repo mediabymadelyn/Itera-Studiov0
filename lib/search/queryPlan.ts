@@ -10,6 +10,9 @@ import {
   statedBackground,
   statedBackgroundVariants,
   withoutBackground,
+  appearanceClause,
+  appearancePhrases,
+  withoutPhrase,
   statedGender,
   withBackgroundFirst,
   isDemographicWord,
@@ -62,6 +65,8 @@ export type QueryPlan = {
   namesFlatMedium: boolean;
   // Content words of the whole request, used for ranking.
   rankWords: string[];
+  // How the person looks, as whole phrases ("purple hair", "red dress").
+  appearance: string[];
   // Extra words for the Art Institute search when the subject has its own
   // catalog term ("drapery study" for "draped fabric").
   aicSubjectTerm: string | null;
@@ -135,7 +140,13 @@ type LlmRewrite = {
   action: string;
   setting: string;
   keywords: string;
+  appearance?: string;
 };
+
+function groundedIn(text: string, query: string): boolean {
+  const queryWords = new Set(tokenize(query));
+  return tokenize(text).length > 0 && tokenize(text).every((word) => queryWords.has(word));
+}
 
 type ParsedRequest = {
   subject: string;
@@ -217,11 +228,13 @@ function buildRewritePrompt(query: string): string {
   return (
     `An artist typed this into an art-reference image search: "${query}"\n\n` +
     `Break it into parts for a keyword search engine. Reply with ONLY a JSON object:\n` +
-    `{"subject":"...","action":"...","setting":"...","keywords":"..."}\n\n` +
+    `{"subject":"...","action":"...","setting":"...","appearance":"...","keywords":"..."}\n\n` +
     `- subject: the main thing to depict, 1-2 words, using the user's own word ` +
     `(keep plural if they wrote plural, e.g. "hands").\n` +
     `- action: what the subject is doing, 1 word, or "" if nothing.\n` +
     `- setting: where it is, 1-2 words, or "" if not stated.\n` +
+    `- appearance: how the subject looks (hair, clothing, features) in the user's own words, ` +
+    `e.g. "purple hair", "red dress", or "" if not stated. Not part of the subject.\n` +
     `- keywords: 2-5 words a photo search engine would match, most important first.\n\n` +
     `Never add a gender, age, ethnicity or body type the user did not write ` +
     `(e.g. "dancer" stays "dancer", never "woman dancer"). No other text.`
@@ -245,7 +258,8 @@ function parseRewrite(raw: string): LlmRewrite | null {
       subject: cleanField(parsed.subject, 2),
       action: cleanField(parsed.action, 1),
       setting: cleanField(parsed.setting, 2),
-      keywords: cleanField(parsed.keywords, MAX_KEYWORD_WORDS)
+      keywords: cleanField(parsed.keywords, MAX_KEYWORD_WORDS),
+      appearance: cleanField(parsed.appearance, 4)
     };
 
     return rewrite.subject ? rewrite : null;
@@ -285,7 +299,8 @@ function mergeRewrite(
   parsed: ParsedRequest,
   rewrite: LlmRewrite,
   queryWords: Set<string>,
-  background: string | null
+  background: string | null,
+  appearance: string[]
 ): ParsedRequest {
   const grounded = (text: string) =>
     tokenize(text).every((word) => queryWords.has(word) || queryWords.has(`${word}s`) || queryWords.has(word.replace(/s$/, "")));
@@ -298,7 +313,11 @@ function mergeRewrite(
   // nothing else; the rewrite doesn't get to undo that.
   const mediumOnly = tokenize(rewrite.subject).every(isMediumWord) && parsed.medium !== "";
   // Nor can it make the person's background the subject.
-  const rewriteSubject = background ? withoutBackground(rewrite.subject, background) : rewrite.subject;
+  // Nor appearance: "girl", not "purple hair girl".
+  const rewriteSubject = appearance.reduce(
+    (rest, phrase) => withoutPhrase(rest, phrase),
+    background ? withoutBackground(rewrite.subject, background) : rewrite.subject
+  );
   const subject =
     rewriteSubject && grounded(rewriteSubject) && !mediumOnly ? rewriteSubject : parsed.subject;
 
@@ -340,7 +359,12 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   // a dancer, not portraits of people.
   const background =
     !options.passthrough && isPeopleQuery(tokenize(query)) ? statedBackground(query) : null;
-  let parsed = parseDeterministically(background ? withoutBackground(stripped, background) : stripped);
+  // How the person looks is kept as whole phrases and taken out before
+  // choosing the subject, so "purple hair girl" is a girl with purple hair.
+  let appearance = options.passthrough ? [] : appearancePhrases(stripped);
+  const withoutDetails = (text: string) =>
+    appearance.reduce((rest, phrase) => withoutPhrase(rest, phrase), background ? withoutBackground(text, background) : text);
+  let parsed = parseDeterministically(withoutDetails(stripped));
   let rewrittenByLlm = false;
 
   if (
@@ -350,7 +374,11 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   ) {
     const rewrite = await rewriteWithLlm(query);
     if (rewrite) {
-      parsed = mergeRewrite(parsed, rewrite, new Set(tokenize(query)), background);
+      // The rewrite can name appearance the rules don't know ("neon green
+      // nails"), as long as it's the user's own words.
+      const rewriteAppearance = rewrite.appearance && groundedIn(rewrite.appearance, query) ? rewrite.appearance : "";
+      if (appearance.length === 0 && rewriteAppearance) appearance = [tokenize(rewriteAppearance).join(" ")];
+      parsed = mergeRewrite(parsed, rewrite, new Set(tokenize(query)), background, appearance);
       rewrittenByLlm = true;
     }
   }
@@ -360,11 +388,17 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   const actionWords = parsed.action ? unique([parsed.action, ...(action?.match ?? [])]) : [];
   const actionSearch = action?.search ?? parsed.action;
 
-  const keywordQuery = options.passthrough
+  // Without the appearance words, for the photo query, which adds them back
+  // as a clause ("girl with purple hair"); with them, for ranking and AIC.
+  const coreKeywordQuery = options.passthrough
     ? query
     : unique([...tokenize(parsed.subject), ...tokenize(parsed.action), ...parsed.keywords])
+        .filter((word) => !appearance.some((phrase) => phrase.split(" ").includes(word)))
         .slice(0, MAX_KEYWORD_WORDS)
         .join(" ") || parsed.subject;
+  const keywordQuery = options.passthrough
+    ? query
+    : unique([...tokenize(coreKeywordQuery), ...appearance.flatMap((phrase) => phrase.split(" "))]).join(" ");
 
   const subjectWords = contentTokens(parsed.subject);
   const bodyPartSubject = isBodyPartSubject(subjectWords);
@@ -407,8 +441,18 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   // short plain requests, which the reordered keywords ("pose dynamic")
   // phrase worse, and to look up subjects with a companion photo search.
   const ownPhrase = contentTokens(stripped).join(" ");
+  // With appearance, the photo phrase follows the user's own order with the
+  // detail right after the person: "old man with white beard", "woman in a
+  // red dress dancing", "girl with purple hair".
+  const appearanceText = appearance.map(appearanceClause).join(" ");
+  const restInOrder = contentTokens(withoutDetails(stripped));
+  const personEnd = restInOrder.lastIndexOf(tokenize(parsed.subject).at(-1) ?? "");
+  const describedPerson =
+    appearance.length > 0 && personEnd !== -1
+      ? [...restInOrder.slice(0, personEnd + 1), appearanceText, ...restInOrder.slice(personEnd + 1)].join(" ")
+      : [coreKeywordQuery, appearanceText].filter(Boolean).join(" ");
   const basePhotoQuery = [
-    withChildQualifier(keywordQuery, allTokens),
+    withChildQualifier(describedPerson, allTokens),
     options.passthrough ? "" : photoSubjectTerm(parsed.subject) ?? "",
     lighting && !options.passthrough ? lighting.photoTerms : ""
   ]
@@ -425,7 +469,8 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   // A named background stays in front of the subject: the reordered
   // "dancer motion black" found 5 photos, "Black dancer motion" a full page.
   const plainShortRequest =
-    !options.passthrough && !lighting && !background && !parsed.action && !parsed.setting && !parsed.medium &&
+    !options.passthrough && !lighting && !background && appearance.length === 0 &&
+    !parsed.action && !parsed.setting && !parsed.medium &&
     ownPhrase.split(" ").length <= MAX_NATURAL_ORDER_WORDS &&
     !photoSubjectTerm(parsed.subject) && ownPhrase !== keywordQuery;
   const photoQuery = background
@@ -453,7 +498,13 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   const photoBackgroundQueries = !peopleQuery
     ? []
     : background
-      ? statedBackgroundVariants(background, parsed.subject, MAX_STATED_BACKGROUND_VARIANTS, statedGender(allTokens), parsed.action)
+      ? statedBackgroundVariants(
+          background,
+          parsed.subject,
+          MAX_STATED_BACKGROUND_VARIANTS,
+          statedGender(allTokens),
+          [parsed.action, appearanceText].filter(Boolean).join(" ")
+        )
       : backgroundVariants(query, photoQuery, bodyPartSubject, MAX_BACKGROUND_VARIANTS, isFaceSubject(subjectWords));
 
   return {
@@ -465,6 +516,7 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
     allowsObjects: queryAllowsObjects(allTokens, bodyPartSubject),
     namesFlatMedium: allTokens.some(isMediumWord),
     rankWords: contentTokens(stripped),
+    appearance,
     aicSubjectTerm: options.passthrough ? null : aicSubjectTerm(parsed.subject),
     companionWords,
     wantsMonochrome: wantsMonochrome(query),

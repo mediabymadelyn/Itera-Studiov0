@@ -3,8 +3,9 @@
   --color-surface: #1f1e24;
   --color-surface-border: rgba(255, 255, 255, 0.1);
   --color-text-primary: #ffffff;
-  --color-text-secondary: #a8a8a8;
-  --color-text-muted: #7a7a7a;
+  /* Brightened for contrast on the dark page (muted is ~6.5:1). */
+  --color-text-secondary: #bcbcbc;
+  --color-text-muted: #9a9a9a;
 
   --color-logo-itera: #a162d2;
   --color-logo-studio: #c598f8;
@@ -32,6 +33,38 @@
   --chip-bg: rgba(255, 255, 255, 0.04);
   --chip-bg-hover: rgba(255, 255, 255, 0.08);
   --chip-border: rgba(255, 255, 255, 0.14);
+  /* Paint pigments: the studio motif (paint strip, dividers, the chip
+     highlight in components/useSlidingHighlight.ts, loading swatches). */
+  --paint-red: hsl(4 72% 48%);
+  --paint-orange: hsl(22 82% 50%);
+  --paint-ochre: hsl(40 68% 42%);
+  --paint-sap: hsl(96 40% 36%);
+  --paint-viridian: hsl(164 55% 32%);
+  --paint-cerulean: hsl(198 68% 42%);
+  --paint-ultramarine: hsl(228 62% 52%);
+  --paint-violet: hsl(272 46% 46%);
+  --paint-strip: linear-gradient(
+    90deg,
+    var(--paint-red) 0 12.5%,
+    var(--paint-orange) 12.5% 25%,
+    var(--paint-ochre) 25% 37.5%,
+    var(--paint-sap) 37.5% 50%,
+    var(--paint-viridian) 50% 62.5%,
+    var(--paint-cerulean) 62.5% 75%,
+    var(--paint-ultramarine) 75% 87.5%,
+    var(--paint-violet) 87.5% 100%
+  );
+
+  /* This visit's featured artwork palette (components/FeaturedPalette sets
+     --palette-1..5, dark to light); the dividers use its three lighter
+     colors, so they show against the dark page. Paint pigments until set. */
+  --palette-strip: linear-gradient(
+    90deg,
+    var(--palette-3, var(--paint-ochre)) 0 33.3%,
+    var(--palette-4, var(--paint-cerulean)) 33.3% 66.6%,
+    var(--palette-5, var(--paint-violet)) 66.6% 100%
+  );
+
   /* Lighter than --color-purple, still readable with white text. */
   --chip-active-bg: #9353c6;
   --chip-active-border: rgba(214, 180, 250, 0.7);
@@ -52,6 +85,19 @@ body {
   font-family: var(--font-body);
   background: var(--color-bg);
   color: var(--color-text-primary);
+}
+
+/* The page fills the window, so a short page keeps the footer at the
+   bottom instead of floating mid-screen. */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body > main {
+  flex: 1 0 auto;
+  width: 100%;
 }
 
 body::before {
@@ -610,12 +656,15 @@ main {
   text-align: center;
 }
 
+/* The divider is a faint line of paint. */
 .section-divider::before,
 .section-divider::after {
   content: "";
   flex: 1;
-  height: 1px;
-  background: var(--chip-border);
+  height: 2px;
+  border-radius: 1px;
+  background: var(--palette-strip);
+  opacity: 0.7;
 }
 
 .section-note {
@@ -694,19 +743,19 @@ main {
 @keyframes swatch-palette {
   0%,
   100% {
-    background: #a162d2;
+    background: var(--paint-violet);
   }
   20% {
-    background: #50add2;
+    background: var(--paint-cerulean);
   }
   40% {
-    background: #e8735a;
+    background: var(--paint-red);
   }
   60% {
-    background: #e0b040;
+    background: var(--paint-ochre);
   }
   80% {
-    background: #7fae8c;
+    background: var(--paint-viridian);
   }
 }
 
@@ -730,16 +779,43 @@ main {
   aspect-ratio: 3 / 4;
 }
 
-.skeleton-line {
-  height: 0.7rem;
-  margin: 0.7rem 0.65rem 0;
-  border-radius: 4px;
+.skeleton-lines {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.65rem 0.7rem 0.7rem;
 }
 
-.skeleton-line-short {
-  width: 55%;
-  margin-bottom: 0.8rem;
+.skeleton-line {
+  height: 0.6rem;
+  border-radius: 3px;
 }
+
+.skeleton-title {
+  width: 80%;
+}
+
+.skeleton-credit {
+  width: 60%;
+  height: 0.5rem;
+}
+
+.skeleton-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+}
+
+.skeleton-tag {
+  width: 30%;
+  height: 0.5rem;
+}
+
+.skeleton-link {
+  width: 22%;
+  height: 0.5rem;
+}
+
 
 @keyframes skeleton-shimmer {
   from {
@@ -1545,5 +1621,69 @@ main {
 .navbar-link:focus-visible {
   outline: 2px solid var(--chip-active-border);
   outline-offset: 2px;
+}
+
+/* This visit's featured artwork palette, as paint chips, with its credit. */
+.featured-palette {
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  margin: 0.35rem 0 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.featured-palette.is-ready {
+  opacity: 1;
+}
+
+/* The chips share one wide row, each stretching to fill its part. */
+.palette-chips {
+  display: flex;
+  gap: 6px;
+  width: min(320px, 80vw);
+}
+
+.palette-chip {
+  flex: 1;
+  height: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 2px;
+  background: var(--chip-bg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.palette-caption {
+  max-width: 420px;
+  min-height: 1em;
+  color: var(--color-text-muted);
+  font-family: var(--font-secondary);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.palette-label {
+  color: var(--color-text-secondary);
+}
+
+/* Footer: a quiet, permanent note of where images come from. */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1040px;
+  margin: 4rem auto 0;
+  padding: 0.75rem 1rem 1rem;
+  border-top: 1px solid var(--color-surface-border);
+  color: var(--color-text-muted);
+  font-family: var(--font-secondary);
+  font-size: 0.64rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.site-footer a {
+  color: var(--color-text-secondary);
 }
 

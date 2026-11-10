@@ -1,0 +1,380 @@
+{
+  "builtAt": "2026-11-10T04:16:41.580Z",
+  "works": [
+    {
+      "id": "met-437455",
+      "title": "The Holy Family with Saints Anne and Catherine of Alexandria",
+      "artist": "Jusepe de Ribera (called Lo Spagnoletto)",
+      "date": "1648",
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/437455",
+      "colors": [
+        "#23375c",
+        "#55321b",
+        "#466097",
+        "#8e8074",
+        "#c4beb7"
+      ]
+    },
+    {
+      "id": "met-436838",
+      "title": "The Fortune-Teller",
+      "artist": "Georges de La Tour",
+      "date": "probably 1630s",
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/436838",
+      "colors": [
+        "#211a11",
+        "#4b2f1a",
+        "#894122",
+        "#816648",
+        "#9f9376"
+      ]
+    },
+    {
+      "id": "met-45434",
+      "title": "Under the Wave off Kanagawa (Kanagawa oki nami ura), also known as The Great Wave, from the series Thirty-six Views of Mount Fuji (Fugaku sanjūrokkei)",
+      "artist": "Katsushika Hokusai",
+      "date": "ca. 1830–32",
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/45434",
+      "colors": [
+        "#2c4e6e",
+        "#597285",
+        "#8c9697",
+        "#d3c2a5",
+        "#fbf7e3"
+      ]
+    },
+    {
+      "id": "met-436908",
+      "title": "Saint Catherine of Alexandria",
+      "artist": "Pietro Lorenzetti",
+      "date": "ca. 1342",
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/436908",
+      "colors": [
+        "#745933",
+        "#cd4f5b",
+        "#99948c",
+        "#f58094",
+        "#f1d56f"
+      ]
+    },
+    {
+      "id": "met-437612",
+      "title": "Madonna and Child with Angels",
+      "artist": "Sassetta (Stefano di Giovanni)",
+      "date": "ca. 1445–50",
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/437612",
+      "colors": [
+        "#000000",
+        "#4b3110",
+        "#92661a",
+        "#ae8833",
+        "#c3a96e"
+      ]
+    },
+    {
+      "id": "met-437199",
+      "title": "Saint Donatian; Saint Victor Presenting a Donor",
+      "artist": "Netherlandish (Bruges) Painter",
+      "date": "",
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/437199",
+      "colors": [
+        "#070503",
+        "#48371b",
+        "#80340e",
+        "#aa8750",
+        "#e4c688"
+      ]
+    },
+    {
+      "id": "met-435741",
+      "title": "Allegory of Lyric Poetry",
+      "artist": "François Boucher",
+      "date": "1753",
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/435741",
+      "colors": [
+        "#3c3222",
+        "#5b6850",
+        "#8c6634",
+        "#b19d72",
+        "#d3d0bc"
+      ]
+    },
+    {
+      "id": "met-436201",
+      "title": "Surprised, or Infidelity Found Out",
+      "artist": "Christian Wilhelm Ernst Dietrich",
+      "date": "",
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/436201",
+      "colors": [
+        "#2a2115",
+        "#20434f",
+        "#5e4d2f",
+        "#786f54",
+        "#b19c78"
+      ]
+    },
+    {
+      "id": "met-437652",
+      "title": "The Virgin Adoring the Child with the Infant Saint John the Baptist",
+      "artist": "Jacopo di Arcangelo (called Jacopo del Sellaio)",
+      "date": "late 1480s",
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/437652",
+      "colors": [
+        "#040404",
+        "#392c15",
+        "#833b24",
+        "#335c4b",
+        "#968157"
+      ]
+    },
+    {
+      "id": "aic-28560",
+      "title": "The Bedroom",
+      "artist": "Vincent van Gogh",
+      "date": "1889",
+      "source": "Art Institute of Chicago",
+      "link": "https://www.artic.edu/artworks/28560",
+      "colors": [
+        "#3f5d4d",
+        "#678495",
+        "#bc801a",
+        "#a4bacc",
+        "#d9d4a5"
+      ]
+    },
+    {
+      "id": "aic-87479",
+      "title": "The Assumption of the Virgin",
+      "artist": "Domenico Theotokópoulos, called El Greco",
+      "date": "1577–79",
+      "source": "Art Institute of Chicago",
+      "link": "https://www.artic.edu/artworks/87479",
+      "colors": [
+        "#113b5b",
+        "#463628",
+        "#74604e",
+        "#597685",
+        "#bba186"
+      ]
+    },
+    {
+      "id": "aic-61128",
+      "title": "At the Moulin Rouge",
+      "artist": "Henri de Toulouse-Lautrec",
+      "date": "1892–95",
+      "source": "Art Institute of Chicago",
+      "link": "https://www.artic.edu/artworks/61128",
+      "colors": [
+        "#1e1c14",
+        "#452613",
+        "#6d420b",
+        "#4e573f",
+        "#958c6a"
+      ]
+    },
+    {
+      "id": "met-436531",
+      "title": "Peasant Woman Cooking by a Fireplace",
+      "artist": "Vincent van Gogh",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/436531",
+      "colors": [
+        "#190e0f",
+        "#3e321e",
+        "#685826",
+        "#92581e",
+        "#cb762e"
+      ]
+    },
+    {
+      "id": "met-436530",
+      "title": "Oleanders",
+      "artist": "Vincent van Gogh",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/436530",
+      "colors": [
+        "#24452b",
+        "#806737",
+        "#8e7e6d",
+        "#88963c",
+        "#b0a389"
+      ]
+    },
+    {
+      "id": "met-438001",
+      "title": "Two Women",
+      "artist": "Paul Gauguin",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/438001",
+      "colors": [
+        "#0f1b14",
+        "#63470d",
+        "#c25d14",
+        "#a69240",
+        "#94999d"
+      ]
+    },
+    {
+      "id": "met-436446",
+      "title": "Two Tahitian Women",
+      "artist": "Paul Gauguin",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/436446",
+      "colors": [
+        "#1c2b36",
+        "#67603a",
+        "#437088",
+        "#7b7674",
+        "#9f8433"
+      ]
+    },
+    {
+      "id": "met-436123",
+      "title": "The Ballet from \"Robert le Diable\"",
+      "artist": "Edgar Degas",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/436123",
+      "colors": [
+        "#2d2118",
+        "#463321",
+        "#5c482e",
+        "#7a6747",
+        "#a08e68"
+      ]
+    },
+    {
+      "id": "met-437994",
+      "title": "Race Horses",
+      "artist": "Edgar Degas",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/437994",
+      "colors": [
+        "#48392c",
+        "#68503a",
+        "#756749",
+        "#a9865d",
+        "#bea592"
+      ]
+    },
+    {
+      "id": "met-437852",
+      "title": "Saltash with the Water Ferry, Cornwall",
+      "artist": "Joseph Mallord William Turner",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/437852",
+      "colors": [
+        "#271b12",
+        "#643e1f",
+        "#8a653a",
+        "#ae9a74",
+        "#d9cba1"
+      ]
+    },
+    {
+      "id": "met-437853",
+      "title": "Venice, from the Porch of Madonna della Salute",
+      "artist": "Joseph Mallord William Turner",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/437853",
+      "colors": [
+        "#49412a",
+        "#82784f",
+        "#6399c1",
+        "#c4b899",
+        "#e5e4da"
+      ]
+    },
+    {
+      "id": "met-56683",
+      "title": "Snowy Gorge",
+      "artist": "Utagawa Hiroshige",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/56683",
+      "colors": [
+        "#43525e",
+        "#918877",
+        "#c2ab8d",
+        "#eecfa5",
+        "#f2e6cb"
+      ]
+    },
+    {
+      "id": "met-56906",
+      "title": "Station Thirty-Eight: Fujikawa, Scene at the Border, from the Fifty-Three Stations of the Tokaido",
+      "artist": "Utagawa Hiroshige",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/56906",
+      "colors": [
+        "#1a446b",
+        "#5d5653",
+        "#a9957f",
+        "#d8c4a4",
+        "#fce9c6"
+      ]
+    },
+    {
+      "id": "met-45294",
+      "title": "Twilight Moon at Ryōgoku Bridge",
+      "artist": "Utagawa Hiroshige",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/45294",
+      "colors": [
+        "#415a6c",
+        "#8a796d",
+        "#7fa6a7",
+        "#b9a690",
+        "#fbedd1"
+      ]
+    },
+    {
+      "id": "met-452419",
+      "title": "\"Rustam Lassos Rakhsh\", Folio from a Shahnama (Book of Kings)",
+      "artist": "Abu'l Qasim Firdausi",
+      "date": null,
+      "source": "The Metropolitan Museum of Art",
+      "link": "https://www.metmuseum.org/art/collection/search/452419",
+      "colors": [
+        "#5c606d",
+        "#8f6b59",
+        "#b58f64",
+        "#d5bb98",
+        "#e6b3e7"
+      ]
+    },
+    {
+      "id": "aic-81537",
+      "title": "Bordighera",
+      "artist": "Claude Monet",
+      "date": null,
+      "source": "Art Institute of Chicago",
+      "link": "https://www.artic.edu/artworks/81537",
+      "colors": [
+        "#1f2725",
+        "#3f6283",
+        "#717d3a",
+        "#908d79",
+        "#82a8af"
+      ]
+    }
+  ]
+}

@@ -61,9 +61,11 @@ export type ArtworkResult = {
   // Which search found this result (see searchAll.ts). "diversity" results
   // come from the people-background Unsplash variant or the Met's
   // non-Western departments, and get a couple of reserved slots.
-  // "lighting" results come from a museum search for the light itself
-  // ("candlelight"), not the subject; see queryPlan.ts.
-  retrievedVia?: "primary" | "secondary" | "diversity" | "lighting";
+  // "lighting": from the pre-scored museum library (museumLibrary.ts).
+  // "catalogTerm": from a museum search in the catalog's own words, as the
+  // fast model suggested them (museumTerm.ts). Both skip the caption check;
+  // the vision check confirms the subject.
+  retrievedVia?: "primary" | "secondary" | "diversity" | "lighting" | "catalogTerm";
   // 1-3 reference categories, strongest first (e.g. "Pose/Anatomy",
   // "Lighting"). Only set by the LLM rerank layer, which is judging
   // per-candidate relevance anyway -- there's no honest source for these

@@ -13,6 +13,7 @@ import ResultCard from "@/components/ResultCard";
 import Lightbox from "@/components/Lightbox";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import MasonryGrid from "@/components/MasonryGrid";
+import FeaturedPalette from "@/components/FeaturedPalette";
 import { useSlidingHighlight } from "@/components/useSlidingHighlight";
 
 type SearchResponse = {
@@ -226,9 +227,9 @@ export default function SearchBar() {
   return (
     <section>
       <div className={hasSearched ? "hero is-collapsed" : "hero"} aria-hidden={hasSearched}>
-        <h1 className="hero-title brand-gradient-text">ItEra Studio</h1>
+        <h1 className="hero-title brand-gradient-text">Itera Studio</h1>
         <p className="hero-subhead">Find real references from real artists.</p>
-        <p className="hero-tagline">Search by pose, lighting, color or mood.</p>
+        <FeaturedPalette />
       </div>
 
       <div ref={stickyMarkerRef} className="sticky-marker" aria-hidden="true" />
@@ -261,7 +262,7 @@ export default function SearchBar() {
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="eg; dynamic anime pose mid jump dramatic lighting"
+            placeholder="Search for a pose, a subject or a kind of light"
             aria-label="Search art references"
           />
         </div>
@@ -397,8 +398,15 @@ export default function SearchBar() {
                 className="skeleton-image"
                 style={{ aspectRatio: SKELETON_ASPECT_RATIOS[index % SKELETON_ASPECT_RATIOS.length] }}
               />
-              <div className="skeleton-line" />
-              <div className="skeleton-line skeleton-line-short" />
+              {/* Same three lines as a real card: title, credit, footer. */}
+              <div className="skeleton-lines">
+                <div className="skeleton-line skeleton-title" />
+                <div className="skeleton-line skeleton-credit" />
+                <div className="skeleton-footer">
+                  <div className="skeleton-line skeleton-tag" />
+                  <div className="skeleton-line skeleton-link" />
+                </div>
+              </div>
             </div>
           ))}
         </MasonryGrid>

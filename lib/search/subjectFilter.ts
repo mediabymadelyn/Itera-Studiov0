@@ -88,7 +88,7 @@ function judge(result: ArtworkResult, plan: QueryPlan, subjectWords: string[]): 
   // matched the subject from the work's depictions; catalog titles often
   // name only the light ("Candlelight"). Kept like sparse results; the
   // vision check confirms the subject from the image.
-  if (result.retrievedVia === "lighting") return "sparse";
+  if (result.retrievedVia === "lighting" || result.retrievedVia === "catalogTerm") return "sparse";
 
   return "unverified";
 }

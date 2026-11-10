@@ -18,6 +18,7 @@ import { isMuseumResult, limitPerArtist, selectWithSourceDiversity } from "@/lib
 import { applySubjectRequirement, capObjectResults } from "@/lib/search/subjectFilter";
 import { applyDramaticLightSignal, lookupDramaticLightResults } from "@/lib/search/lightingCatalog";
 import { libraryResultsFor } from "@/lib/search/museumLibrary";
+import { museumTermFor } from "@/lib/search/museumTerm";
 import {
   analyzeResultImages,
   applyImageMetrics,
@@ -282,10 +283,38 @@ function unsplashExtraSearchBudget(): number {
   return max;
 }
 
-async function fetchCandidates(plan: QueryPlan, limit: number): Promise<ArtworkResult[]> {
+/**
+ * Extra Met and AIC searches in the catalog's own words (see museumTerm.ts),
+ * started as soon as the fast model answers. Tagged "catalogTerm" so the
+ * caption check doesn't drop works whose titles don't repeat the user's words.
+ */
+function catalogTermSearches(term: Promise<string | null>, limit: number): Tagged[] {
+  const controller = new AbortController();
+  return [
+    {
+      label: "met (catalog term)",
+      promise: term
+        .then((t) => (t ? searchMetArtworks(t, limit, { objectLimit: MET_SECONDARY_OBJECT_LIMIT }) : []))
+        .then((results) => tagRetrieval(results, "catalogTerm"))
+    },
+    {
+      label: "aic (catalog term)",
+      promise: term
+        .then((t) => (t ? withTimeout(searchAicArtworks(t, limit, controller.signal), AIC_BRANCH_TIMEOUT_MS, controller, []) : []))
+        .then((results) => tagRetrieval(results, "catalogTerm"))
+    }
+  ];
+}
+
+async function fetchCandidates(
+  plan: QueryPlan,
+  limit: number,
+  catalogTerm: Promise<string | null> | null = null
+): Promise<ArtworkResult[]> {
   const searches = routeQueryToSources(plan.original).flatMap((source) =>
     buildSourceSearches(source, plan, limit)
   );
+  if (catalogTerm) searches.push(...catalogTermSearches(catalogTerm, limit));
 
   // Museum works known for dramatic light, pre-scored (see
   // museumLibrary.ts) -- the museums' own search can't find them by lighting.
@@ -493,7 +522,13 @@ export async function searchAllArtworks(
   });
 
   const plannedAt = Date.now();
-  let combined = await fetchCandidates(plan, limit);
+  // The catalog's own term for this subject, from the fast model, when no
+  // hand-tested term (drapery, pose) or lighting library already covers it.
+  const catalogTerm =
+    useLlmRerank && !options.disableQueryTranslation && !plan.lighting && !plan.aicSubjectTerm
+      ? museumTermFor(plan.original)
+      : null;
+  let combined = await fetchCandidates(plan, limit, catalogTerm);
 
   // Last resort for very specific requests: nothing matched anywhere, so
   // retry with just the subject rather than showing an empty page.

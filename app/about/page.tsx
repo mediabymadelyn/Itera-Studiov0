@@ -1,16 +1,17 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const values = [
   {
     icon: "M12 22q-2.05 0-3.875-.788t-3.187-2.15t-2.15-3.187T2 12q0-2.075.813-3.9t2.2-3.175T8.25 2.788T12.2 2q2 0 3.775.688t3.113 1.9t2.125 2.875T22 11.05q0 2.875-1.75 4.413T16 17h-1.85q-.225 0-.312.125t-.088.275q0 .3.375.863t.375 1.287q0 1.25-.687 1.85T12 22m-4.425-9.425Q8 12.15 8 11.5t-.425-1.075T6.5 10t-1.075.425T5 11.5t.425 1.075T6.5 13t1.075-.425m3-4Q11 8.15 11 7.5t-.425-1.075T9.5 6t-1.075.425T8 7.5t.425 1.075T9.5 9t1.075-.425m5 0Q16 8.15 16 7.5t-.425-1.075T14.5 6t-1.075.425T13 7.5t.425 1.075T14.5 9t1.075-.425m3 4Q19 12.15 19 11.5t-.425-1.075T17.5 10t-1.075.425T16 11.5t.425 1.075T17.5 13t1.075-.425M12 20q.225 0 .363-.125t.137-.325q0-.35-.375-.825T11.75 17.3q0-1.05.725-1.675T14.25 15H16q1.65 0 2.825-.962T20 11.05q0-3.025-2.312-5.038T12.2 4Q8.8 4 6.4 6.325T4 12q0 3.325 2.338 5.663T12 20",
     title: "Purpose Statement",
-    text: "Artists spend more time searching for references than creating. ItEra gives that time back. Instead of generating images, it finds artwork from museums and working photographers, with full credit."
+    text: "Artists spend more time searching for references than creating. Itera gives that time back. Instead of generating images, it finds artwork from museums and working photographers, with full credit."
   },
   {
     icon: "M12 22q-3.475-.875-5.738-3.988T4 11.1V5l8-3l8 3v6.1q0 3.8-2.262 6.913T12 22m0-2.1q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.25l-6 2.25V11.1q0 3.025 1.7 5.5t4.3 3.3m0-7.9",
     title: "Non-generative philosophy",
-    text: "No generated images. No scraped training data. AI helps ItEra understand what you are looking for and improve search, not replicate artists or replace their work."
+    text: "No generated images. No scraped training data. AI helps Itera understand what you are looking for and improve search, not replicate artists or replace their work."
   },
   {
     icon: "M15.188 14.688Q16.5 13.375 16.5 11.5t-1.312-3.187T12 7T8.813 8.313T7.5 11.5t1.313 3.188T12 16t3.188-1.312m-5.1-1.276Q9.3 12.625 9.3 11.5t.788-1.912T12 8.8t1.913.788t.787 1.912t-.787 1.913T12 14.2t-1.912-.787m-4.738 3.55Q2.35 14.925 1 11.5q1.35-3.425 4.35-5.462T12 4t6.65 2.038T23 11.5q-1.35 3.425-4.35 5.463T12 19t-6.65-2.037m11.838-1.45Q19.55 14.025 20.8 11.5q-1.25-2.525-3.613-4.012T12 6T6.813 7.488T3.2 11.5q1.25 2.525 3.613 4.013T12 17t5.188-1.487",
@@ -34,7 +35,7 @@ const values = [
   {
     icon: "M0 18v-1.575q0-1.075 1.1-1.75T4 14q.325 0 .625.013t.575.062q-.35.525-.525 1.1t-.175 1.2V18zm6 0v-1.625q0-.8.438-1.463t1.237-1.162T9.588 13T12 12.75q1.325 0 2.438.25t1.912.75t1.225 1.163t.425 1.462V18zm13.5 0v-1.625q0-.65-.162-1.225t-.488-1.075q.275-.05.563-.062T20 14q1.8 0 2.9.663t1.1 1.762V18zM8.125 16H15.9q-.25-.5-1.388-.875T12 14.75t-2.512.375T8.125 16M4 13q-.825 0-1.412-.587T2 11q0-.85.588-1.425T4 9q.85 0 1.425.575T6 11q0 .825-.575 1.413T4 13m16 0q-.825 0-1.412-.587T18 11q0-.85.588-1.425T20 9q.85 0 1.425.575T22 11q0 .825-.575 1.413T20 13m-8-1q-1.25 0-2.125-.875T9 9q0-1.275.875-2.137T12 6q1.275 0 2.138.863T15 9q0 1.25-.862 2.125T12 12m0-2q.425 0 .713-.288T13 9t-.288-.712T12 8t-.712.288T11 9t.288.713T12 10m0-1",
     title: "Fostering community",
-    text: "Learning comes from seeing how other artists work. ItEra points you to the people behind the work, so you can explore their other pieces and learn from how they approached it."
+    text: "Learning comes from seeing how other artists work. Itera points you to the people behind the work, so you can explore their other pieces and learn from how they approached it."
   }
 ];
 
@@ -91,7 +92,7 @@ export default function AboutPage() {
       <Navbar activePage="about" />
       <main className="about-page">
         <header className="about-header">
-          <h1 className="hero-title about-page-title">About ItEra Studio</h1>
+          <h1 className="hero-title about-page-title">About Itera Studio</h1>
           <p className="about-subtitle">
             AI-powered reference search built to support artists, not replace them.
           </p>
@@ -119,7 +120,7 @@ export default function AboutPage() {
         <section id="how-it-works" className="about-how">
           <h2 className="about-how-title">How it works</h2>
           <p className="about-section-text">
-            ItEra goes beyond keyword search. It breaks your search into visual qualities like
+            Itera goes beyond keyword search. It breaks your search into visual qualities like
             pose, motion, lighting, composition, and style, then finds references that match them.
             You don&apos;t need perfect prompts.
           </p>
@@ -157,7 +158,7 @@ export default function AboutPage() {
         <section id="sources" className="about-how">
           <h2 className="about-how-title">Sources</h2>
           <p className="about-section-text">
-            ItEra only shows images it has the right to show. Museum works in copyright, and so most
+            Itera only shows images it has the right to show. Museum works in copyright, and so most
             contemporary art, aren&apos;t included.
           </p>
           <ul className="about-sources">
@@ -172,6 +173,7 @@ export default function AboutPage() {
           </ul>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

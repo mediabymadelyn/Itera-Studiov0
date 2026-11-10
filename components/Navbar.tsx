@@ -8,7 +8,7 @@ export default function Navbar({ activePage = "search" }: NavbarProps) {
   return (
     <nav className="navbar">
       <Link href="/" className="navbar-logo brand-gradient-text">
-        ItEra Studio
+        Itera Studio
       </Link>
       <div className="navbar-links">
         <Link

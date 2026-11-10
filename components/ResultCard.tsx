@@ -114,7 +114,7 @@ export default function ResultCard({
         <span className="result-image-expand-hint">Click to expand</span>
         {/* What the image check saw, on hover: the kind of light and the
             main colors. Image search engines don't say why a result is
-            there; ItEra can. */}
+            there; Itera can. */}
         {(hoverTags.length > 0 || palette.length > 0) && (
           <span className="card-why" aria-hidden="true">
             {hoverTags.length > 0 && (

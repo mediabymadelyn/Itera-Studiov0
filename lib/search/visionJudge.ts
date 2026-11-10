@@ -53,7 +53,7 @@ const JUDGMENT_CACHE_MAX_SIZE = 2000;
 // Part of the cache key, so judgments made under an earlier prompt or
 // scoring rule aren't reused. Bump when buildPrompt or lightingScoreFor
 // changes.
-const PROMPT_VERSION = 10;
+const PROMPT_VERSION = 11;
 
 // What kind of light falls on the subject. Shown to users in the expanded
 // view; "even" and "patterned" light also cap the dramatic score.
@@ -208,7 +208,8 @@ function buildPrompt(result: ArtworkResult, query: string): string {
     `unrelated thing that only shares a word with the search. Also 0 when the thing the ` +
     `search names (a face, hands, a pose) can't be studied in the image: mostly covered by ` +
     `hands, hair or objects, turned away, or cropped out. Shadow falling across a visible ` +
-    `face is fine.\n` +
+    `face is fine. If the search names who the person is (background, age, gender) and the image ` +
+    `shows the right subject but a different person, that's 1, not 0.\n` +
     `- light: describe only the light falling ON THE MAIN SUBJECT (the face, figure or ` +
     `thing the search is about), not the background. A dark or black background says ` +
     `nothing about the light on the subject.\n` +
@@ -361,46 +362,85 @@ async function judgeOne(result: ArtworkResult, query: string): Promise<VisionJud
  * the query.
  */
 // --- Lasting cache ---------------------------------------------------------
-// Judgments also go to disk, so a restarted server (or a warm Vercel
-// instance) doesn't pay Gemini again for an image it already judged for the
-// same search. Files are named by a hash of the key -- prompt version,
-// model, search, result and image -- so no search text is stored, and the
-// key can't reach outside the folder. Entries older than DISK_CACHE_MAX_AGE
-// are ignored. On Vercel only /tmp is writable, and it lasts as long as
-// one server instance.
+// Judgments are saved so a restarted server, or another Vercel instance,
+// doesn't pay Gemini again for an image it already judged for the same
+// search. With Redis configured (Upstash, from the Vercel Marketplace) the
+// cache is shared by every instance; without it, judgments go to disk
+// (.cache/judgments locally, /tmp on Vercel, which lasts one instance).
+// Keys are a hash of prompt version, model, search, result and image, so
+// no search text is stored, and entries expire after 30 days. A slow or
+// missing cache never slows a search: reads give up after a moment.
+const CACHE_MAX_AGE_SECONDS = 30 * 24 * 60 * 60;
+const REDIS_TIMEOUT_MS = 800;
+const REDIS_KEY_PREFIX = "itera:judgment:";
 const DISK_CACHE_DIR =
   process.env.JUDGMENT_CACHE_DIR || (process.env.VERCEL ? "/tmp/itera-judgments" : ".cache/judgments");
-const DISK_CACHE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
-let diskCacheEnabled = process.env.JUDGMENT_DISK_CACHE !== "off";
+let lastingCacheEnabled = process.env.JUDGMENT_DISK_CACHE !== "off";
 
 /** The eval and the library build need fresh answers, not saved ones. */
 export function setDiskCacheEnabled(enabled: boolean): void {
-  diskCacheEnabled = enabled;
+  lastingCacheEnabled = enabled;
 }
 
-function diskPath(cacheKey: string): string {
-  return join(DISK_CACHE_DIR, `${createHash("sha256").update(cacheKey).digest("hex")}.json`);
+function hashKey(cacheKey: string): string {
+  return createHash("sha256").update(cacheKey).digest("hex");
 }
 
-async function readDisk(cacheKey: string): Promise<VisionJudgment | null> {
-  if (!diskCacheEnabled) return null;
+function redisConfig(): { url: string; token: string } | null {
+  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+  return url && token ? { url, token } : null;
+}
+
+async function redisCommand(command: (string | number)[]): Promise<unknown> {
+  const config = redisConfig();
+  if (!config) return null;
+  const response = await fetch(config.url, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${config.token}`, "Content-Type": "application/json" },
+    body: JSON.stringify(command),
+    signal: AbortSignal.timeout(REDIS_TIMEOUT_MS),
+    cache: "no-store"
+  });
+  if (!response.ok) return null;
+  return ((await response.json()) as { result?: unknown }).result ?? null;
+}
+
+function isJudgment(value: unknown): value is VisionJudgment {
+  const judgment = value as VisionJudgment | null;
+  return Boolean(judgment) && [0, 1, 2].includes(judgment!.match) && Boolean(judgment!.lighting);
+}
+
+async function readLasting(cacheKey: string): Promise<VisionJudgment | null> {
+  if (!lastingCacheEnabled) return null;
   try {
-    const saved = JSON.parse(await readFile(diskPath(cacheKey), "utf8")) as { savedAt: number; judgment: VisionJudgment };
-    if (Date.now() - saved.savedAt > DISK_CACHE_MAX_AGE_MS) return null;
-    if (![0, 1, 2].includes(saved.judgment?.match) || !saved.judgment.lighting) return null;
-    return saved.judgment;
+    if (redisConfig()) {
+      const stored = await redisCommand(["GET", REDIS_KEY_PREFIX + hashKey(cacheKey)]);
+      const judgment = typeof stored === "string" ? JSON.parse(stored) : null;
+      return isJudgment(judgment) ? judgment : null;
+    }
+    const saved = JSON.parse(await readFile(join(DISK_CACHE_DIR, `${hashKey(cacheKey)}.json`), "utf8")) as {
+      savedAt: number;
+      judgment: VisionJudgment;
+    };
+    if (Date.now() - saved.savedAt > CACHE_MAX_AGE_SECONDS * 1000) return null;
+    return isJudgment(saved.judgment) ? saved.judgment : null;
   } catch {
     return null;
   }
 }
 
-async function writeDisk(cacheKey: string, judgment: VisionJudgment): Promise<void> {
-  if (!diskCacheEnabled) return;
+async function writeLasting(cacheKey: string, judgment: VisionJudgment): Promise<void> {
+  if (!lastingCacheEnabled) return;
   try {
+    if (redisConfig()) {
+      await redisCommand(["SET", REDIS_KEY_PREFIX + hashKey(cacheKey), JSON.stringify(judgment), "EX", CACHE_MAX_AGE_SECONDS]);
+      return;
+    }
     await mkdir(DISK_CACHE_DIR, { recursive: true });
-    await writeFile(diskPath(cacheKey), JSON.stringify({ savedAt: Date.now(), judgment }));
+    await writeFile(join(DISK_CACHE_DIR, `${hashKey(cacheKey)}.json`), JSON.stringify({ savedAt: Date.now(), judgment }));
   } catch {
-    // A read-only or full disk just means no lasting cache.
+    // A read-only disk or unreachable store just means no lasting cache.
   }
 }
 
@@ -413,7 +453,7 @@ export async function judgeResultImages(
   const entries = await Promise.all(
     results.map(async (result) => {
       const cacheKey = `${PROMPT_VERSION}|${visionModel()}|${normalizedQuery}|${result.id}|${analysisUrl(result)}`;
-      const cached = judgmentCache.get(cacheKey) ?? (await readDisk(cacheKey));
+      const cached = judgmentCache.get(cacheKey) ?? (await readLasting(cacheKey));
       if (cached) {
         judgmentCache.set(cacheKey, cached);
         return [result.id, cached] as const;
@@ -423,7 +463,7 @@ export async function judgeResultImages(
       if (judgment) {
         if (judgmentCache.size >= JUDGMENT_CACHE_MAX_SIZE) judgmentCache.clear();
         judgmentCache.set(cacheKey, judgment);
-        void writeDisk(cacheKey, judgment);
+        void writeLasting(cacheKey, judgment);
       }
       return [result.id, judgment] as const;
     })

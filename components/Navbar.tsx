@@ -23,7 +23,9 @@ export default function Navbar({ activePage = "search" }: NavbarProps) {
         >
           About
         </Link>
-        <span className="navbar-link">Sources</span>
+        <Link href="/about#sources" className="navbar-link">
+          Sources
+        </Link>
       </div>
     </nav>
   );

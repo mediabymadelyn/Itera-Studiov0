@@ -181,9 +181,7 @@ function buildSourceSearches(
 
   if (source === "aic") {
     const controller = new AbortController();
-    const aicQuery = plan.lighting
-      ? `${plan.keywordQuery} ${plan.lighting.aicTerm}`
-      : plan.keywordQuery;
+    const aicQuery = [plan.keywordQuery, plan.aicSubjectTerm, plan.lighting?.aicTerm].filter(Boolean).join(" ");
     const aicPromise = searchAicArtworks(aicQuery, limit, controller.signal);
 
     return [
@@ -415,13 +413,23 @@ function arrangeSections(results: ArtworkResult[], plan: QueryPlan): ArtworkResu
   const monochromeCap = plan.wantsMonochrome ? BEST_MATCHES_MAX : Math.floor(BEST_MATCHES_MAX / 2);
   const best: ArtworkResult[] = [];
   let monochrome = 0;
+  // One per named artist in Best: two shots from one shoot side by side
+  // read as duplicates ("dynamic pose"). The second goes to More results.
+  const bestArtists = new Set<string>();
+  const artistOf = (result: ArtworkResult) => {
+    const name = result.artist.trim().toLowerCase();
+    return name.startsWith("unknown") || name === "anonymous" ? null : name;
+  };
   const take = (result: ArtworkResult): boolean => {
     if (best.length >= BEST_MATCHES_MAX || best.includes(result)) return false;
+    const artist = artistOf(result);
+    if (artist && bestArtists.has(artist)) return false;
     if (isMonochrome(result)) {
       if (monochrome >= monochromeCap) return false;
       monochrome++;
     }
     best.push(result);
+    if (artist) bestArtists.add(artist);
     return true;
   };
 

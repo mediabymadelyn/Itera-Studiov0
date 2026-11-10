@@ -19,11 +19,12 @@ type AicSearchItem = {
   short_description?: string;
   place_of_origin?: string;
   artwork_type_title?: string;
+  date_display?: string;
 };
 
 const AIC_SEARCH_URL = "https://api.artic.edu/api/v1/artworks/search";
 const AIC_FIELDS =
-  "id,title,artist_display,main_reference_number,is_public_domain,subject_titles,style_titles,technique_titles,theme_titles,description,short_description,place_of_origin,artwork_type_title";
+  "id,title,artist_display,main_reference_number,is_public_domain,subject_titles,style_titles,technique_titles,theme_titles,description,short_description,place_of_origin,artwork_type_title,date_display";
 // AIC's Cloudflare returns 403 for Node's default `User-Agent: node`, so
 // identify the client explicitly. AIC's docs ask for AIC-User-Agent; see
 // https://api.artic.edu/docs/#authentication
@@ -69,6 +70,8 @@ function normalizeAicItem(
     description: item.description,
     shortDescription: item.short_description,
     culture: item.place_of_origin,
+    // Shown on the card's wall label ("Pissarro, 1881").
+    objectDate: item.date_display,
     // "Painting", "Print", "Sculpture", "Vessel"... -- the same role as the
     // Met's classification, used to cap 3D objects (see queryTerms.ts).
     classification: item.artwork_type_title

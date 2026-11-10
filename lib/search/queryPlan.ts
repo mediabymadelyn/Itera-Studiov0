@@ -19,6 +19,10 @@ import {
   isSettingPreposition,
   lookupAction,
   museumSubjectTerm,
+  aicSubjectTerm,
+  museumCompanionSearch,
+  photoCompanionQuery,
+  photoSubjectTerm,
   queryAllowsObjects,
   settingMatchWords,
   backgroundVariants,
@@ -58,6 +62,9 @@ export type QueryPlan = {
   namesFlatMedium: boolean;
   // Content words of the whole request, used for ranking.
   rankWords: string[];
+  // Extra words for the Art Institute search when the subject has its own
+  // catalog term ("drapery study" for "draped fabric").
+  aicSubjectTerm: string | null;
   // The background the user named for a people search ("black"), if any.
   // Its variant searches are then main results, not diversity extras.
   statedBackground: string | null;
@@ -101,6 +108,9 @@ export type QueryPlan = {
 
 // Enough variants for the largest per-search budget (see searchAll.ts).
 const MAX_BACKGROUND_VARIANTS = 2;
+// Requests up to this many words keep their own word order for the photo
+// search when nothing else (action, setting, lighting) needs adding.
+const MAX_NATURAL_ORDER_WORDS = 3;
 // When the user named a background, the variant searches all look for it
 // (see statedBackgroundVariants), so they get one more.
 const MAX_STATED_BACKGROUND_VARIANTS = 3;
@@ -390,9 +400,16 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
       departmentId: MET_EUROPEAN_PAINTINGS
     });
   }
+  const museumAlso = options.passthrough ? null : museumCompanionSearch(parsed.subject);
+  if (museumAlso) museumSecondarySearches.push({ queries: [museumAlso.query], departmentId: museumAlso.departmentId });
 
+  // The request's own words in its own order ("dynamic pose"): used for
+  // short plain requests, which the reordered keywords ("pose dynamic")
+  // phrase worse, and to look up subjects with a companion photo search.
+  const ownPhrase = contentTokens(stripped).join(" ");
   const basePhotoQuery = [
     withChildQualifier(keywordQuery, allTokens),
+    options.passthrough ? "" : photoSubjectTerm(parsed.subject) ?? "",
     lighting && !options.passthrough ? lighting.photoTerms : ""
   ]
     .filter(Boolean)
@@ -407,14 +424,24 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
   const peopleQuery = !options.passthrough && isPeopleQuery(allTokens);
   // A named background stays in front of the subject: the reordered
   // "dancer motion black" found 5 photos, "Black dancer motion" a full page.
-  const photoQuery = background ? withBackgroundFirst(basePhotoQuery, background) : basePhotoQuery;
+  const plainShortRequest =
+    !options.passthrough && !lighting && !background && !parsed.action && !parsed.setting && !parsed.medium &&
+    ownPhrase.split(" ").length <= MAX_NATURAL_ORDER_WORDS &&
+    !photoSubjectTerm(parsed.subject) && ownPhrase !== keywordQuery;
+  const photoQuery = background
+    ? withBackgroundFirst(basePhotoQuery, background)
+    : plainShortRequest
+      ? withChildQualifier(ownPhrase, allTokens)
+      : basePhotoQuery;
   const subjectActionQuery = parsed.action ? `${parsed.subject} ${parsed.action}` : "";
   const photoSecondaryQuery =
     !peopleQuery && parsed.action && !options.passthrough
       ? keywordQuery === subjectActionQuery
         ? parsed.action
         : subjectActionQuery
-      : undefined;
+      : options.passthrough
+        ? undefined
+        : photoCompanionQuery(ownPhrase) ?? undefined;
   const photoLightingQueries =
     lighting?.photoPatterns && !options.passthrough
       ? lighting.photoPatterns.map((pattern, index) =>
@@ -438,6 +465,7 @@ export async function planQuery(query: string, options: PlanOptions = {}): Promi
     allowsObjects: queryAllowsObjects(allTokens, bodyPartSubject),
     namesFlatMedium: allTokens.some(isMediumWord),
     rankWords: contentTokens(stripped),
+    aicSubjectTerm: options.passthrough ? null : aicSubjectTerm(parsed.subject),
     companionWords,
     wantsMonochrome: wantsMonochrome(query),
     statedBackground: background,

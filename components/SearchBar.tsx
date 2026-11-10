@@ -27,9 +27,13 @@ type ResultTypeFilter = "all" | "museum" | "photography";
 // as the filter being broken (P2, P5).
 const TYPE_OPTIONS: { value: ResultTypeFilter; label: string }[] = [
   { value: "all", label: "All" },
-  { value: "museum", label: "Museum art" },
-  { value: "photography", label: "Photography" }
+  { value: "museum", label: "Art" },
+  { value: "photography", label: "Photo" }
 ];
+
+// Shown under the search bar before the first search: common things
+// artists come looking for, one click away.
+const EXAMPLE_SEARCHES = ["hand gestures", "draped fabric", "dynamic pose", "seated figure"];
 
 // Long searches (LLM rewrite + several sources + relevance filtering) can
 // take a while, but a request that hangs forever looked like the app was
@@ -131,6 +135,15 @@ export default function SearchBar() {
     setSubtagFilter(null);
   }
 
+  // The expanded view steps through the page in its shown order (Best
+  // matches, then More results), stopping at either end.
+  const pageOrder = [...bestMatches, ...moreResults];
+  const expandedIndex = expandedResult ? pageOrder.findIndex((result) => result.id === expandedResult.id) : -1;
+  const stepTo = (offset: number) => {
+    const next = pageOrder[expandedIndex + offset];
+    return expandedIndex === -1 || !next ? undefined : () => setExpandedResult(next);
+  };
+
   function resetFilters() {
     setTypeFilter("all");
     setCategoryFilter(null);
@@ -155,10 +168,18 @@ export default function SearchBar() {
     ));
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    void runSearch(query);
+  }
 
-    const trimmedQuery = query.trim();
+  function searchExample(example: string) {
+    setQuery(example);
+    void runSearch(example);
+  }
+
+  async function runSearch(text: string) {
+    const trimmedQuery = text.trim();
 
     if (!trimmedQuery) {
       setError("Please enter a search query.");
@@ -207,6 +228,7 @@ export default function SearchBar() {
       <div className={hasSearched ? "hero is-collapsed" : "hero"} aria-hidden={hasSearched}>
         <h1 className="hero-title brand-gradient-text">ItEra Studio</h1>
         <p className="hero-subhead">Find real references from real artists.</p>
+        <p className="hero-tagline">Search by pose, lighting, color or mood.</p>
       </div>
 
       <div ref={stickyMarkerRef} className="sticky-marker" aria-hidden="true" />
@@ -244,6 +266,17 @@ export default function SearchBar() {
           />
         </div>
       </form>
+
+      {!hasSearched && (
+        <div className="example-searches" aria-label="Example searches">
+          <span className="example-label">Start with</span>
+          {EXAMPLE_SEARCHES.map((example) => (
+            <button key={example} type="button" className="chip chip-small" onClick={() => searchExample(example)}>
+              {example}
+            </button>
+          ))}
+        </div>
+      )}
 
       {toolbarShown && (
         <div className="toolbar" role="toolbar" aria-label="Filter results">
@@ -299,14 +332,15 @@ export default function SearchBar() {
             })}
           </div>
 
-          <div className="toolbar-end">
-            <span className="toolbar-count">
-              {ordered.length} of {availableResults.length}
-            </span>
-            <button type="button" className="text-button" onClick={resetFilters} disabled={!isFiltered}>
-              Reset
-            </button>
-          </div>
+          {/* Counts live in the section headings; Clear only appears once
+              there's a filter to clear, so the row fits on one line. */}
+          {isFiltered && (
+            <div className="toolbar-end">
+              <button type="button" className="text-button" onClick={resetFilters}>
+                Clear
+              </button>
+            </div>
+          )}
         </div>
       )}
 
@@ -372,11 +406,15 @@ export default function SearchBar() {
 
       {!loading && bestMatches.length > 0 && (
         <>
-          {moreResults.length > 0 && (
-            <h2 className="section-heading">
-              Best matches <span className="section-count">{bestMatches.length}</span>
-            </h2>
-          )}
+          <h2 className="section-heading">
+            {moreResults.length > 0 ? "Best matches" : "Results"}{" "}
+            <span className="section-count">{bestMatches.length}</span>
+            {isFiltered && (
+              <span className="section-filtered">
+                {ordered.length} of {availableResults.length} shown
+              </span>
+            )}
+          </h2>
           <MasonryGrid>{renderCards(bestMatches)}</MasonryGrid>
         </>
       )}
@@ -403,7 +441,12 @@ export default function SearchBar() {
         </>
       )}
 
-      <Lightbox result={expandedResult} onClose={() => setExpandedResult(null)} />
+      <Lightbox
+        result={expandedResult}
+        onClose={() => setExpandedResult(null)}
+        onPrevious={stepTo(-1)}
+        onNext={stepTo(1)}
+      />
     </section>
   );
 }

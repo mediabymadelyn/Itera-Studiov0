@@ -348,7 +348,7 @@ main {
   position: relative;
   z-index: 1;
   height: calc(var(--chip-height) - 6px);
-  padding: 0 0.8rem;
+  padding: 0 0.65rem;
   border: 0;
   border-radius: var(--radius-tag);
   background: none;
@@ -463,13 +463,13 @@ main {
   align-items: center;
   gap: 0.4rem;
   height: var(--chip-height);
-  padding: 0 0.8rem;
+  padding: 0 0.6rem;
   border: 1px solid var(--chip-border);
   border-radius: var(--radius-control);
   background: var(--chip-bg);
   color: var(--color-text-primary);
   font-family: var(--font-heading);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
@@ -903,7 +903,7 @@ main {
 .result-image-expand-hint {
   position: absolute;
   right: 0.5rem;
-  bottom: 0.5rem;
+  top: 0.5rem;
   font-family: var(--font-heading);
   font-size: 0.68rem;
   color: #fff;
@@ -949,22 +949,108 @@ main {
   z-index: 50;
 }
 
+/* Image left, details right on wide screens; stacked on narrow ones. */
 .lightbox-content {
   position: relative;
-  max-width: min(90vw, 1100px);
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  width: min(94vw, 1200px);
+  max-height: 92vh;
+  display: grid;
+  gap: 1.25rem;
   align-items: center;
 }
 
-.lightbox-image {
+@media (min-width: 900px) {
+  .lightbox-content {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+}
+
+.lightbox-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.lightbox-frame {
+  position: relative;
+  display: flex;
+  justify-content: center;
   max-width: 100%;
-  max-height: 75vh;
+  max-height: 84vh;
+}
+
+/* Zoomed: the image at full size, scrolled to where it was clicked. */
+.lightbox-frame.is-zoomed {
+  overflow: auto;
+  width: 100%;
+  height: 84vh;
+  justify-content: flex-start;
+  border-radius: var(--radius-control);
+}
+
+.lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: 84vh;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: var(--radius-control);
   background: #2a2a30;
+  cursor: zoom-in;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-frame.is-zoomed .lightbox-image {
+  max-width: none;
+  max-height: none;
+  cursor: zoom-out;
+}
+
+/* Values: the image in grey, to judge light and dark without color. */
+.lightbox-image.is-values {
+  filter: grayscale(1) contrast(1.05);
+}
+
+.lightbox-image.is-mirrored {
+  transform: scaleX(-1);
+}
+
+/* Rule-of-thirds grid over the image. */
+.lightbox-grid {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  max-width: 100%;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, transparent calc(33.333% - 0.5px), rgba(255, 255, 255, 0.55) calc(33.333% - 0.5px), rgba(255, 255, 255, 0.55) calc(33.333% + 0.5px), transparent calc(33.333% + 0.5px), transparent calc(66.666% - 0.5px), rgba(255, 255, 255, 0.55) calc(66.666% - 0.5px), rgba(255, 255, 255, 0.55) calc(66.666% + 0.5px), transparent calc(66.666% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(33.333% - 0.5px), rgba(255, 255, 255, 0.55) calc(33.333% - 0.5px), rgba(255, 255, 255, 0.55) calc(33.333% + 0.5px), transparent calc(33.333% + 0.5px), transparent calc(66.666% - 0.5px), rgba(255, 255, 255, 0.55) calc(66.666% - 0.5px), rgba(255, 255, 255, 0.55) calc(66.666% + 0.5px), transparent calc(66.666% + 0.5px));
+  border-radius: var(--radius-control);
+}
+
+.lightbox-step {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 2.25rem;
+  height: 2.25rem;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox-step.is-previous {
+  left: 0.5rem;
+}
+
+.lightbox-step.is-next {
+  right: 0.5rem;
 }
 
 .lightbox-close {
@@ -983,19 +1069,70 @@ main {
 }
 
 .lightbox-info {
+  display: grid;
+  gap: 0.6rem;
   color: #fff;
-  text-align: center;
   font-family: var(--font-body);
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .lightbox-info {
+    align-content: center;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .lightbox-info .tag-row {
+    justify-content: flex-start;
+  }
+
+  .lightbox-info .swatches {
+    margin: 0;
+  }
 }
 
 .lightbox-title {
+  font-family: var(--font-heading);
   font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Artwork titles in italics, as on a museum wall label. */
+.lightbox-title.is-artwork {
+  font-style: italic;
 }
 
 .lightbox-meta {
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  margin-bottom: 0.35rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.lightbox-license {
+  color: var(--color-text-muted);
+}
+
+.lightbox-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chip.is-on {
+  background: var(--chip-active-bg);
+  border-color: var(--chip-active-border);
+}
+
+.lightbox-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lightbox-actions .result-link {
+  margin-left: 0;
+  font-size: 0.78rem;
 }
 
 .attribution-link {
@@ -1284,3 +1421,129 @@ main {
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 6px 16px rgba(0, 0, 0, 0.4);
 }
+
+/* --- Search page extras ---------------------------------------------- */
+
+.example-searches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 720px;
+  margin: 1rem auto 0;
+}
+
+.example-label {
+  color: var(--color-text-muted);
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+}
+
+.section-filtered {
+  margin-left: 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+/* Museum works read like a gallery wall label: italic title, artist and
+   date, then the collection, on a slightly lighter "mat". */
+.result-card.is-museum .result-content {
+  background: rgba(255, 255, 255, 0.035);
+  border-top: 1px solid var(--color-surface-border);
+}
+
+.wall-title {
+  overflow: hidden;
+  color: var(--color-text-primary);
+  font-size: 0.82rem;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wall-artist {
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.wall-collection {
+  color: var(--color-text-muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* What the image check saw, over the bottom of the image on hover:
+   lighting tags and a strip of the main colors. */
+.card-why {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.5rem 0.5rem 0.45rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.result-image-button:hover .card-why,
+.result-image-button:focus-visible .card-why {
+  opacity: 1;
+}
+
+.card-why-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.card-why-tag {
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-tag);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.64rem;
+}
+
+.card-palette {
+  display: flex;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.card-palette > span {
+  flex-basis: 0;
+  min-width: 4px;
+}
+
+.about-sources {
+  display: grid;
+  gap: 1rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Keyboard focus, visible everywhere it can land. */
+.chip:focus-visible,
+.segmented-option:focus-visible,
+.text-button:focus-visible,
+.result-image-button:focus-visible,
+.result-link:focus-visible,
+.attribution-link:focus-visible,
+.lightbox-step:focus-visible,
+.lightbox-close:focus-visible,
+.navbar-link:focus-visible {
+  outline: 2px solid var(--chip-active-border);
+  outline-offset: 2px;
+}
+

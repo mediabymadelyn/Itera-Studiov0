@@ -79,6 +79,7 @@ export type LightingIntent = {
 };
 
 export const MET_EUROPEAN_PAINTINGS = 11;
+const MET_DRAWINGS_AND_PRINTS = 9;
 const MET_PHOTOGRAPHS = 19;
 
 const DRAMATIC_LIGHTING_PHRASES = [
@@ -485,7 +486,56 @@ export function pickByQuery<T>(query: string, options: readonly T[]): T {
 // showing a face is catalogued as a "portrait" or "head", almost never
 // "face". `museumTerm` is what the Met is searched with; `match` is what
 // counts as showing the subject.
-const SUBJECT_SYNONYMS: Record<string, { museumTerm?: string; match: string[] }> = {
+// Fabric falling in folds is "drapery" to a museum: a "draped fabric"
+// search found two studio photos and a velvet still life, while "drapery
+// study" finds the drapery drawings artists learn from (Verrocchio,
+// Burne-Jones, Albert Moore). Bare "drapery" finds curtain tiebacks, so the
+// museums get the phrase. Photos get "folds": plain "draped fabric" on
+// Unsplash returned close-ups of fabric texture, not cloth hanging in folds.
+const DRAPERY = {
+  museumTerm: "drapery study",
+  aicTerm: "drapery study",
+  photoTerm: "folds",
+  match: ["drapery", "draperies", "draped", "drape", "cloth", "fabric", "folds", "robe", "robes", "garment", "silk", "satin", "linen"]
+};
+
+// A pose is a figure to a museum: "figure study" finds the figure drawings
+// artists learn from (Leighton, Rops, Renoir, Fuseli). It's an extra Met
+// search in Drawings and Prints rather than a replacement, since "pose"
+// itself finds good prints too (Nakamura Nakazō as an actor in a dramatic
+// stance). Figure studies never say "pose", so these words confirm the
+// subject.
+const POSE = {
+  museumAlso: { query: "figure study", departmentId: MET_DRAWINGS_AND_PRINTS },
+  aicTerm: "figure study",
+  match: ["figure", "figures", "study", "studies", "nude", "dancer", "dancing", "athlete", "wrestlers", "leap", "leaping", "jump", "jumping", "motion", "action"]
+};
+// Moving poses also search for the strongest photo phrasing tested:
+// "dancer leaping" got 12/12 full matches for "dynamic pose".
+const MOVING_POSE = { ...POSE, photoAlso: "dancer leaping" };
+
+type SubjectSynonym = {
+  museumTerm?: string;
+  // One more Met search, in one department, alongside the subject search.
+  museumAlso?: { query: string; departmentId: number };
+  aicTerm?: string;
+  photoTerm?: string;
+  photoAlso?: string;
+  match: string[];
+};
+
+const SUBJECT_SYNONYMS: Record<string, SubjectSynonym> = {
+  pose: POSE,
+  poses: POSE,
+  "dynamic pose": MOVING_POSE,
+  "action pose": MOVING_POSE,
+  "dynamic poses": MOVING_POSE,
+  "draped fabric": DRAPERY,
+  "draped cloth": DRAPERY,
+  fabric: DRAPERY,
+  cloth: DRAPERY,
+  drapery: DRAPERY,
+  "fabric folds": DRAPERY,
   face: { museumTerm: "portrait", match: ["portrait", "portraits", "head", "heads", "bust", "profile"] },
   // "side profile" describes a face, not an object: in the Met's catalog a
   // bare "profile" search is mostly metal ornaments ("Profile Warrior").
@@ -504,6 +554,26 @@ export function subjectSynonyms(word: string): string[] {
 
 export function museumSubjectTerm(subject: string): string {
   return SUBJECT_SYNONYMS[subject]?.museumTerm ?? subject;
+}
+
+/** Extra words for the Art Institute search, when the subject has its own catalog term. */
+export function aicSubjectTerm(subject: string): string | null {
+  return SUBJECT_SYNONYMS[subject]?.aicTerm ?? null;
+}
+
+/** One more Met search for subjects whose catalog term differs ("figure study" for a pose). */
+export function museumCompanionSearch(subject: string): { query: string; departmentId: number } | null {
+  return SUBJECT_SYNONYMS[subject]?.museumAlso ?? null;
+}
+
+/** A second photo search for subjects that have a stronger companion phrasing. */
+export function photoCompanionQuery(phrase: string): string | null {
+  return SUBJECT_SYNONYMS[phrase]?.photoAlso ?? null;
+}
+
+/** Extra words for the photo search, when Unsplash needs a nudge toward the subject. */
+export function photoSubjectTerm(subject: string): string | null {
+  return SUBJECT_SYNONYMS[subject]?.photoTerm ?? null;
 }
 
 // --- Settings -------------------------------------------------------------

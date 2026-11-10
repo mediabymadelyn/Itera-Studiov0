@@ -3,6 +3,11 @@
 import { SyntheticEvent, useEffect, useState } from "react";
 import { ArtworkResult } from "@/lib/types/artwork";
 import { reportUnsplashDownload } from "@/components/unsplashDownload";
+import { lightingSubtagsOf } from "@/lib/search/categories";
+
+// Lighting tags shown over the image on hover; the full set is in the
+// expanded view.
+const MAX_HOVER_TAGS = 2;
 
 type ResultCardProps = {
   result: ArtworkResult;
@@ -27,10 +32,8 @@ function frameAspectRatio(ratio: number | undefined): number {
   return Math.min(MAX_ASPECT_RATIO, Math.max(MIN_ASPECT_RATIO, ratio ?? DEFAULT_ASPECT_RATIO));
 }
 
-function getTypeLabel(source: string): "Museum" | "Photography" {
-  return source.toLowerCase().includes("unsplash")
-    ? "Photography"
-    : "Museum";
+function isPhotoResult(result: ArtworkResult): boolean {
+  return result.source.toLowerCase().includes("unsplash");
 }
 
 export function AttributionLink({ href, children }: { href?: string; children: string }) {
@@ -54,8 +57,7 @@ export default function ResultCard({
   const [hasError, setHasError] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(result.imageAspectRatio);
 
-  const typeLabel = getTypeLabel(result.source);
-  const isPhoto = typeLabel === "Photography";
+  const isPhoto = isPhotoResult(result);
 
   useEffect(() => {
     if (hasError) {
@@ -81,8 +83,11 @@ export default function ResultCard({
     return null;
   }
 
+  const hoverTags = lightingSubtagsOf(result).slice(0, MAX_HOVER_TAGS);
+  const palette = result.imageMetrics?.palette ?? [];
+
   return (
-    <article className="result-card">
+    <article className={isPhoto ? "result-card" : "result-card is-museum"}>
       <button
         type="button"
         className="result-image-button"
@@ -107,44 +112,82 @@ export default function ResultCard({
         </span>
         {showsActiveTag && activeTag && <span className="card-tag">{activeTag}</span>}
         <span className="result-image-expand-hint">Click to expand</span>
+        {/* What the image check saw, on hover: the kind of light and the
+            main colors. Image search engines don't say why a result is
+            there; ItEra can. */}
+        {(hoverTags.length > 0 || palette.length > 0) && (
+          <span className="card-why" aria-hidden="true">
+            {hoverTags.length > 0 && (
+              <span className="card-why-tags">
+                {hoverTags.map((tag) => (
+                  <span key={tag} className="card-why-tag">
+                    {tag}
+                  </span>
+                ))}
+              </span>
+            )}
+            {palette.length > 0 && (
+              <span className="card-palette">
+                {palette.map((swatch) => (
+                  <span key={swatch.color} style={{ background: swatch.color, flexGrow: swatch.share }} />
+                ))}
+              </span>
+            )}
+          </span>
+        )}
       </button>
-      {/* Compact credit block: every card still shows title, creator,
-          source, license and the original link. Creator and source link out
-          wherever the source provides a page for them -- required for
-          Unsplash, in its "Photo by X on Unsplash" form (photographer
-          profile + Unsplash, with referral parameters; see unsplash.ts). */}
-      <div className="result-content">
-        <span className="result-title-value" title={result.title}>
-          {result.title}
-        </span>
-        <span className="result-credit">
-          {isPhoto ? (
-            <>
-              Photo by <AttributionLink href={result.artistLink}>{result.artist}</AttributionLink>{" "}
-              on <AttributionLink href={result.sourceLink}>{result.source}</AttributionLink>
-            </>
-          ) : (
-            <>
-              <AttributionLink href={result.artistLink}>{result.artist}</AttributionLink>
-              {" · "}
+      {/* Every card shows title, creator, source, license and the original
+          link. Creator and source link out wherever the source provides a
+          page for them -- required for Unsplash, in its "Photo by X on
+          Unsplash" form (photographer profile + Unsplash, with referral
+          parameters; see unsplash.ts). Museum works read like a gallery
+          wall label: italic title, artist and date, then the collection. */}
+      {isPhoto ? (
+        <div className="result-content">
+          <span className="result-title-value" title={result.title}>
+            {result.title}
+          </span>
+          <span className="result-credit">
+            Photo by <AttributionLink href={result.artistLink}>{result.artist}</AttributionLink>{" "}
+            on <AttributionLink href={result.sourceLink}>{result.source}</AttributionLink>
+          </span>
+          <span className="result-footer">
+            {result.licenseType && <span className="result-license">{result.licenseType}</span>}
+            <ViewOriginal result={result} />
+          </span>
+        </div>
+      ) : (
+        <div className="result-content wall-label">
+          <span className="wall-title" title={result.title}>
+            {result.title}
+          </span>
+          <span className="wall-artist">
+            <AttributionLink href={result.artistLink}>{result.artist}</AttributionLink>
+            {result.objectDate ? `, ${result.objectDate}` : ""}
+          </span>
+          <span className="result-footer">
+            <span className="wall-collection">
               <AttributionLink href={result.sourceLink}>{result.source}</AttributionLink>
-            </>
-          )}
-        </span>
-        <span className="result-footer">
-          <span className="info-tag">{typeLabel}</span>
-          {result.licenseType && <span className="result-license">{result.licenseType}</span>}
-          <a
-            className="result-link"
-            href={result.originalLink}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => reportUnsplashDownload(result)}
-          >
-            View original
-          </a>
-        </span>
-      </div>
+              {result.licenseType ? ` · ${result.licenseType}` : ""}
+            </span>
+            <ViewOriginal result={result} />
+          </span>
+        </div>
+      )}
     </article>
+  );
+}
+
+function ViewOriginal({ result }: { result: ArtworkResult }) {
+  return (
+    <a
+      className="result-link"
+      href={result.originalLink}
+      target="_blank"
+      rel="noreferrer"
+      onClick={() => reportUnsplashDownload(result)}
+    >
+      View original
+    </a>
   );
 }

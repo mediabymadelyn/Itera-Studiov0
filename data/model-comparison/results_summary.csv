@@ -1,0 +1,6 @@
+model,image_detail,relevance_correct,relevance_total,lighting_correct,lighting_total,flat_called_dramatic,flat_total,dramatic_missed,dramatic_total,relevance_flips_between_runs,images_compared,median_ms,slowest_ms
+Gemini 3.8 Flash,default,31,32,32,42,3,16,0,26,2,40,2850,8173
+Gemini 3.5 Flash-Lite,default,30,32,31,42,2,16,0,26,0,40,821,1155
+Gemma 3 27B,default,24,32,26,42,6,16,0,26,0,40,1874,3756
+Gemini 3.8 Flash,medium,31,32,32,42,,,,,2,40,2598,6258
+Gemini 3.8 Flash,low,30,32,32,42,,,,,0,40,2449,6654

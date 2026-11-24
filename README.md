@@ -28,3 +28,6 @@ user input -> query interpretation -> source routing -> API search -> normalizat
 - no image generation
 - no custom model training
 - no complex multimodal comparison yet
+
+## Research data
+The SUS survey answers, 40-image model comparison and lighting evaluation are in [data/](data/README.md).

@@ -70,6 +70,7 @@ Before finishing a task:
 - `components` UI parts
 - `scripts` build and check scripts; `scripts/eval` the evaluation
 - `data/eval` the eval manifest, runs and reports
+- `data/user-study`, `data/model-comparison` anonymous SUS answers and the 40-image model test; `data/README.md` lists all research data
 
 ## Search pipeline
 1. Read the search (`queryPlan.ts`, `queryTerms.ts`): subject, action, setting, lighting, stated background and appearance phrases (kept together, e.g. "red hair"). Llama rewrites the search; rules handle it when the model is off.

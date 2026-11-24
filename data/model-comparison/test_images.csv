@@ -1,0 +1,41 @@
+image,search,source,title,title_cut_off,lighting_label,relevance_label
+0,side profile dramatic lighting,Unsplash,Profile of a man in dramatic light,no,lit,
+1,side profile dramatic lighting,The Metropolitan Museum of Art,Portrait of a Young Woman with a Fan,no,,
+2,side profile dramatic lighting,The Metropolitan Museum of Art,Old Woman Cutting Her Nails,no,lit,
+3,side profile dramatic lighting,The Metropolitan Museum of Art,A Young Woman as a Shepherdess,no,,
+4,side profile dramatic lighting,Unsplash,Woman's profile in dramatic black and white lighti,yes,lit,
+5,side profile dramatic lighting,Unsplash,Profile of a woman with glasses in dark lighting,no,lit,
+6,side profile dramatic lighting,Art Institute of Chicago,Young Man in a Turban,no,lit,
+7,side profile dramatic lighting,The Metropolitan Museum of Art,Self-Portrait,no,flat,
+8,side profile dramatic lighting,The Metropolitan Museum of Art,Portrait of a Woman,no,flat,
+9,side profile dramatic lighting,The Metropolitan Museum of Art,Self-Portrait,no,flat,
+10,side profile dramatic lighting,The Metropolitan Museum of Art,Self-Portrait,no,flat,
+11,side profile dramatic lighting,The Metropolitan Museum of Art,Self-Portrait,no,flat,
+12,dramatic lighting on face,Unsplash,A man's face in dramatic black and white lighting,yes,lit,
+13,dramatic lighting on face,Unsplash,Woman shielding face with hand against dark backgr,yes,lit,
+14,dramatic lighting on face,Unsplash,Man with dark shadows on his face,no,lit,
+15,dramatic lighting on face,Unsplash,Woman's face with blue eyes and orange hair in dar,yes,lit,
+16,dramatic lighting on face,The Metropolitan Museum of Art,Man with a Steel Gorget,no,lit,
+17,dramatic lighting on face,Unsplash,Woman's face illuminated by red light with reflect,yes,lit,
+18,dramatic lighting on face,The Metropolitan Museum of Art,Young Woman with a Red Necklace,no,,
+19,portrait chiaroscuro,Art Institute of Chicago,Portrait of a Man with Gray Hair,no,lit,
+20,portrait chiaroscuro,Art Institute of Chicago,The Captive Slave (Ira Aldridge),no,flat,
+21,portrait chiaroscuro,Art Institute of Chicago,Édouard Manet,no,flat,
+22,portrait chiaroscuro,Art Institute of Chicago,Madame de Pastoret and Her Son,no,flat,
+23,side profile dramatic lighting,Unsplash,woman in black tank top,no,lit,
+24,dramatic lighting on face,The Metropolitan Museum of Art,Bag Face,no,,irrelevant
+25,dramatic lighting on face,The Metropolitan Museum of Art,Storage Bag (Chuval) Face,no,,irrelevant
+26,oil painting portrait,The Metropolitan Museum of Art,Oil Lamp,no,,irrelevant
+27,oil painting portrait,The Metropolitan Museum of Art,Oil Lamp,no,,irrelevant
+28,oil painting portrait,The Metropolitan Museum of Art,Oil lamp,no,,irrelevant
+29,side profile dramatic lighting,The Metropolitan Museum of Art,Portrait,no,,irrelevant
+30,portrait chiaroscuro,Unsplash,woman standing near neon sign,no,,irrelevant
+31,dancer mid motion,The Metropolitan Museum of Art,Dancer,no,,irrelevant
+32,charcoal figure drawing,Unsplash,A woman in a dress and a chimpanzee,no,,relevant
+33,charcoal figure drawing,Unsplash,Three portraits hang on a gallery wall,no,,irrelevant
+34,charcoal figure drawing,The Metropolitan Museum of Art,Study of a seated male figure (Ecce Homo?),no,,relevant
+35,charcoal figure drawing,The Metropolitan Museum of Art,Seated Male Figure with the Head of an Onlooker (r,yes,,relevant
+36,charcoal figure drawing,Unsplash,A charcoal sketch of a person curled up,no,,relevant
+37,dancer mid motion,Unsplash,A dancer performs an elegant leap in midair,no,,relevant
+38,dancer mid motion,Art Institute of Chicago,Ballet Dancers,no,,relevant
+39,dancer mid motion,Unsplash,A dancer in a dark dress performing with long expo,yes,,relevant
